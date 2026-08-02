@@ -16,5 +16,8 @@ Non\ confermato*
 .vscode/
 .idea/
 
-# Nested external repo (non tracciato, va clonato separatamente)
-llama.cpp/
+# Build artifacts di llama.cpp (compilati localmente, non codice sorgente)
+llama.cpp/build/
+
+# Modelli LLM pesanti (superano il limite di 100MB di GitHub)
+/*.gguf
