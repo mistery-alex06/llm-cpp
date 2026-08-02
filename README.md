@@ -26,9 +26,28 @@ g++ -std=c++17 main.cpp src/matrix.cpp src/tokenizer.cpp src/transformer.cpp -Ii
 
 ---
 
+Chat con Qwen3-4B (via llama.cpp)
+
+È incluso uno script pronto per avviare una chat interattiva con il modello `Qwen3-4B-Q4_K_M.gguf` (da scaricare separatamente, non incluso nella repo per via del limite di 100MB di GitHub):
+
+```bash
+./run_qwen.sh
+```
+
+Oppure per una singola risposta non interattiva:
+
+```bash
+./run_qwen.sh -p "Ciao, chi sei?" -n 60 -st
+```
+
+> Nota hardware: su macchine con RAM limitata (8GB), lo script gira in modalità CPU-only (`-ngl 0`) con contesto ridotto (`-c 2048`) per evitare thrashing di memoria. Chiudere applicazioni pesanti (browser, IDE) prima dell'avvio migliora sensibilmente le prestazioni.
+
+---
+
 Roadmap
 - [x] Tokenizer di base
 - [x] Motore di calcolo matriciale (Matrix)
 - [x] Forward pass e Softmax
 - [x] CLI interattiva
-- [x] Integrazione avanzata con llama.cpp
+- [x] Setup base llama.cpp + Qwen3-4B (CLI standalone, script `run_qwen.sh`)
+- [ ] Integrazione avanzata con llama.cpp (chiamata diretta da `main.cpp`)
