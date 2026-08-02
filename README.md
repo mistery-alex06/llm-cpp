@@ -50,4 +50,6 @@ Roadmap
 - [x] Forward pass e Softmax
 - [x] CLI interattiva
 - [x] Setup base llama.cpp + Qwen3-4B (CLI standalone, script `run_qwen.sh`)
+- [x] Interfaccia web (llama-server + Web UI integrata, script `run_qwen_server.sh`)
+- [ ] Personalizzazione interfaccia web (branding, UI su misura)
 - [ ] Integrazione avanzata con llama.cpp (chiamata diretta da `main.cpp`)
