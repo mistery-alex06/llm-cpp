@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qwen — Assistente Locale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:        #0a1220;
+    --ink-deep:   #060b15;
+    --panel:      #0e1a2c;
+    --line:       rgba(245,243,238,0.09);
+    --line-strong:rgba(245,243,238,0.16);
+    --ivory:      #f4f1e9;
+    --ivory-dim:  #b9bfc9;
+    --ivory-faint:#7b8492;
+    --gold:       #cbaa6b;
+    --gold-soft:  rgba(203,170,107,0.55);
+    --gold-faint: rgba(203,170,107,0.18);
+    --blue-vein:  rgba(90,140,180,0.20);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html,body{height:100%;}
+
+  body{
+    font-family:'Inter', sans-serif;
+    background:
+      radial-gradient(ellipse 900px 500px at 12% -10%, rgba(60,110,150,0.35), transparent 60%),
+      radial-gradient(ellipse 700px 600px at 105% 10%, rgba(203,170,107,0.10), transparent 55%),
+      radial-gradient(ellipse 800px 700px at 50% 120%, rgba(30,55,85,0.45), transparent 60%),
+      linear-gradient(180deg, var(--ink) 0%, var(--ink-deep) 100%);
+    color:var(--ivory);
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* --- ricamo: venature sottili oro/bianco, texture leggerissima --- */
+  .veins{
+    position:fixed; inset:0;
+    pointer-events:none;
+    opacity:0.5;
+    z-index:0;
+    mix-blend-mode:screen;
+  }
+  .veins svg{width:100%; height:100%;}
+
+  /* --- header --- */
+  header{
+    position:relative; z-index:2;
+    display:flex; align-items:center; justify-content:center;
+    padding:30px 24px 22px;
+    flex-shrink:0;
+  }
+  .brand{
+    display:flex; align-items:center; gap:14px;
+  }
+  .brand svg{width:26px; height:26px; opacity:0.85;}
+  .brand-text{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    font-size:26px;
+    letter-spacing:0.04em;
+    color:var(--ivory);
+  }
+  .brand-text em{
+    font-style:italic;
+    color:var(--gold);
+    font-weight:500;
+  }
+  header::after{
+    content:"";
+    position:absolute; left:50%; bottom:0; transform:translateX(-50%);
+    width:min(560px, 70%); height:1px;
+    background:linear-gradient(90deg, transparent, var(--gold-soft) 20%, var(--line-strong) 50%, var(--gold-soft) 80%, transparent);
+  }
+
+  /* --- chat area --- */
+  main{
+    position:relative; z-index:2;
+    flex:1;
+    overflow-y:auto;
+    scroll-behavior:smooth;
+  }
+  main::-webkit-scrollbar{width:8px;}
+  main::-webkit-scrollbar-thumb{background:rgba(245,243,238,0.08); border-radius:4px;}
+  main::-webkit-scrollbar-track{background:transparent;}
+
+  .thread{
+    max-width:680px;
+    margin:0 auto;
+    padding:8px 28px 40px;
+  }
+
+  .empty-state{
+    height:100%;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    gap:14px;
+    padding:0 40px;
+    color:var(--ivory-faint);
+  }
+  .empty-state .flourish{width:120px; height:28px; opacity:0.55;}
+  .empty-state h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:400;
+    font-style:italic;
+    font-size:28px;
+    color:var(--ivory-dim);
+    letter-spacing:0.01em;
+  }
+  .empty-state p{font-size:13px; letter-spacing:0.02em; color:var(--ivory-faint);}
+
+  .msg{
+    padding:22px 0;
+    border-bottom:1px solid var(--line);
+    animation:rise 0.35s ease both;
+  }
+  .msg:last-child{border-bottom:none;}
+  @keyframes rise{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  .msg-role{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:10px;
+  }
+  .msg-role .thread-mark{width:22px; height:8px; opacity:0.6;}
+  .msg-role span{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:15px;
+    letter-spacing:0.04em;
+    color:var(--ivory-dim);
+  }
+  .msg.user .msg-role span{color:var(--gold);}
+
+  .msg-body{
+    font-size:15.5px;
+    line-height:1.75;
+    color:var(--ivory);
+    font-weight:300;
+    white-space:pre-wrap;
+    word-wrap:break-word;
+  }
+  .msg-body p{margin:0 0 0.9em;}
+  .msg-body p:last-child{margin-bottom:0;}
+  .msg-body code{
+    font-family:'SF Mono', Menlo, monospace;
+    font-size:0.87em;
+    background:rgba(245,243,238,0.06);
+    border:1px solid var(--line);
+    padding:1px 6px;
+    border-radius:4px;
+  }
+  .msg-body pre{
+    background:rgba(6,11,21,0.6);
+    border:1px solid var(--line);
+    border-left:2px solid var(--gold-faint);
+    border-radius:6px;
+    padding:14px 16px;
+    overflow-x:auto;
+    margin:0.9em 0;
+  }
+  .msg-body pre code{background:none; border:none; padding:0;}
+
+  .cursor{
+    display:inline-block; width:7px; height:15px;
+    background:var(--gold-soft);
+    margin-left:2px;
+    vertical-align:text-bottom;
+    animation:blink 1s step-start infinite;
+  }
+  @keyframes blink{ 50%{opacity:0;} }
+
+  /* --- composer --- */
+  .composer-wrap{
+    position:relative; z-index:2;
+    flex-shrink:0;
+    padding:18px 24px 26px;
+  }
+  .composer{
+    max-width:680px;
+    margin:0 auto;
+    position:relative;
+    background:rgba(20,32,50,0.55);
+    border:1px solid var(--line-strong);
+    border-radius:14px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 12px 40px rgba(0,0,0,0.25);
+    transition:border-color 0.25s ease;
+  }
+  .composer:focus-within{
+    border-color:var(--gold-faint);
+  }
+  .composer-inner{
+    display:flex; align-items:flex-end; gap:10px;
+    padding:8px 8px 8px 20px;
+  }
+  textarea{
+    flex:1;
+    background:none; border:none; outline:none; resize:none;
+    font-family:'Inter', sans-serif;
+    font-size:14.5px; font-weight:300;
+    color:var(--ivory);
+    line-height:1.6;
+    max-height:160px;
+    padding:10px 0;
+  }
+  textarea::placeholder{color:var(--ivory-faint);}
+
+  button#send{
+    width:38px; height:38px; flex-shrink:0;
+    border-radius:10px;
+    border:1px solid var(--gold-faint);
+    background:rgba(203,170,107,0.08);
+    color:var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    margin-bottom:2px;
+  }
+  button#send:hover:not(:disabled){
+    background:rgba(203,170,107,0.16);
+    border-color:var(--gold-soft);
+  }
+  button#send:disabled{opacity:0.35; cursor:default;}
+  button#send svg{width:16px; height:16px;}
+
+  .hint{
+    text-align:center;
+    font-size:11px;
+    letter-spacing:0.03em;
+    color:var(--ivory-faint);
+    margin-top:12px;
+    opacity:0.7;
+  }
+</style>
+</head>
+<body>
+
+  <div class="veins" id="veins"></div>
+
+  <header>
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
+        <path d="M12 2 C 15 6, 15 6, 12 12 C 9 18, 9 18, 12 22" stroke="url(#g1)"/>
+        <path d="M4 8 C 8 10, 8 10, 4 16" stroke="url(#g1)"/>
+        <path d="M20 8 C 16 10, 16 10, 20 16" stroke="url(#g1)"/>
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#cbaa6b"/>
+            <stop offset="100%" stop-color="#f4f1e9"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="brand-text">studio<em>Qwen</em></div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="thread" id="thread">
+      <div class="empty-state" id="emptyState">
+        <svg class="flourish" viewBox="0 0 120 28" fill="none">
+          <path d="M0 14 C 20 2, 30 26, 50 14 C 70 2, 80 26, 100 14 C 108 10, 114 10, 120 14"
+                stroke="url(#eg)" stroke-width="1"/>
+          <defs>
+            <linearGradient id="eg" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="transparent"/>
+              <stop offset="20%" stop-color="#cbaa6b"/>
+              <stop offset="50%" stop-color="#f4f1e9"/>
+              <stop offset="80%" stop-color="#cbaa6b"/>
+              <stop offset="100%" stop-color="transparent"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <h1>Di cosa parliamo, oggi?</h1>
+        <p>UN PENSIERO, UNA DOMANDA, UN'IDEA</p>
+      </div>
+    </div>
+  </main>
+
+  <div class="composer-wrap">
+    <div class="composer">
+      <div class="composer-inner">
+        <textarea id="input" placeholder="Scrivi qui..." rows="1"></textarea>
+        <button id="send" aria-label="Invia">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5M12 5l-6 6M12 5l6 6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="hint">↵ per inviare · ⇧↵ per andare a capo</div>
+  </div>
+
+<script>
+const API_URL = "http://127.0.0.1:8080/v1/chat/completions";
+
+const thread = document.getElementById('thread');
+const emptyState = document.getElementById('emptyState');
+const input = document.getElementById('input');
+const sendBtn = document.getElementById('send');
+const main = document.getElementById('main');
+
+let history = [];
+let busy = false;
+
+// --- venature di sfondo (ricamo oro/bianco molto leggero) ---
+function initVeins(){
+  const el = document.getElementById('veins');
+  const paths = [
+    "M -10 20 C 15 5, 25 35, 45 18 C 65 2, 75 30, 100 15 C 115 8, 120 20, 130 12",
+    "M -10 55 C 20 40, 30 68, 55 52 C 78 38, 85 62, 110 48",
+    "M -10 82 C 25 70, 35 95, 60 80 C 82 68, 95 90, 130 78",
+    "M 60 -10 C 50 15, 75 25, 68 50 C 62 72, 80 85, 72 110",
+  ];
+  const colors = ["#cbaa6b","#f4f1e9","#5a8cb4"];
+  let svg = `<svg viewBox="0 0 120 100" preserveAspectRatio="none">`;
+  paths.forEach((d,i)=>{
+    svg += `<path d="${d}" fill="none" stroke="${colors[i%colors.length]}" stroke-width="${0.12+ (i%2)*0.06}" opacity="${0.10 + (i%3)*0.04}"/>`;
+  });
+  svg += `</svg>`;
+  el.innerHTML = svg;
+}
+initVeins();
+
+function autoResize(){
+  input.style.height = 'auto';
+  input.style.height = Math.min(input.scrollHeight, 160) + 'px';
+}
+input.addEventListener('input', autoResize);
+
+input.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter' && !e.shiftKey){
+    e.preventDefault();
+    submit();
+  }
+});
+sendBtn.addEventListener('click', submit);
+
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// markdown minimale: **bold**, *italic*, `code`, ```blocchi```, paragrafi
+function renderMarkdown(raw){
+  let text = escapeHtml(raw);
+  text = text.replace(/```([\s\S]*?)```/g, (m, code)=>`<pre><code>${code.trim()}</code></pre>`);
+  text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+  text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  text = text.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  const parts = text.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
+  return parts.map(p => `<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
+}
+
+function addMessage(role){
+  if(emptyState) emptyState.remove();
+  const wrap = document.createElement('div');
+  wrap.className = 'msg ' + role;
+  const roleLabel = role === 'user' ? 'Tu' : 'Qwen';
+  wrap.innerHTML = `
+    <div class="msg-role">
+      <svg class="thread-mark" viewBox="0 0 22 8" fill="none">
+        <path d="M0 4 C 5 0, 8 8, 11 4 C 14 0, 17 8, 22 4" stroke="${role==='user' ? '#cbaa6b' : '#f4f1e9'}" stroke-width="0.9" opacity="0.6"/>
+      </svg>
+      <span>${roleLabel}</span>
+    </div>
+    <div class="msg-body"></div>`;
+  thread.appendChild(wrap);
+  main.scrollTop = main.scrollHeight;
+  return wrap.querySelector('.msg-body');
+}
+
+async function submit(){
+  const text = input.value.trim();
+  if(!text || busy) return;
+
+  input.value = '';
+  autoResize();
+
+  const userBody = addMessage('user');
+  userBody.innerHTML = renderMarkdown(text);
+  history.push({role:'user', content:text});
+
+  const asstBody = addMessage('assistant');
+  asstBody.innerHTML = '<span class="cursor"></span>';
+
+  busy = true;
+  sendBtn.disabled = true;
+
+  let full = '';
+  try{
+    const res = await fetch(API_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model: "qwen",
+        messages: history,
+        stream: true,
+        temperature: 0.7
+      })
+    });
+
+    if(!res.ok || !res.body){
+      throw new Error('risposta non valida dal server (' + res.status + ')');
+    }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while(true){
+      const {done, value} = await reader.read();
+      if(done) break;
+      buffer += decoder.decode(value, {stream:true});
+      const lines = buffer.split('\n');
+      buffer = lines.pop();
+
+      for(const line of lines){
+        const t = line.trim();
+        if(!t.startsWith('data:')) continue;
+        const payload = t.slice(5).trim();
+        if(payload === '[DONE]') continue;
+        try{
+          const json = JSON.parse(payload);
+          const delta = json.choices?.[0]?.delta?.content;
+          if(delta){
+            full += delta;
+            asstBody.innerHTML = renderMarkdown(full) + '<span class="cursor"></span>';
+            main.scrollTop = main.scrollHeight;
+          }
+        }catch(e){ /* riga incompleta, ignora */ }
+      }
+    }
+
+    asstBody.innerHTML = renderMarkdown(full || '…');
+    history.push({role:'assistant', content: full});
+
+  }catch(err){
+    asstBody.innerHTML = `<p style="color:#c98a8a;">Impossibile contattare il modello locale. Verifica che <code>run_qwen_server.sh</code> sia attivo su <code>127.0.0.1:8080</code>.<br><span style="opacity:0.6;font-size:0.85em;">${escapeHtml(err.message)}</span></p>`;
+  }finally{
+    busy = false;
+    sendBtn.disabled = false;
+    main.scrollTop = main.scrollHeight;
+    input.focus();
+  }
+}
+
+input.focus();
+</script>
+</body>
+</html>
