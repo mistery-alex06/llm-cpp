@@ -31,4 +31,4 @@ Roadmap
 - [x] Motore di calcolo matriciale (Matrix)
 - [x] Forward pass e Softmax
 - [x] CLI interattiva
-- [ ] Integrazione avanzata con llama.cpp
+- [x] Integrazione avanzata con llama.cpp
