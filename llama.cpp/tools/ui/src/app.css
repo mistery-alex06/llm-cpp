@@ -225,3 +225,16 @@
 .mermaidTooltip {
 	display: none !important;
 }
+
+/* Contorno bianco-oro, solo bordo, per sidebar e riquadro messaggi */
+aside {
+	border: 1px solid oklch(0.88 0.05 85 / 0.32) !important;
+}
+
+[data-slot='input-area'] {
+	border-color: oklch(0.88 0.05 85 / 0.4) !important;
+}
+
+[data-slot='input-area']:focus-within {
+	border-color: oklch(0.88 0.05 85 / 0.7) !important;
+}
