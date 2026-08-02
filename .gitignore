@@ -18,6 +18,9 @@ Non\ confermato*
 
 # Build artifacts di llama.cpp (compilati localmente, non codice sorgente)
 llama.cpp/build/
+llama.cpp/tools/ui/node_modules/
+llama.cpp/tools/ui/dist/
+llama.cpp/tools/ui/.svelte-kit/
 
 # Modelli LLM pesanti (superano il limite di 100MB di GitHub)
 /*.gguf
