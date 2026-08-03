@@ -229,12 +229,34 @@
 /* Contorno bianco-oro, solo bordo, per sidebar e riquadro messaggi */
 aside {
 	border: 1px solid oklch(0.88 0.05 85 / 0.32) !important;
+	position: relative;
+	z-index: 1;
 }
 
 [data-slot='input-area'] {
 	border-color: oklch(0.88 0.05 85 / 0.4) !important;
+	position: relative;
+	z-index: 1;
 }
 
 [data-slot='input-area']:focus-within {
 	border-color: oklch(0.88 0.05 85 / 0.7) !important;
+}
+
+/* Sfondo marmo blu-oro, dietro a tutto, sidebar e composer restano opachi sopra */
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	background-image: url('/bg-marble.jpg');
+	background-size: cover;
+	background-position: center;
+	opacity: 0.15;
+}
+
+aside,
+[data-slot='input-area'] {
+	background-color: var(--background) !important;
 }
