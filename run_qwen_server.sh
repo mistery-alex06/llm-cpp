@@ -28,4 +28,4 @@ fi
 # -t 4       : usa tutti e 4 i core disponibili
 # --host 127.0.0.1 --port 8080 : accessibile solo in locale
 echo "Avvio server su http://127.0.0.1:8080 (Ctrl+C per fermare)"
-"$BIN" -m "$MODEL" -ngl 0 -c 2048 -t 4 --host 127.0.0.1 --port 8080 "$@"
+"$BIN" --models-dir "$DIR" --models-max 1 -ngl 0 -c 2048 -t 4 --host 127.0.0.1 --port 8080 "$@"
