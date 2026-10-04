@@ -229,13 +229,11 @@
 /* Contorno bianco-oro, solo bordo, per sidebar e riquadro messaggi */
 aside {
 	border: 1px solid oklch(0.88 0.05 85 / 0.32) !important;
-	position: relative;
 	z-index: 1;
 }
 
 [data-slot='input-area'] {
 	border-color: oklch(0.88 0.05 85 / 0.4) !important;
-	position: relative;
 	z-index: 1;
 }
 
