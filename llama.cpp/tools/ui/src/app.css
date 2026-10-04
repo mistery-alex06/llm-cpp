@@ -248,7 +248,7 @@ body::before {
 	inset: 0;
 	z-index: 0;
 	pointer-events: none;
-	background-image: url('/bg-marble.jpg');
+	background-image: url('/bg-ship.jpg');
 	background-size: cover;
 	background-position: center;
 	opacity: 0.15;
