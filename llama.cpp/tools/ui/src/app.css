@@ -260,3 +260,36 @@ aside,
 [data-slot='input-area'] {
 	background-color: var(--background) !important;
 }
+
+/* Su monitor ultrawide, la colonna di chat (max-w-3xl, 48rem) lascia troppo spazio vuoto ai lati */
+@media (min-width: 1700px) {
+	.chat-message-user,
+	.chat-message-assistant,
+	.conversation-chat-form {
+		max-width: 64rem !important;
+	}
+}
+
+@media (min-width: 2400px) {
+	.chat-message-user,
+	.chat-message-assistant,
+	.conversation-chat-form {
+		max-width: 80rem !important;
+	}
+}
+
+@media (min-width: 3000px) {
+	.chat-message-user,
+	.chat-message-assistant,
+	.conversation-chat-form {
+		max-width: 96rem !important;
+	}
+}
+
+@media (min-width: 3840px) {
+	.chat-message-user,
+	.chat-message-assistant,
+	.conversation-chat-form {
+		max-width: 112rem !important;
+	}
+}
