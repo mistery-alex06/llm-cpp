@@ -1,3 +1,4 @@
+import { memorySystemPrompt } from '$lib/utils/altea-memory';
 import { getAuthHeaders, getJsonHeaders } from '$lib/utils/api-headers';
 import { formatAttachmentText } from '$lib/utils/formatters';
 import { isAbortError } from '$lib/utils/abort';
@@ -211,6 +212,17 @@ export class ChatService {
 
 			return true;
 		});
+
+		// Memoria persistente di Altea: iniettata nel system prompt
+		const memoryPrompt = memorySystemPrompt();
+		if (memoryPrompt) {
+			const first = normalizedMessages[0];
+			if (first && first.role === MessageRole.SYSTEM && typeof first.content === 'string') {
+				first.content = first.content + '\n\n' + memoryPrompt;
+			} else {
+				normalizedMessages.unshift({ role: MessageRole.SYSTEM, content: memoryPrompt } as ApiChatMessageData);
+			}
+		}
 
 		// Filter out image attachments if the model doesn't support vision
 		if (options.model && !modelsStore.modelSupportsVision(options.model)) {

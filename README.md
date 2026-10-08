@@ -24,6 +24,7 @@ Sviluppata e testata su Mac Intel, 8 GB di RAM, solo CPU.
   - **Chat da terminale**, con il programma `./llm` oppure con `run_qwen.sh`.
 - Supporta il ragionamento di Qwen3 (blocchi `<think>`). Scrivendo `/no_think` all'inizio del messaggio il modello risponde senza ragionare, molto più in fretta.
 - Due modelli selezionabili dalla UI: Qwen3-4B (più capace, più lento) e Qwen3-1.7B (più veloce).
+- Memoria persistente: `/ricorda <testo>` salva un fatto, `/memoria` li elenca, `/dimentica <n|tutto>` li cancella. Salvata nel browser e inviata ad Altea in ogni chat.
 
 ## Come funziona
 
@@ -140,4 +141,4 @@ llm/
 - [x] Personalizzazione della UI (tema blu-oro, contorni, sfondo dedicato)
 - [x] Integrazione nativa con llama.cpp in `main.cpp`
 - [x] Secondo modello e selettore nella UI (router mode)
-- [ ] Sistema di memoria persistente tra le sessioni
+- [x] Memoria persistente (`/ricorda`, `/dimentica`, `/memoria` nella UI)
