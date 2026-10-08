@@ -54,7 +54,7 @@ export const APPLE_ASSETS = {
 export const PWA_MANIFEST = {
 	name: APP_NAME,
 	short_name: APP_NAME,
-	description: 'Local AI chat interface powered by llama.cpp',
+	description: 'Altea, IA locale',
 	start_url: './',
 	display: 'standalone' as const,
 	background_color: THEME_COLORS.BACKGROUND_LIGHT,

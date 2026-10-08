@@ -1,4 +1,4 @@
-# llm-cpp
+# Altea (llm-cpp)
 
 IA locale in C++ che gira interamente sul tuo computer: chat da terminale e interfaccia web, basate su [llama.cpp](https://github.com/ggml-org/llama.cpp) e modelli Qwen3 in formato GGUF.
 
