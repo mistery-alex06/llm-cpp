@@ -26,6 +26,7 @@ fi
 # -ngl 0     : CPU only (evita contese GPU/Metal su questo Mac Intel/8GB RAM)
 # -c 2048    : contesto ridotto per limitare l'uso di RAM
 # -t 4       : usa tutti e 4 i core disponibili
+# --reasoning off : thinking disattivato di default (risposte molto più rapide)
 # --host 127.0.0.1 --port 8080 : accessibile solo in locale
 echo "Avvio server su http://127.0.0.1:8080 (Ctrl+C per fermare)"
-"$BIN" --models-dir "$DIR" --models-max 1 -ngl 0 -c 2048 -t 4 --host 127.0.0.1 --port 8080 "$@"
+"$BIN" --models-dir "$DIR" --models-max 1 -ngl 0 -c 2048 -t 4 --reasoning off --reasoning-budget 0 --host 127.0.0.1 --port 8080 "$@"
