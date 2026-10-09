@@ -25,6 +25,7 @@ Sviluppata e testata su Mac Intel, 8 GB di RAM, solo CPU.
 - **Tre modelli** selezionabili dalla UI: Qwen3-4B (più capace), Qwen3-1.7B (più veloce) e Qwen2.5-Omni-3B (multimodale).
 - **Immagini e audio** in ingresso con Qwen2.5-Omni-3B.
 - **Memoria persistente**: ricorda da sola i fatti personali duraturi che le dici e li usa nelle chat successive.
+- **Lettura ad alta voce** delle risposte con un pulsante.
 - **Ragionamento** attivabile dal menu per tutti i modelli (spento di default per risposte più rapide).
 - **Avvio con un clic** su macOS: `Altea.app`.
 - Due modi d'uso:
@@ -153,6 +154,10 @@ La memoria è salvata nel browser (`localStorage`): cancellando i dati del sito 
 - Su Qwen3 è il ragionamento nativo, mostrato in un riquadro separato (`<think>`).
 - Su Qwen2.5-Omni, che non lo supporta nativamente, viene chiesto ad Altea nel prompt di ragionare passo per passo: il ragionamento compare nel testo della risposta.
 - `/no_think` all'inizio del messaggio forza la risposta immediata sui Qwen3.
+
+### Lettura ad alta voce
+
+Quando una risposta è completa, sotto il messaggio compare un pulsante **microfono**: premilo per far leggere la risposta ad Altea, premilo di nuovo (ora è un quadrato) per interrompere. Usa le voci italiane installate su macOS tramite il browser, quindi funziona offline. Altea sceglie una voce femminile (Federica, Emma, Paola, Alice...), preferendo la versione *Premium* o *Enhanced* se installata: puoi scaricarle da Impostazioni di Sistema > Accessibilità > Contenuto letto > Voce di sistema > Gestisci voci. Markdown, codice e link non vengono letti.
 
 ### Immagini e audio
 

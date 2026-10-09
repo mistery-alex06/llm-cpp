@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { alteaVoice } from '$lib/utils/altea-voice.svelte';
 	import {
 		ChatMessageAgenticContent,
 		ChatMessageActionIcons,
@@ -212,6 +213,10 @@
 			{showDeleteDialog}
 			{deletionInfo}
 			{onCopy}
+			onSpeak={isActivelyProcessing || !alteaVoice.supported || !message.content?.trim()
+				? undefined
+				: () => alteaVoice.toggle(message.id, message.content)}
+			isSpeaking={alteaVoice.speakingId === message.id}
 			{onEdit}
 			{onRegenerate}
 			onContinue={currentConfig.enableContinueGeneration ? onContinue : undefined}
