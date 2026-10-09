@@ -24,3 +24,4 @@ llama.cpp/tools/ui/.svelte-kit/
 
 # Modelli LLM pesanti (superano il limite di 100MB di GitHub)
 /*.gguf
+/Qwen*/

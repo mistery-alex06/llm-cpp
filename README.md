@@ -23,7 +23,7 @@ Sviluppata e testata su Mac Intel, 8 GB di RAM, solo CPU.
   - **Interfaccia web** su `http://127.0.0.1:8080`, con cronologia delle conversazioni, impostazioni, selettore modello e tema personalizzato blu-oro.
   - **Chat da terminale**, con il programma `./llm` oppure con `run_qwen.sh`.
 - Supporta il ragionamento di Qwen3 (blocchi `<think>`). Scrivendo `/no_think` all'inizio del messaggio il modello risponde senza ragionare, molto più in fretta.
-- Due modelli selezionabili dalla UI: Qwen3-4B (più capace, più lento) e Qwen3-1.7B (più veloce).
+- Tre modelli selezionabili dalla UI: Qwen3-4B (più capace, più lento), Qwen3-1.7B (più veloce) e Qwen2.5-Omni-3B (multimodale: accetta immagini e audio; scaricalo da huggingface.co/ggml-org/Qwen2.5-Omni-3B-GGUF, file Q4_K_M + mmproj Q8_0, in una cartella `Qwen2.5-Omni-3B/`).
 - Memoria automatica: Altea estrae da sola i fatti personali duraturi dai tuoi messaggi e li ricorda nelle chat successive. Comandi manuali opzionali: `/ricorda <testo>`, `/memoria`, `/dimentica <n|tutto>`. Salvata nel browser.
 
 ## Come funziona
