@@ -24,7 +24,7 @@ Sviluppata e testata su Mac Intel, 8 GB di RAM, solo CPU.
   - **Chat da terminale**, con il programma `./llm` oppure con `run_qwen.sh`.
 - Supporta il ragionamento di Qwen3 (blocchi `<think>`). Scrivendo `/no_think` all'inizio del messaggio il modello risponde senza ragionare, molto più in fretta.
 - Due modelli selezionabili dalla UI: Qwen3-4B (più capace, più lento) e Qwen3-1.7B (più veloce).
-- Memoria persistente: `/ricorda <testo>` salva un fatto, `/memoria` li elenca, `/dimentica <n|tutto>` li cancella. Salvata nel browser e inviata ad Altea in ogni chat.
+- Memoria automatica: Altea estrae da sola i fatti personali duraturi dai tuoi messaggi e li ricorda nelle chat successive. Comandi manuali opzionali: `/ricorda <testo>`, `/memoria`, `/dimentica <n|tutto>`. Salvata nel browser.
 
 ## Come funziona
 

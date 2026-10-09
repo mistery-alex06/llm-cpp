@@ -14,7 +14,12 @@
 import { SvelteMap, SvelteSet } from 'svelte/reactivity';
 import { DatabaseService } from '$lib/services/database.service';
 import { ChatService } from '$lib/services/chat.service';
-import { handleMemoryCommand } from '$lib/utils/altea-memory';
+import {
+	handleMemoryCommand,
+	looksPersonal,
+	EXTRACT_PROMPT,
+	addExtractedFacts
+} from '$lib/utils/altea-memory';
 import { STREAM_RESUME_RETRY_MS } from '$lib/constants/api-endpoints';
 import { streamIdentity } from '$lib/utils/stream-identity';
 import { getAuthHeaders } from '$lib/utils/api-headers';
@@ -1084,7 +1089,9 @@ class ChatStore {
 			await this.streamChatCompletion(
 				conversationsStore.activeMessages.slice(0, -1),
 				assistantMessage,
-				undefined,
+				async () => {
+					void this.autoRemember(content);
+				},
 				undefined,
 				undefined,
 				config().titleGenerationUseLLM && isNewConversation ? content : undefined
@@ -1533,6 +1540,28 @@ class ChatStore {
 		this.clearChatStreaming(convId);
 		this.setProcessingState(convId, null);
 		this.clearPendingMessage(convId);
+	}
+
+	private async autoRemember(userContent: string): Promise<void> {
+		if (!looksPersonal(userContent)) return;
+		const model = isRouterMode() && selectedModelName() ? selectedModelName() : undefined;
+		let out = '';
+		try {
+			await ChatService.sendMessage(
+				[{ role: MessageRole.USER, content: EXTRACT_PROMPT(userContent.slice(0, 800)) }],
+				{
+					model: model || undefined,
+					stream: true,
+					custom: { chat_template_kwargs: { enable_thinking: false }, max_tokens: 120 },
+					onChunk: (c: string) => {
+						out += c;
+					}
+				}
+			);
+		} catch {
+			return;
+		}
+		addExtractedFacts(out);
 	}
 
 	private async generateTitleWithLLM(

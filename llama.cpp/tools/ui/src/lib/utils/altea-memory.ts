@@ -12,7 +12,7 @@ export function loadMemory(): string[] {
 	}
 }
 
-function saveMemory(items: string[]): void {
+export function saveMemory(items: string[]): void {
 	try {
 		localStorage.setItem(KEY, JSON.stringify(items.slice(-MAX_ITEMS)));
 	} catch {
@@ -66,4 +66,32 @@ export function handleMemoryCommand(text: string): string | null {
 		'/no_think Elenca esattamente, in lista numerata e senza aggiungere altro, ciò che hai in memoria:\n' +
 		items.map((x, i) => `${i + 1}. ${x}`).join('\n')
 	);
+}
+
+// --- Memoria automatica ---
+// Filtro economico: l'estrazione via LLM parte solo se il messaggio sembra contenere info personali.
+const PERSONAL_RE =
+	/\b(mi chiamo|il mio nome|sono (un|una|uno|di|nato|nata|studente)|ho \d+ anni|ho (un|una|due|tre)|mi piace|mi piacciono|non mi piace|preferisco|adoro|odio|studio|lavoro|vivo|abito|uso|il mio|la mia|i miei|le mie|sto (facendo|costruendo|imparando)|ricordati|ricorda che|d'ora in poi|sempre)\b/i;
+
+export function looksPersonal(text: string): boolean {
+	const t = text.trim();
+	return t.length >= 12 && !t.startsWith('/') && PERSONAL_RE.test(t);
+}
+
+export const EXTRACT_PROMPT = (msg: string) =>
+	`/no_think Dal seguente messaggio di un utente estrai SOLO fatti personali duraturi su di lui (nome, studi, lavoro, progetti, preferenze, abitudini, istruzioni su come rispondergli). Scrivi ogni fatto come frase breve e autonoma, una per riga, senza elenchi o numeri. Ignora domande, richieste temporanee e informazioni generiche. Se non c'è nessun fatto duraturo rispondi solo: NESSUNO\n\nEsempio\nMessaggio: "Mi chiamo Marco, studio medicina e mi piace il tennis. Cos'è un integrale?"\nFatti:\nL'utente si chiama Marco.\nL'utente studia medicina.\nL'utente ama il tennis.\n\nEsempio\nMessaggio: "Che tempo fa a Roma?"\nFatti:\nNESSUNO\n\nOra tocca a te.\nMessaggio: "${msg}"\nFatti:`;
+
+export function addExtractedFacts(raw: string): void {
+	const items = loadMemory();
+	const norm = (x: string) => x.toLowerCase().replace(/[^a-z0-9àèéìòù ]/g, '').trim();
+	let changed = false;
+	for (let line of raw.split('\n')) {
+		line = line.replace(/^[-*•\d.)\s]+/, '').trim();
+		if (line.length < 5 || line.length > 200 || /^nessun/i.test(line) || /non indicat|non specificat|n\/a/i.test(line) || /<think>/i.test(line))
+			continue;
+		if (items.some((x) => norm(x) === norm(line))) continue;
+		items.push(line);
+		changed = true;
+	}
+	if (changed) saveMemory(items);
 }
