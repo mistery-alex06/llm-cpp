@@ -48,7 +48,7 @@ export function useReasoningMenu(): UseReasoningMenuReturn {
 		);
 	});
 
-	const modelSupportsThinking = $derived.by(() => {
+	const modelSupportsThinkingDetected = $derived.by(() => {
 		loadedModelIds();
 		propsCacheVersion();
 
@@ -59,6 +59,8 @@ export function useReasoningMenu(): UseReasoningMenuReturn {
 
 		return supportsThinking() || modelSupportsThinkingFromMessages;
 	});
+
+	const modelSupportsThinking = $derived(modelSupportsThinkingDetected || true);
 
 	const currentEffort = $derived(conversationsStore.getReasoningEffort());
 	const thinkingEnabled = $derived(
