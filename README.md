@@ -1,6 +1,6 @@
 # Altea (llm-cpp)
 
-IA locale in C++ che gira interamente sul tuo computer: chat da terminale e interfaccia web, basate su [llama.cpp](https://github.com/ggml-org/llama.cpp) e modelli Qwen3 in formato GGUF.
+Altea è un'IA locale in C++ che gira interamente sul tuo computer: chat da terminale e interfaccia web, basate su [llama.cpp](https://github.com/ggml-org/llama.cpp) e modelli Qwen in formato GGUF.
 
 Sviluppata e testata su Mac Intel, 8 GB di RAM, solo CPU.
 
@@ -11,35 +11,42 @@ Sviluppata e testata su Mac Intel, 8 GB di RAM, solo CPU.
 3. [Requisiti](#requisiti)
 4. [Installazione](#installazione)
 5. [Avvio](#avvio)
-6. [Scelta del modello](#scelta-del-modello)
-7. [Prestazioni su poca RAM](#prestazioni-su-poca-ram)
-8. [Struttura della cartella](#struttura-della-cartella)
-9. [Roadmap](#roadmap)
+6. [Uso di Altea](#uso-di-altea)
+7. [Scelta del modello](#scelta-del-modello)
+8. [Prestazioni su poca RAM](#prestazioni-su-poca-ram)
+9. [Personalizzare Altea](#personalizzare-altea)
+10. [Struttura della cartella](#struttura-della-cartella)
+11. [Roadmap](#roadmap)
 
 ## Cosa fa
 
 - Risponde alle domande in locale: nessun dato lascia il computer e non serve internet (dopo il download dei modelli).
+- Parla **italiano** e si esprime **al femminile** (è "Altea").
+- **Tre modelli** selezionabili dalla UI: Qwen3-4B (più capace), Qwen3-1.7B (più veloce) e Qwen2.5-Omni-3B (multimodale).
+- **Immagini e audio** in ingresso con Qwen2.5-Omni-3B.
+- **Memoria persistente**: ricorda da sola i fatti personali duraturi che le dici e li usa nelle chat successive.
+- **Ragionamento** attivabile dal menu per tutti i modelli (spento di default per risposte più rapide).
+- **Avvio con un clic** su macOS: `Altea.app`.
 - Due modi d'uso:
   - **Interfaccia web** su `http://127.0.0.1:8080`, con cronologia delle conversazioni, impostazioni, selettore modello e tema personalizzato blu-oro.
   - **Chat da terminale**, con il programma `./llm` oppure con `run_qwen.sh`.
-- Supporta il ragionamento di Qwen3 (blocchi `<think>`). Scrivendo `/no_think` all'inizio del messaggio il modello risponde senza ragionare, molto più in fretta.
-- Tre modelli selezionabili dalla UI: Qwen3-4B (più capace, più lento), Qwen3-1.7B (più veloce) e Qwen2.5-Omni-3B (multimodale: accetta immagini e audio; scaricalo da huggingface.co/ggml-org/Qwen2.5-Omni-3B-GGUF, file Q4_K_M + mmproj Q8_0, in una cartella `Qwen2.5-Omni-3B/`).
-- Memoria automatica: Altea estrae da sola i fatti personali duraturi dai tuoi messaggi e li ricorda nelle chat successive. Comandi manuali opzionali: `/ricorda <testo>`, `/memoria`, `/dimentica <n|tutto>`. Salvata nel browser.
 
 ## Come funziona
 
 ```
-main.cpp  ──────────────►  libllama / libggml  ◄──── llama-server ◄──── browser
+main.cpp  ──────────────►  libllama / libggml  ◄──── llama-server ◄──── browser / Altea.app
 (chat da terminale)         (motore llama.cpp)       (API + Web UI)      127.0.0.1:8080
                                    │
                                    ▼
-                          modelli .gguf (Qwen3)
+                    modelli .gguf (Qwen3, Qwen2.5-Omni)
 ```
 
 - **`main.cpp`**: programma C++ che si collega direttamente alle librerie `libllama` e `libggml`. Carica il modello, applica il chat template, genera le risposte token per token e le mostra in streaming.
 - **`llama.cpp/`**: copia completa del progetto llama.cpp inclusa nella repo. Fornisce il motore di inferenza e `llama-server`.
-- **`llama-server`**: server locale con API compatibile OpenAI (`/v1/chat/completions`) e interfaccia web incorporata. Parte in *router mode*: legge tutti i `.gguf` presenti nella cartella e carica il modello scelto quando serve. Ne tiene in memoria uno alla volta.
-- **Interfaccia web**: la UI di llama.cpp (SvelteKit, in `llama.cpp/tools/ui/`) con tema personalizzato in `src/app.css` e sfondo `static/bg-ship.jpg`. I file della UI vengono incorporati nel binario `llama-server` in fase di compilazione.
+- **`llama-server`**: server locale con API compatibile OpenAI (`/v1/chat/completions`) e interfaccia web incorporata. Parte in *router mode*: legge tutti i `.gguf` presenti nella cartella (e nelle sottocartelle con modello + `mmproj`) e carica il modello scelto quando serve. Ne tiene in memoria uno alla volta.
+- **Interfaccia web**: la UI di llama.cpp (SvelteKit, in `llama.cpp/tools/ui/`), personalizzata: tema in `src/app.css`, sfondo `static/bg-ship.jpg`, testi in italiano, nome Altea. I file della UI vengono incorporati nel binario `llama-server` in fase di compilazione.
+- **Memoria** (`llama.cpp/tools/ui/src/lib/utils/altea-memory.ts`): i fatti sono salvati nel `localStorage` del browser e aggiunti al system prompt di ogni richiesta, insieme all'identità di Altea (italiano, femminile). Dopo ogni risposta, se il messaggio sembra contenere informazioni personali, il modello stesso estrae i fatti duraturi da salvare.
+- **`Altea.app`**: generata da `make_app.sh`. Avvia il server, apre una finestra Chrome dedicata e spegne il server quando la finestra viene chiusa.
 - **`src/` e `include/`**: tokenizer, matrici e transformer scritti da zero (progetto iniziale). Non vengono più usati per l'inferenza.
 - **`web/index.html`**: prima pagina web sperimentale, non usata dal server attuale.
 
@@ -51,7 +58,8 @@ main.cpp  ──────────────►  libllama / libggml  ◄
 | Compilatore C++17 (`g++`/`clang++`) | compilare `main.cpp` |
 | CMake | compilare llama.cpp |
 | Node.js e npm | compilare la UI web |
-| ~2,5 GB di spazio per il modello 4B (~1,1 GB per l'1.7B) | pesi dei modelli |
+| Google Chrome | finestra di `Altea.app` (il resto funziona con qualsiasi browser) |
+| ~2,5 GB per il 4B, ~1,1 GB per l'1.7B, ~3,6 GB per Omni-3B | pesi dei modelli |
 
 ## Installazione
 
@@ -66,10 +74,15 @@ cmake --build build --config Release -j4
 cd ..
 ```
 
-**2. Scarica i modelli** e mettili nella cartella `llm/` (non sono inclusi nella repo, per il limite di 100 MB di GitHub):
+**2. Scarica i modelli.** Non sono inclusi nella repo (limite di 100 MB di GitHub, e sono esclusi da `.gitignore`).
 
-- [Qwen3-4B-Q4_K_M.gguf](https://huggingface.co/unsloth/Qwen3-4B-GGUF/tree/main)
-- [Qwen3-1.7B-Q4_K_M.gguf](https://huggingface.co/unsloth/Qwen3-1.7B-GGUF/tree/main)
+| Modello | Download | Dove metterlo |
+|---|---|---|
+| Qwen3-4B | [Qwen3-4B-Q4_K_M.gguf](https://huggingface.co/unsloth/Qwen3-4B-GGUF/tree/main) | `llm/Qwen3-4B-Q4_K_M.gguf` |
+| Qwen3-1.7B | [Qwen3-1.7B-Q4_K_M.gguf](https://huggingface.co/unsloth/Qwen3-1.7B-GGUF/tree/main) | `llm/Qwen3-1.7B-Q4_K_M.gguf` |
+| Qwen2.5-Omni-3B (multimodale) | [ggml-org/Qwen2.5-Omni-3B-GGUF](https://huggingface.co/ggml-org/Qwen2.5-Omni-3B-GGUF/tree/main): servono **due** file, `Qwen2.5-Omni-3B-Q4_K_M.gguf` e `mmproj-Qwen2.5-Omni-3B-Q8_0.gguf` | entrambi nella cartella `llm/Qwen2.5-Omni-3B/` |
+
+Il file `mmproj` è la parte che interpreta immagini e audio: senza di esso Omni accetta solo testo.
 
 **3. (Facoltativo) Compila la chat da terminale `./llm`:**
 
@@ -79,20 +92,35 @@ g++ -std=c++17 -O2 main.cpp -I llama.cpp/include -I llama.cpp/ggml/include \
     -Wl,-rpath,@executable_path/llama.cpp/build/bin -o llm
 ```
 
+**4. (Facoltativo, macOS) Crea l'app con un clic:**
+
+```bash
+bash make_app.sh
+```
+
 ## Avvio
 
 | Cosa vuoi fare | Comando |
 |---|---|
-| **Avvio con un clic (macOS)** | `bash make_app.sh` crea `Altea.app` sul Desktop; doppio clic per avviare, chiudendo la finestra il server si spegne (alla prima apertura accetta i permessi Desktop e Chrome) |
+| **Avvio con un clic (macOS)** | doppio clic su `Altea.app` (sul Desktop, creata da `make_app.sh`) |
 | Avviare l'interfaccia web | `./run_qwen_server.sh` poi apri `http://127.0.0.1:8080` |
+| Avviare con il ragionamento sempre attivo | `./run_qwen_server.sh --reasoning on` |
 | Usare un'altra porta | `./run_qwen_server.sh --port 9090` |
 | Chat da terminale (programma C++) | `./llm` |
 | Chat da terminale con un modello specifico | `./llm /percorso/modello.gguf` |
 | Chat da terminale (llama-cli) | `./run_qwen.sh` |
 | Singola risposta e uscita | `./run_qwen.sh -p "Ciao, chi sei?" -n 60 -st` |
-| Fermare il server | `Ctrl+C` nel terminale, oppure `pkill -f llama-server` |
+| Fermare il server | `Ctrl+C` nel terminale, oppure `pkill -x llama-server` |
 
 `./llm` cerca `Qwen3-4B-Q4_K_M.gguf` nella cartella corrente e in quelle superiori. `run_qwen.sh` usa sempre il 4B.
+
+### Altea.app
+
+- Doppio clic: avvia il server se non è già attivo, aspetta che risponda e apre Altea in una finestra senza barra del browser.
+- Chiudendo la finestra il server si spegne dopo pochi secondi e libera la RAM. Se il server era già stato avviato a mano, non viene spento.
+- Usa il tuo profilo Chrome, quindi chat e memoria sono le stesse del browser.
+- **Prima apertura:** macOS chiede il permesso per la cartella Desktop e per controllare Google Chrome. Vanno accettati; se neghi il secondo, il server non si spegne più da solo.
+- Se sposti la cartella `llm/`, rigenera l'app con `bash make_app.sh`.
 
 ### Ricompilare la UI dopo averla modificata
 
@@ -103,6 +131,33 @@ cd ../../build && cmake --build . --target llama-server -j4
 
 Poi riavvia il server. Se la pagina non cambia, svuota la cache del browser (le risorse hanno cache lunga e c'è un service worker).
 
+## Uso di Altea
+
+### Memoria
+
+Altea ricorda da sola le informazioni personali che le dici (nome, studi, lavoro, preferenze...). Ogni messaggio che sembra contenere dati personali provoca una breve chiamata aggiuntiva al modello, in background, per estrarre i fatti.
+
+| Comando | Effetto |
+|---|---|
+| `/ricorda <testo>` | salva un fatto a mano |
+| `/memoria` | elenca i fatti salvati |
+| `/dimentica <n>` | cancella il fatto numero *n* |
+| `/dimentica tutto` | svuota la memoria |
+
+La memoria è salvata nel browser (`localStorage`): cancellando i dati del sito o cambiando browser si perde. Contiene al massimo 50 voci. Un modello piccolo può estrarre fatti imprecisi: controlla con `/memoria` e correggi con `/dimentica`.
+
+### Ragionamento
+
+- Spento di default (`--reasoning off`), per risposte molto più rapide.
+- Si attiva dal menu **+** → *Ragionamento*, con tutti e tre i modelli.
+- Su Qwen3 è il ragionamento nativo, mostrato in un riquadro separato (`<think>`).
+- Su Qwen2.5-Omni, che non lo supporta nativamente, viene chiesto ad Altea nel prompt di ragionare passo per passo: il ragionamento compare nel testo della risposta.
+- `/no_think` all'inizio del messaggio forza la risposta immediata sui Qwen3.
+
+### Immagini e audio
+
+Seleziona **Qwen2.5-Omni-3B** nel selettore del modello, poi usa **+** → *Aggiungi file*. Con gli altri modelli il caricamento di immagini e audio è disattivato. Il video non è stato testato.
+
 ## Scelta del modello
 
 Nell'interfaccia web il modello attivo è l'etichetta accanto al pulsante di invio, nel riquadro dei messaggi: cliccandola scegli tra i modelli presenti in `llm/`. Qualsiasi `.gguf` aggiunto alla cartella compare nella lista. Il cambio richiede qualche secondo di caricamento.
@@ -111,13 +166,39 @@ Nell'interfaccia web il modello attivo è l'etichetta accanto al pulsante di inv
 |---|---|---|
 | Qwen3-1.7B | ~15 token/s | domande veloci, compiti semplici |
 | Qwen3-4B | ~2-5 token/s | ragionamento e compiti complessi |
+| Qwen2.5-Omni-3B | più lento dell'1.7B; primo caricamento ~1 min | immagini e audio |
 
 ## Prestazioni su poca RAM
 
-Il server parte con `-ngl 0 -c 2048 -t 4`: solo CPU, contesto di 2048 token, 4 thread. È una configurazione prudente per evitare lo swap su un Mac da 8 GB.
+Il server parte con questi parametri (in `run_qwen_server.sh`):
+
+| Parametro | Significato |
+|---|---|
+| `--models-dir . --models-max 1` | router mode, un solo modello in RAM alla volta |
+| `-ngl 0` | solo CPU (evita contese con la GPU su Mac Intel/8 GB) |
+| `-c 2048` | contesto di 2048 token |
+| `-t 4` | 4 thread |
+| `--reasoning off --reasoning-budget 0` | niente ragionamento di default |
+| `--no-mmproj-offload` | il file di visione/audio resta sulla CPU (altrimenti Omni non si carica: cerca 4,3 GB sulla GPU) |
+
+Consigli:
 
 - Chiudi le applicazioni pesanti (browser, IDE) prima di avviare.
-- Per risposte più rapide, usa il modello 1.7B e/o `/no_think` all'inizio del messaggio.
+- Per risposte più rapide usa il modello 1.7B e lascia il ragionamento spento.
+- Se il contesto da 2048 token si riempie (conversazioni lunghe, immagini), apri una nuova chat.
+
+## Personalizzare Altea
+
+| Cosa | Dove |
+|---|---|
+| Identità, lingua e genere di Altea | costante `PERSONA` in `llama.cpp/tools/ui/src/lib/utils/altea-memory.ts` |
+| Logica della memoria | stesso file e `llama.cpp/tools/ui/src/lib/stores/chat.svelte.ts` |
+| Saluto iniziale | `llama.cpp/tools/ui/src/lib/components/app/chat/ChatScreen/ChatScreenGreeting.svelte` |
+| Nome dell'app | `llama.cpp/tools/ui/src/lib/constants/app.ts` |
+| Tema, colori, sfondo | `llama.cpp/tools/ui/src/app.css` e `static/bg-ship.jpg` |
+| Parametri del server | `run_qwen_server.sh` |
+
+Dopo ogni modifica alla UI serve [ricompilare](#ricompilare-la-ui-dopo-averla-modificata) e riavviare il server. Nel `app.css`, per lo sfondo: non aggiungere `position: relative` a `aside` e `[data-slot='input-area']`, altrimenti l'immagine finisce sopra i contenuti.
 
 ## Struttura della cartella
 
@@ -126,11 +207,13 @@ llm/
 ├── main.cpp                chat da terminale collegata a libllama
 ├── run_qwen_server.sh      avvia llama-server (UI web, router mode)
 ├── run_qwen.sh             avvia llama-cli (chat da terminale)
+├── make_app.sh             genera Altea.app sul Desktop
 ├── llama.cpp/              llama.cpp completo (motore, server, UI web)
 ├── src/, include/          tokenizer, matrici, transformer custom (storico)
 ├── web/index.html          prima pagina web sperimentale (non usata)
-├── Qwen3-*.gguf            modelli (non tracciati da git)
-└── sfondo_AI.jpg           immagine originale dello sfondo della UI
+├── Qwen3-*.gguf            modelli Qwen3 (non tracciati da git)
+├── Qwen2.5-Omni-3B/        modello multimodale + mmproj (non tracciato da git)
+└── sfondo_AI.jpg           immagine originale dello sfondo e dell'icona
 ```
 
 ## Roadmap
