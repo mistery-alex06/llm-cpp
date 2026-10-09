@@ -135,6 +135,8 @@ llm/
 
 ## Roadmap
 
+### Completato
+
 - [x] Tokenizer, matrici, forward pass e Softmax custom
 - [x] CLI interattiva
 - [x] Setup llama.cpp con Qwen3-4B (`run_qwen.sh`)
@@ -142,5 +144,25 @@ llm/
 - [x] Personalizzazione della UI (tema blu-oro, contorni, sfondo dedicato)
 - [x] Integrazione nativa con llama.cpp in `main.cpp`
 - [x] Secondo modello e selettore nella UI (router mode)
-- [x] Memoria persistente (`/ricorda`, `/dimentica`, `/memoria` nella UI)
+- [x] Memoria persistente, manuale e automatica
 - [x] App con un clic (`Altea.app`, `make_app.sh`)
+- [x] Identità di Altea: risposte in italiano, al femminile; UI principale tradotta
+- [x] Ragionamento spento di default, attivabile dal menu per tutti i modelli
+- [x] Modello multimodale Qwen2.5-Omni-3B (immagini e audio)
+
+### Prossimi obiettivi
+
+| Priorità | Obiettivo | Note |
+|---|---|---|
+| Alta | Scelta automatica del modello | domande semplici al 1.7B, complesse al 4B |
+| Alta | Documenti locali (RAG) | rispondere su PDF e appunti, con citazione della fonte |
+| Alta | Ricerca web | Altea cerca online e cita le fonti (tool/MCP) |
+| Media | Memoria su file | non legata al browser, condivisa tra browser e backup |
+| Media | Voce | dettatura (speech-to-text) e lettura delle risposte (text-to-speech) |
+| Media | Esporta/importa | chat e memoria in un file di backup |
+| Media | Traduzione completa della UI | Impostazioni e messaggi d'errore inclusi |
+| Media | Analisi video | estrazione di fotogrammi da dare a Omni |
+| Bassa | Azioni sul computer | comandi con conferma esplicita dell'utente |
+| Bassa | Personalizzazione del modello | fine-tuning leggero (LoRA) su stile e conoscenze |
+| Bassa | Benchmark e quantizzazioni | confronto velocità/qualità per ottimizzare su 8 GB di RAM |
+| Bassa | Launcher per Windows/Linux | equivalente di `Altea.app` |
