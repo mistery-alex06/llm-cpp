@@ -164,7 +164,7 @@
 	{/if}
 
 	<div class="flex justify-end gap-2 pt-1">
-		<Button type="button" size="sm" variant="secondary" onclick={onCancel}>Cancel</Button>
+		<Button type="button" size="sm" variant="secondary" onclick={onCancel}>Annulla</Button>
 
 		<Button size="sm" type="submit" disabled={!isComplete}>Read Resource</Button>
 	</div>

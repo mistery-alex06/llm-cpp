@@ -119,7 +119,7 @@
 
 		<ActionIcon
 			icon={Trash2}
-			tooltip="Delete selected"
+			tooltip="Elimina selezionati"
 			tooltipSide={TooltipSide.TOP}
 			disabled={!hasSelection}
 			ariaLabel="Delete selected"
@@ -135,7 +135,7 @@
 
 		<ActionIcon
 			icon={X}
-			tooltip="Exit bulk selection mode"
+			tooltip="Esci dalla selezione multipla"
 			tooltipSide={TooltipSide.TOP}
 			ariaLabel="Exit bulk selection mode"
 			size="sm"

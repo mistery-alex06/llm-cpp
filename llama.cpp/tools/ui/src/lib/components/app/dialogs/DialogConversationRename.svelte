@@ -77,9 +77,9 @@
 		</form>
 
 		<AlertDialog.Footer>
-			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+			<AlertDialog.Cancel>Annulla</AlertDialog.Cancel>
 
-			<Button type="button" onclick={handleSubmit} disabled={!canSubmit}>Save</Button>
+			<Button type="button" onclick={handleSubmit} disabled={!canSubmit}>Salva</Button>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>

@@ -11,7 +11,7 @@
 		icon={ArrowDown}
 		{onclick}
 		ariaLabel="Scroll to bottom"
-		tooltip="Scroll to bottom"
+		tooltip="Vai in fondo"
 		size="lg"
 		iconSize={ICON_CLASS_DEFAULT}
 		class="h-9 w-9 rounded-full bg-accent text-accent-foreground absolute bottom-4 shadow-md"

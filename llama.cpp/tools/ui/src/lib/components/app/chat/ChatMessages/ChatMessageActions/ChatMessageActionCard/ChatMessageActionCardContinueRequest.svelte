@@ -16,7 +16,7 @@
 	{/snippet}
 
 	{#snippet actions()}
-		<Button size="sm" onclick={() => onDecision(true)}>Continue</Button>
+		<Button size="sm" onclick={() => onDecision(true)}>Continua</Button>
 
 		<Button
 			variant="destructive"

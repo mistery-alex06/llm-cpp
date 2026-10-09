@@ -40,7 +40,7 @@
 	<Collapsible.Trigger
 		class="flex w-full cursor-pointer items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
 	>
-		<span>Token usage details</span>
+		<span>Dettagli uso token</span>
 
 		<ChevronDown class={'ml-auto h-3 w-3 transition-transform' + (open ? ' rotate-180' : '')} />
 	</Collapsible.Trigger>
@@ -55,7 +55,7 @@
 				<div class="flex flex-col gap-2">
 					{#if cumulativeRead > 0}
 						<ContextGaugeDetailRow
-							label="Prompt tokens evaluated"
+							label="Token del prompt valutati"
 							value={`${cumulativeRead.toLocaleString()} tok`}
 							subtitle={cumulativeCacheTotal > 0
 								? `${cumulativeCacheTotal.toLocaleString()} reused from KV cache`
@@ -64,7 +64,7 @@
 					{/if}
 					{#if cumulativeOutput > 0}
 						<ContextGaugeDetailRow
-							label="Tokens generated"
+							label="Token generati"
 							value={`${cumulativeOutput.toLocaleString()} tok`}
 						/>
 					{/if}
@@ -91,7 +91,7 @@
 
 					{#if currentOutput > 0}
 						<ContextGaugeDetailRow
-							label="Generated"
+							label="Generati"
 							value={`${currentOutput.toLocaleString()} tok`}
 						/>
 					{/if}

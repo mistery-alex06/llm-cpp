@@ -95,31 +95,31 @@
 		<div
 			class="pointer-events-auto inset-0 flex items-center gap-1 opacity-100 transition-all duration-150"
 		>
-			<ActionIcon icon={Copy} tooltip="Copy" onclick={onCopy} />
+			<ActionIcon icon={Copy} tooltip="Copia" onclick={onCopy} />
 
 			{#if onEdit}
-				<ActionIcon icon={Edit} tooltip="Edit" onclick={onEdit} />
+				<ActionIcon icon={Edit} tooltip="Modifica" onclick={onEdit} />
 			{/if}
 
 			{#if role === MessageRole.ASSISTANT && onRegenerate}
-				<ActionIcon icon={RefreshCw} tooltip="Regenerate" onclick={() => onRegenerate()} />
+				<ActionIcon icon={RefreshCw} tooltip="Rigenera" onclick={() => onRegenerate()} />
 			{/if}
 
 			{#if role === MessageRole.ASSISTANT && onContinue}
-				<ActionIcon icon={ArrowRight} tooltip="Continue" onclick={onContinue} />
+				<ActionIcon icon={ArrowRight} tooltip="Continua" onclick={onContinue} />
 			{/if}
 
 			{#if onForkConversation}
 				<ActionIcon icon={GitBranch} tooltip="Fork conversation" onclick={handleOpenForkDialog} />
 			{/if}
 
-			<ActionIcon icon={Trash2} tooltip="Delete" onclick={onDelete} />
+			<ActionIcon icon={Trash2} tooltip="Elimina" onclick={onDelete} />
 		</div>
 	</div>
 
 	{#if showRawOutputSwitch}
 		<div class="flex items-center gap-2">
-			<span class="text-xs text-muted-foreground">Show raw output</span>
+			<span class="text-xs text-muted-foreground">Mostra output grezzo</span>
 			<Switch
 				checked={rawOutputEnabled}
 				onCheckedChange={(checked) => onRawOutputToggle?.(checked)}
@@ -130,7 +130,7 @@
 
 <DialogConfirmation
 	bind:open={showDeleteDialog}
-	title="Delete Message"
+	title="Elimina messaggio"
 	description={deletionInfo && deletionInfo.totalCount > 1
 		? `This will delete ${deletionInfo.totalCount} messages including: ${deletionInfo.userMessages} user message${deletionInfo.userMessages > 1 ? 's' : ''} and ${deletionInfo.assistantMessages} assistant response${deletionInfo.assistantMessages > 1 ? 's' : ''}. All messages in this branch and their responses will be permanently removed. This action cannot be undone.`
 		: 'Are you sure you want to delete this message? This action cannot be undone.'}
@@ -146,7 +146,7 @@
 
 <DialogConfirmation
 	bind:open={showForkDialog}
-	title="Fork Conversation"
+	title="Duplica conversazione"
 	description="Create a new conversation branching from this message."
 	confirmText="Fork"
 	cancelText="Cancel"
@@ -156,12 +156,12 @@
 >
 	<div class="flex flex-col gap-4 py-2">
 		<div class="flex flex-col gap-2">
-			<Label for="fork-name">Title</Label>
+			<Label for="fork-name">Titolo</Label>
 
 			<Input
 				id="fork-name"
 				class="text-foreground"
-				placeholder="Enter fork name"
+				placeholder="Nome del ramo"
 				type="text"
 				bind:value={forkName}
 			/>

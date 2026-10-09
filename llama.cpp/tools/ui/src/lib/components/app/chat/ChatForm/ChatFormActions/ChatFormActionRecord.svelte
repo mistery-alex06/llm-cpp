@@ -46,7 +46,7 @@
 
 		{#if !hasAudioModality}
 			<Tooltip.Content>
-				<p>Current model does not support audio</p>
+				<p>Il modello attuale non supporta l'audio</p>
 			</Tooltip.Content>
 		{/if}
 	</Tooltip.Root>

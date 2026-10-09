@@ -55,7 +55,7 @@
 			</Tooltip.Trigger>
 
 			<Tooltip.Content>
-				<p>MCP Servers</p>
+				<p>Server MCP</p>
 			</Tooltip.Content>
 		</Tooltip.Root>
 	</button>

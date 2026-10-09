@@ -96,7 +96,7 @@
 			bind:ref={searchInputRef}
 			onClose={handleSearchModeDeactivate}
 			onKeyDown={(e) => e.key === 'Escape' && handleSearchModeDeactivate()}
-			placeholder="Search conversations..."
+			placeholder="Cerca conversazioni..."
 		/>
 	</div>
 {:else if isExpandedMode || isOnMobile}

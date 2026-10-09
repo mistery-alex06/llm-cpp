@@ -66,7 +66,7 @@
 				{/if}
 			</div>
 		{:else}
-			<div class="rounded bg-muted/20 p-2 text-xs text-muted-foreground/70 italic">No edits</div>
+			<div class="rounded bg-muted/20 p-2 text-xs text-muted-foreground/70 italic">Nessuna modifica</div>
 		{/if}
 	{/snippet}
 </ToolCallBlock>

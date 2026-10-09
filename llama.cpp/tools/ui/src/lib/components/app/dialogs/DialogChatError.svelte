@@ -74,7 +74,7 @@
 		</div>
 
 		<AlertDialog.Footer>
-			<AlertDialog.Action onclick={() => handleOpenChange(false)}>Close</AlertDialog.Action>
+			<AlertDialog.Action onclick={() => handleOpenChange(false)}>Chiudi</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>

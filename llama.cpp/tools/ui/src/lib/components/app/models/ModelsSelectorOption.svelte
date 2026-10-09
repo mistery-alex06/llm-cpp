@@ -94,7 +94,7 @@
 				<ActionIcon
 					iconSize="h-2.5 w-2.5"
 					icon={HeartOff}
-					tooltip="Remove from favorites"
+					tooltip="Rimuovi dai preferiti"
 					class="h-3 w-3 hover:text-foreground"
 					onclick={() => modelsStore.toggleFavorite(option.model)}
 				/>
@@ -102,7 +102,7 @@
 				<ActionIcon
 					iconSize="h-2.5 w-2.5"
 					icon={Heart}
-					tooltip="Add to favorites"
+					tooltip="Aggiungi ai preferiti"
 					class="h-3 w-3 hover:text-foreground"
 					onclick={() => modelsStore.toggleFavorite(option.model)}
 				/>
@@ -113,7 +113,7 @@
 				<ActionIcon
 					iconSize="h-2.5 w-2.5"
 					icon={Info}
-					tooltip="Model information"
+					tooltip="Informazioni sul modello"
 					class="h-3 w-3 hover:text-foreground"
 					onclick={() => onInfoClick(option.model)}
 				/>
@@ -134,7 +134,7 @@
 					<ActionIcon
 						iconSize="h-2.5 w-2.5"
 						icon={RotateCw}
-						tooltip="Retry loading model"
+						tooltip="Riprova a caricare il modello"
 						class="h-3 w-3 text-red-500 hover:text-foreground"
 						onclick={() => modelsStore.loadModel(option.model)}
 						stopPropagationOnClick
@@ -151,7 +151,7 @@
 					<ActionIcon
 						iconSize="h-2.5 w-2.5"
 						icon={PowerOff}
-						tooltip="Unload model"
+						tooltip="Scarica modello"
 						class="h-3 w-3 text-red-500 hover:text-red-600 [@media(pointer:coarse)]:text-amber-500 [@media(pointer:coarse)]:hover:text-amber-600"
 						onclick={(e) => {
 							e?.stopPropagation();
@@ -170,7 +170,7 @@
 					<ActionIcon
 						iconSize="h-2.5 w-2.5"
 						icon={PowerOff}
-						tooltip="Unload model"
+						tooltip="Scarica modello"
 						class="h-3 w-3 text-red-500 hover:text-red-600 [@media(pointer:coarse)]:text-green-500 [@media(pointer:coarse)]:hover:text-green-600"
 						onclick={() => modelsStore.unloadModel(option.model)}
 						stopPropagationOnClick
@@ -187,7 +187,7 @@
 					<ActionIcon
 						iconSize="h-2.5 w-2.5"
 						icon={Power}
-						tooltip="Load model"
+						tooltip="Carica modello"
 						class="h-3 w-3 [@media(pointer:coarse)]:text-muted-foreground"
 						onclick={() => modelsStore.loadModel(option.model)}
 						stopPropagationOnClick

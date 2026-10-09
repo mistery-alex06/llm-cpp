@@ -63,13 +63,13 @@
 		<DropdownMenu.SubTrigger class="flex cursor-pointer items-center gap-2">
 			<McpLogo class={ICON_CLASS_DEFAULT} />
 
-			<span>MCP Servers</span>
+			<span>Server MCP</span>
 		</DropdownMenu.SubTrigger>
 
 		<DropdownMenu.SubContent class="w-72 pt-0">
 			{#if hasMcpServers}
 				<DropdownMenuSearchable
-					placeholder="Search servers..."
+					placeholder="Cerca server..."
 					bind:searchValue={mcpSearchQuery}
 					emptyMessage="No servers found"
 					isEmpty={filteredMcpServers.length === 0}
@@ -126,7 +126,7 @@
 						>
 							<Settings class={ICON_CLASS_DEFAULT} />
 
-							<span>Manage MCP Servers</span>
+							<span>Gestisci server MCP</span>
 						</DropdownMenu.Item>
 					{/snippet}
 				</DropdownMenuSearchable>
@@ -143,7 +143,7 @@
 				>
 					<Plus class={ICON_CLASS_DEFAULT} />
 
-					<span>Add MCP Servers</span>
+					<span>Aggiungi server MCP</span>
 				</DropdownMenu.Item>
 			{/if}
 		</DropdownMenu.SubContent>

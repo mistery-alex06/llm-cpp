@@ -28,7 +28,7 @@
 	>
 		<ActionIcon
 			icon={ChevronLeft}
-			tooltip="Previous version"
+			tooltip="Versione precedente"
 			disabled={!hasPrevious}
 			class="h-5 w-5 p-0 {!hasPrevious ? '!cursor-not-allowed opacity-30' : ''}"
 			onclick={() => onNavigateToSibling?.(previousSiblingId!)}
@@ -40,7 +40,7 @@
 
 		<ActionIcon
 			icon={ChevronRight}
-			tooltip="Next version"
+			tooltip="Versione successiva"
 			disabled={!hasNext}
 			class="h-5 w-5 p-0 {!hasNext ? 'opacity-30' : ''}"
 			onclick={() => onNavigateToSibling?.(nextSiblingId!)}

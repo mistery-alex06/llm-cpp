@@ -46,21 +46,21 @@
 {/snippet}
 
 {#if groups.loaded.length > 0}
-	<p class={sectionHeaderClass}>Loaded models</p>
+	<p class={sectionHeaderClass}>Modelli caricati</p>
 	{#each groups.loaded as item (`loaded-${item.option.id}`)}
 		{@render render(item, false)}
 	{/each}
 {/if}
 
 {#if groups.favorites.length > 0}
-	<p class={sectionHeaderClass}>Favorite models</p>
+	<p class={sectionHeaderClass}>Modelli preferiti</p>
 	{#each groups.favorites as item (`fav-${item.option.id}`)}
 		{@render render(item, true)}
 	{/each}
 {/if}
 
 {#if groups.available.length > 0}
-	<p class={sectionHeaderClass}>Available models</p>
+	<p class={sectionHeaderClass}>Modelli disponibili</p>
 	{#each groups.available as group (group.orgName)}
 		{#if group.orgName}
 			<p class={orgHeaderClass}>{group.orgName}</p>

@@ -19,7 +19,7 @@
 				Your browser does not support the video element.
 			</video>
 		{:else}
-			<p class="mb-4 text-white/70">Video preview not available</p>
+			<p class="mb-4 text-white/70">Anteprima video non disponibile</p>
 		{/if}
 
 		<p class="text-sm text-white/50">{currentItem?.name || 'Video'}</p>

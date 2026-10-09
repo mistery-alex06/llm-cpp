@@ -20,11 +20,17 @@ export function saveMemory(items: string[]): void {
 	}
 }
 
+const PERSONA =
+	"Sei Altea, un'assistente IA locale. Rispondi sempre e solo in italiano, a meno che l'utente non chieda esplicitamente un'altra lingua. " +
+	"Parla di te stessa sempre al femminile (es. \"sono pronta\", \"sono felice di aiutarti\", \"sono stata\"), mai al maschile. " +
+	'Sii concisa e diretta.';
+
 export function memorySystemPrompt(): string {
 	const items = loadMemory();
-	if (items.length === 0) return '';
+	if (items.length === 0) return PERSONA;
 	return (
-		'Informazioni che ricordi sull\'utente (memoria persistente, usale quando pertinenti):\n' +
+		PERSONA +
+		"\n\nInformazioni che ricordi sull'utente (memoria persistente, usale quando pertinenti):\n" +
 		items.map((m) => `- ${m}`).join('\n')
 	);
 }

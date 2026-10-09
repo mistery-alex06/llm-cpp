@@ -117,7 +117,7 @@
 				<DropdownMenu.SubTrigger class="flex cursor-pointer items-center gap-2">
 					<File class={ICON_CLASS_DEFAULT} />
 
-					<span>Add files</span>
+					<span>Aggiungi file</span>
 				</DropdownMenu.SubTrigger>
 
 				<DropdownMenu.SubContent class="w-48">
@@ -167,7 +167,7 @@
 			>
 				<MessageSquare class={ICON_CLASS_DEFAULT} />
 
-				<span>System Message</span>
+				<span>Messaggio di sistema</span>
 			</DropdownMenu.Item>
 
 			<ChatFormActionAddToolsSubmenu />
@@ -183,7 +183,7 @@
 				>
 					<Zap class={ICON_CLASS_DEFAULT} />
 
-					<span>MCP Prompt</span>
+					<span>Prompt MCP</span>
 				</DropdownMenu.Item>
 			{/if}
 
@@ -194,7 +194,7 @@
 				>
 					<FolderOpen class={ICON_CLASS_DEFAULT} />
 
-					<span>MCP Resources</span>
+					<span>Risorse MCP</span>
 				</DropdownMenu.Item>
 			{/if}
 		</DropdownMenu.Content>

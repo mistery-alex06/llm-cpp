@@ -67,7 +67,7 @@
 		</div>
 
 		<AlertDialog.Footer>
-			<AlertDialog.Cancel onclick={onCancel}>Cancel</AlertDialog.Cancel>
+			<AlertDialog.Cancel onclick={onCancel}>Annulla</AlertDialog.Cancel>
 
 			<AlertDialog.Action
 				onclick={onConfirm}

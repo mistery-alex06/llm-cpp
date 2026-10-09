@@ -52,7 +52,7 @@
 				Total matches: <span class="font-mono">{meta.totalMatches ?? meta.matches.length}</span>
 			</div>
 		{:else}
-			<div class="text-xs text-muted-foreground/70 italic">No matches</div>
+			<div class="text-xs text-muted-foreground/70 italic">Nessun risultato</div>
 			<div class="mt-1.5 text-xs text-muted-foreground/70 italic">
 				Total matches: <span class="font-mono">{meta?.totalMatches ?? 0}</span>
 			</div>

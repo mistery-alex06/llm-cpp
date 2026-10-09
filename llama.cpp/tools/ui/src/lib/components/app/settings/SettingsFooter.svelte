@@ -52,7 +52,7 @@
 			</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
-			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+			<AlertDialog.Cancel>Annulla</AlertDialog.Cancel>
 			<AlertDialog.Action onclick={handleConfirmReset}>Reset to Default</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>

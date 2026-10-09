@@ -143,7 +143,7 @@
 
 <DialogConfirmation
 	bind:open={showDiscardDialog}
-	title="Discard changes?"
+	title="Scartare le modifiche?"
 	description="You have unsaved changes. Are you sure you want to discard them?"
 	confirmText="Discard"
 	cancelText="Keep editing"

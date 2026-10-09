@@ -112,7 +112,7 @@
 				<Package class="h-3.5 w-3.5 shrink-0" />
 			</span>
 		{:else}
-			<p class="text-xs text-muted-foreground">No models available.</p>
+			<p class="text-xs text-muted-foreground">Nessun modello disponibile.</p>
 		{/if}
 	{:else}
 		{@const selectedOption = ms.getDisplayOption()}
@@ -160,7 +160,7 @@
 										hideQuantization
 									/>
 								{:else}
-									<span class="min-w-0 font-medium">Select model</span>
+									<span class="min-w-0 font-medium">Seleziona modello</span>
 								{/if}
 
 								{#if ms.updating || ms.isLoadingModel}
@@ -190,7 +190,7 @@
 					<DropdownMenuSearchable
 						searchValue={ms.searchTerm}
 						onSearchChange={(v) => ms.setSearchTerm(v)}
-						placeholder="Search models..."
+						placeholder="Cerca modelli..."
 						onSearchKeyDown={handleSearchKeyDown}
 						emptyMessage="No models found."
 						isEmpty={ms.filteredOptions.length === 0 && ms.isCurrentModelInCache}
@@ -213,7 +213,7 @@
 							{/if}
 
 							{#if ms.filteredOptions.length === 0}
-								<p class="px-4 py-3 text-sm text-muted-foreground">No models found.</p>
+								<p class="px-4 py-3 text-sm text-muted-foreground">Nessun modello trovato.</p>
 							{/if}
 
 							{#snippet modelOption(item: ModelItem, hideOrgName: boolean)}

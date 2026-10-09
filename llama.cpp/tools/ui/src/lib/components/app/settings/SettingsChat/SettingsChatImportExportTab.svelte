@@ -253,7 +253,7 @@
 </script>
 
 <div class="space-y-12" in:fade={{ duration: 150 }}>
-	<SettingsGroup title="Conversations">
+	<SettingsGroup title="Conversazioni">
 		<SettingsChatImportExportSection
 			title="Export"
 			description="Download your conversations as a ZIP of JSONL files. This includes all messages, attachments, and conversation history."
@@ -284,7 +284,7 @@
 		/>
 	</SettingsGroup>
 
-	<SettingsGroup title="Settings">
+	<SettingsGroup title="Impostazioni">
 		<SettingsChatImportExportSection
 			title="Export"
 			description="Export your chat settings and preferences as a JSON file."

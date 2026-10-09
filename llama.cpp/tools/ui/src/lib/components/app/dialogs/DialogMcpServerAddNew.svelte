@@ -292,7 +292,7 @@
 					Cancel
 				</Button>
 
-				<Button variant="default" size="sm" type="submit" disabled={!canSave} aria-label="Save">
+				<Button variant="default" size="sm" type="submit" disabled={!canSave} aria-label="Salva">
 					Add
 				</Button>
 			</Dialog.Footer>

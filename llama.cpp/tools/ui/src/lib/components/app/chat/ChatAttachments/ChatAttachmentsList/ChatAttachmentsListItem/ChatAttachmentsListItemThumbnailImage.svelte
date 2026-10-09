@@ -58,7 +58,7 @@
 				icon={X}
 				onclick={() => onRemove?.(id)}
 				stopPropagationOnClick
-				tooltip="Remove"
+				tooltip="Rimuovi"
 			/>
 		</div>
 	{/if}

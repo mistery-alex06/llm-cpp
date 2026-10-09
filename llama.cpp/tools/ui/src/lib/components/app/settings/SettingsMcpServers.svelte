@@ -71,7 +71,7 @@
 
 <div in:fade={{ duration: 150 }} class="flex min-h-[calc(100dvh-4rem)] flex-col">
 	<div class="fixed top-4.5 right-4 z-50 md:hidden">
-		<ActionIcon icon={X} tooltip="Close" onclick={handleClose} />
+		<ActionIcon icon={X} tooltip="Chiudi" onclick={handleClose} />
 	</div>
 
 	<div
@@ -80,7 +80,7 @@
 		<div class="flex items-center gap-2">
 			<McpLogo class="h-5 w-5 md:h-6 md:w-6" />
 
-			<h1 class="text-lg font-semibold md:text-2xl">MCP Servers</h1>
+			<h1 class="text-lg font-semibold md:text-2xl">Server MCP</h1>
 		</div>
 	</div>
 

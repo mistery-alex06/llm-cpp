@@ -42,7 +42,7 @@
 <div class="text-muted-foreground flex items-center gap-2 py-1.5">
 	<Clock class="text-muted-foreground/60 h-3.5 w-3.5 shrink-0" />
 	{#if showSpinner}
-		<span class="text-foreground/80 text-sm font-medium">Current time</span>
+		<span class="text-foreground/80 text-sm font-medium">Ora attuale</span>
 		<Loader2 class="text-muted-foreground/70 h-3 w-3 animate-spin" />
 	{:else if dateMeta.errorMessage}
 		<span class="text-foreground/80 text-sm font-medium">Current time&nbsp;</span>
@@ -52,6 +52,6 @@
 		<span class="text-foreground/80 text-sm font-medium">Current time is&nbsp;</span>
 		<span class="font-mono text-foreground/90 text-sm">{dateMeta.dateString}</span>
 	{:else}
-		<span class="text-foreground/80 text-sm font-medium">Current time</span>
+		<span class="text-foreground/80 text-sm font-medium">Ora attuale</span>
 	{/if}
 </div>

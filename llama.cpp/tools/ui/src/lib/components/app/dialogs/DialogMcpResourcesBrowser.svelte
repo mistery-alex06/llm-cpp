@@ -262,7 +262,7 @@
 			<Dialog.Title class="flex items-center gap-2">
 				<FolderOpen class="h-5 w-5" />
 
-				<span>MCP Resources</span>
+				<span>Risorse MCP</span>
 
 				{#if totalCount > 0}
 					<span class="text-sm font-normal text-muted-foreground">({totalCount})</span>
@@ -367,7 +367,7 @@
 		</div>
 
 		<Dialog.Footer class="border-t border-border/30 px-6 py-4">
-			<Button variant="outline" onclick={() => handleOpenChange(false)}>Cancel</Button>
+			<Button variant="outline" onclick={() => handleOpenChange(false)}>Annulla</Button>
 
 			{#if hasTemplateResult}
 				<Button onclick={handleAttachTemplateResource} disabled={isAttaching}>

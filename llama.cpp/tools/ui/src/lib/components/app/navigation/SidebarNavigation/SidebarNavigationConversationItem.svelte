@@ -208,7 +208,7 @@
 				</Tooltip.Trigger>
 
 				<Tooltip.Content>
-					<p>See parent conversation</p>
+					<p>Vedi conversazione originale</p>
 				</Tooltip.Content>
 			</Tooltip.Root>
 		{/if}
@@ -222,7 +222,7 @@
 						onkeydown={(e) => e.key === 'Enter' && handleStop(e)}
 						role="button"
 						tabindex="0"
-						aria-label="Stop generation"
+						aria-label="Interrompi generazione"
 					>
 						<Loader2 class="loading-icon h-3.5 w-3.5 animate-spin" />
 
@@ -231,7 +231,7 @@
 				</Tooltip.Trigger>
 
 				<Tooltip.Content>
-					<p>Stop generation</p>
+					<p>Interrompi generazione</p>
 				</Tooltip.Content>
 			</Tooltip.Root>
 		{/if}

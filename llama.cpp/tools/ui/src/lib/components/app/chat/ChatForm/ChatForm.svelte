@@ -73,7 +73,7 @@
 		class: className = '',
 		disabled = false,
 		isLoading = false,
-		placeholder = 'Type a message...',
+		placeholder = 'Scrivi un messaggio...',
 		showMcpPromptButton = false,
 		showAddButton = true,
 		showModelSelector = true,

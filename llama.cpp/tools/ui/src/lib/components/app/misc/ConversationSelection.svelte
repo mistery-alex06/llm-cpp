@@ -86,7 +86,7 @@
 </script>
 
 <div class="space-y-4">
-	<SearchInput bind:value={searchQuery} placeholder="Search conversations..." />
+	<SearchInput bind:value={searchQuery} placeholder="Cerca conversazioni..." />
 
 	<div class="flex items-center justify-between text-sm text-muted-foreground">
 		<span>
@@ -167,7 +167,7 @@
 	</div>
 
 	<div class="flex justify-end gap-2">
-		<Button variant="outline" onclick={handleCancel}>Cancel</Button>
+		<Button variant="outline" onclick={handleCancel}>Annulla</Button>
 
 		<Button onclick={handleConfirm} disabled={selectedIds.size === 0}>
 			{mode === 'export' ? 'Export' : 'Import'} ({selectedIds.size})

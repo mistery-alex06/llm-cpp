@@ -17,7 +17,7 @@
 	<div class="flex items-center gap-2 py-2">
 		<Settings class="h-5 w-5 md:h-6 md:w-6" />
 
-		<h1 class="text-xl font-semibold md:text-2xl">Settings</h1>
+		<h1 class="text-xl font-semibold md:text-2xl">Impostazioni</h1>
 	</div>
 
 	<nav class="space-y-1">

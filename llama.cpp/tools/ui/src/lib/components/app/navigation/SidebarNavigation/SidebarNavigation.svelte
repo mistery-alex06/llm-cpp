@@ -341,7 +341,7 @@
 						iconSize="h-4.5 w-4.5 md:h-4 md:w-4"
 						class="backdrop-blur-none md:h-9 md:w-9 h-10 w-10 rounded-full mr-1 hover:bg-accent!"
 						onclick={toggleExpandedMode}
-						tooltip="Close Sidebar"
+						tooltip="Chiudi barra laterale"
 						tooltipSide={TooltipSide.LEFT}
 						ariaLabel="Collapse navigation"
 					/>

@@ -62,7 +62,7 @@
 					iconSize="h-2 w-2"
 					onclick={() => onRemove?.(attachment.id)}
 					stopPropagationOnClick
-					tooltip="Remove"
+					tooltip="Rimuovi"
 				/>
 			{/if}
 		</button>

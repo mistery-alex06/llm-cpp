@@ -62,7 +62,7 @@
 			Loading models…
 		</div>
 	{:else if ms.options.length === 0 && ms.isRouter}
-		<p class="text-xs text-muted-foreground">No models available.</p>
+		<p class="text-xs text-muted-foreground">Nessun modello disponibile.</p>
 	{:else}
 		{@const selectedOption = ms.getDisplayOption()}
 		{@const triggerModel = selectedOption?.model}
@@ -98,7 +98,7 @@
 				<Package class="h-3.5 w-3.5 shrink-0" />
 
 				{#if !selectedOption}
-					<span class="min-w-0 font-medium">Select model</span>
+					<span class="min-w-0 font-medium">Seleziona modello</span>
 				{:else}
 					<ModelId
 						class="text-xs"
@@ -123,7 +123,7 @@
 			<Sheet.Root bind:open={sheetOpen} onOpenChange={handleSheetOpenChange}>
 				<Sheet.Content side="bottom" class="max-h-[85vh] gap-1">
 					<Sheet.Header>
-						<Sheet.Title>Select Model</Sheet.Title>
+						<Sheet.Title>Seleziona modello</Sheet.Title>
 
 						<Sheet.Description class="sr-only">
 							Choose a model to use for the conversation
@@ -133,7 +133,7 @@
 					<div class="flex flex-col gap-1 pb-4">
 						<div class="mb-3 px-4">
 							<SearchInput
-								placeholder="Search models..."
+								placeholder="Cerca modelli..."
 								value={ms.searchTerm}
 								onInput={(v) => ms.setSearchTerm(v)}
 							/>
@@ -155,7 +155,7 @@
 							{/if}
 
 							{#if ms.filteredOptions.length === 0}
-								<p class="px-3 py-3 text-center text-sm text-muted-foreground">No models found.</p>
+								<p class="px-3 py-3 text-center text-sm text-muted-foreground">Nessun modello trovato.</p>
 							{/if}
 
 							<ModelsSelectorList

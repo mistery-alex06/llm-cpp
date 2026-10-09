@@ -18,7 +18,7 @@
 	<DropdownMenu.SubTrigger class="flex cursor-pointer items-center gap-2">
 		<PencilRuler class={ICON_CLASS_DEFAULT} />
 
-		<span>Tools</span>
+		<span>Strumenti</span>
 	</DropdownMenu.SubTrigger>
 
 	<DropdownMenu.SubContent class="w-72 p-0">
@@ -37,7 +37,7 @@
 						<span>
 							Run llama-server with <code>{CLI_FLAGS.TOOLS}</code> flag to enable
 
-							<strong>Built-in Tools</strong>.
+							<strong>Strumenti integrati</strong>.
 						</span>
 					</span>
 
@@ -47,12 +47,12 @@
 						<span>
 							{hasMcpServersAvailable ? 'Enable' : 'Add'} MCP Server(s) to access
 
-							<strong>MCP Tools</strong>.
+							<strong>Strumenti MCP</strong>.
 						</span>
 					</span>
 				</div>
 			{:else if toolsStore.error}
-				<div class="px-3 py-4 text-center text-sm text-muted-foreground">Failed to load tools</div>
+				<div class="px-3 py-4 text-center text-sm text-muted-foreground">Impossibile caricare gli strumenti</div>
 			{:else if toolsPanel.noToolsInfoMessage}
 				<div class="flex gap-2 px-3 py-4 text-sm text-muted-foreground">
 					<Info class="mt-0.5 {ICON_CLASS_DEFAULT} shrink-0" />
@@ -60,7 +60,7 @@
 					<span>{toolsPanel.noToolsInfoMessage}</span>
 				</div>
 			{:else}
-				<div class="px-3 py-4 text-center text-sm text-muted-foreground">No tools available</div>
+				<div class="px-3 py-4 text-center text-sm text-muted-foreground">Nessuno strumento disponibile</div>
 			{/if}
 		{:else}
 			<div class="max-h-80 overflow-y-auto p-2 pr-1">

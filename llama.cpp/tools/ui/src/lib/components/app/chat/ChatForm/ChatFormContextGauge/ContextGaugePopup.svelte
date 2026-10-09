@@ -58,7 +58,7 @@
 	>
 		<div class="flex flex-col gap-2">
 			<div class="flex items-center gap-2">
-				<span class="font-medium">Context</span>
+				<span class="font-medium">Contesto</span>
 				<span class="text-muted-foreground">·</span>
 				<span class="font-mono text-muted-foreground">
 					{formatParameters(gauge.contextUsed)}
@@ -91,7 +91,7 @@
 					</span>
 				</div>
 			{:else}
-				<div class="text-xs text-muted-foreground">No context info available</div>
+				<div class="text-xs text-muted-foreground">Nessuna info sul contesto</div>
 			{/if}
 
 			{#if gauge.hasAnyUsage}

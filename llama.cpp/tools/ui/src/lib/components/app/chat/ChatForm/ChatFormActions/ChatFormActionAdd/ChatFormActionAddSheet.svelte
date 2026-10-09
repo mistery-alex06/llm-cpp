@@ -94,7 +94,7 @@
 
 		<Sheet.Content side="bottom" class="max-h-[85vh] gap-0 overflow-y-auto">
 			<Sheet.Header>
-				<Sheet.Title>Add to chat</Sheet.Title>
+				<Sheet.Title>Aggiungi alla chat</Sheet.Title>
 
 				<Sheet.Description class="sr-only">
 					Add files, system prompt or configure MCP servers
@@ -122,7 +122,7 @@
 								<Lightbulb class="{ICON_CLASS_DEFAULT} shrink-0 text-muted-foreground" />
 							{/if}
 
-							<span class="flex-1">Reasoning</span>
+							<span class="flex-1">Ragionamento</span>
 
 							<span class="text-xs capitalize text-muted-foreground">
 								{reasoning.currentEffort}
@@ -171,7 +171,7 @@
 
 						<File class="{ICON_CLASS_DEFAULT} shrink-0" />
 
-						<span class="flex-1">Add files</span>
+						<span class="flex-1">Aggiungi file</span>
 					</Collapsible.Trigger>
 
 					<Collapsible.Content>
@@ -218,7 +218,7 @@
 
 						<McpLogo class="inline {ICON_CLASS_DEFAULT} shrink-0" />
 
-						<span class="flex-1">MCP Servers</span>
+						<span class="flex-1">Server MCP</span>
 
 						<span class="text-xs text-muted-foreground">
 							{mcpServers.length} server{mcpServers.length !== 1 ? 's' : ''}
@@ -290,7 +290,7 @@
 
 							<PencilRuler class="inline {ICON_CLASS_DEFAULT} shrink-0" />
 
-							<span class="flex-1">Tools</span>
+							<span class="flex-1">Strumenti</span>
 
 							<span class="text-xs text-muted-foreground">
 								{toolsPanel.totalToolCount} tool{toolsPanel.totalToolCount !== 1 ? 's' : ''}
@@ -346,7 +346,7 @@
 				>
 					<MessageSquare class="{ICON_CLASS_DEFAULT} shrink-0" />
 
-					<span>System Message</span>
+					<span>Messaggio di sistema</span>
 				</button>
 
 				{#if hasMcpPromptsSupport}
@@ -357,7 +357,7 @@
 					>
 						<Zap class="{ICON_CLASS_DEFAULT} shrink-0" />
 
-						<span>MCP Prompt</span>
+						<span>Prompt MCP</span>
 					</button>
 				{/if}
 
@@ -369,7 +369,7 @@
 					>
 						<FolderOpen class="{ICON_CLASS_DEFAULT} shrink-0" />
 
-						<span>MCP Resources</span>
+						<span>Risorse MCP</span>
 					</button>
 				{/if}
 			</div>

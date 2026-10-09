@@ -13,6 +13,6 @@
 		aria-live="polite"
 	>
 		<Loader2 class="h-3.5 w-3.5 animate-spin" />
-		<span>Reconnecting to the stream...</span>
+		<span>Riconnessione in corso...</span>
 	</div>
 {/if}

@@ -71,7 +71,7 @@
 			<Dialog.Close
 				class="absolute top-4 right-4 z-10 cursor-pointer text-white hover:text-gray-400"
 				onclick={handleClose}
-				aria-label="Close"
+				aria-label="Chiudi"
 			>
 				<X class="size-4" />
 			</Dialog.Close>

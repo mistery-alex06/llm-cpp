@@ -182,9 +182,9 @@
 			onclick={() =>
 				ChatService.stopReasoning(activeMessage?.completionId ?? '', activeMessage?.model)}
 			class="group h-8 w-8 rounded-full p-0"
-			title="Skip reasoning"
+			title="Salta il ragionamento"
 		>
-			<span class="sr-only">Skip reasoning</span>
+			<span class="sr-only">Salta il ragionamento</span>
 
 			<SkipForward
 				class="{ICON_CLASS_DEFAULT} stroke-muted-foreground group-hover:stroke-foreground"

@@ -119,7 +119,7 @@
 					autoResizeTextarea(e.currentTarget);
 					editCtx.setContent(e.currentTarget.value);
 				}}
-				placeholder="Edit system message..."
+				placeholder="Modifica messaggio di sistema..."
 			></textarea>
 
 			<div class="mt-2 flex justify-end gap-2">

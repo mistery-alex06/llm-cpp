@@ -24,7 +24,7 @@
 </script>
 
 {#if groups.length === 0}
-	<div class="py-8 text-center text-sm text-muted-foreground">No tools available</div>
+	<div class="py-8 text-center text-sm text-muted-foreground">Nessuno strumento disponibile</div>
 {:else}
 	<div class="space-y-2">
 		{#each groups as group (group.key)}
