@@ -237,11 +237,11 @@ llm/
 
 | Priorità | Obiettivo | Note |
 |---|---|---|
+| **In corso (prossima)** | **Voce** | 1) pulsante microfono sotto ogni risposta per farla leggere ad alta voce (text-to-speech); 2) dettatura dei messaggi (speech-to-text) |
 | Alta | Scelta automatica del modello | domande semplici al 1.7B, complesse al 4B |
 | Alta | Documenti locali (RAG) | rispondere su PDF e appunti, con citazione della fonte |
 | Alta | Ricerca web | Altea cerca online e cita le fonti (tool/MCP) |
 | Media | Memoria su file | non legata al browser, condivisa tra browser e backup |
-| Media | Voce | dettatura (speech-to-text) e lettura delle risposte (text-to-speech) |
 | Media | Esporta/importa | chat e memoria in un file di backup |
 | Media | Traduzione completa della UI | Impostazioni e messaggi d'errore inclusi |
 | Media | Analisi video | estrazione di fotogrammi da dare a Omni |
