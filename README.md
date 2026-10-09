@@ -83,6 +83,7 @@ g++ -std=c++17 -O2 main.cpp -I llama.cpp/include -I llama.cpp/ggml/include \
 
 | Cosa vuoi fare | Comando |
 |---|---|
+| **Avvio con un clic (macOS)** | `bash make_app.sh` crea `Altea.app` sul Desktop; doppio clic per avviare, chiudendo la finestra il server si spegne (alla prima apertura accetta i permessi Desktop e Chrome) |
 | Avviare l'interfaccia web | `./run_qwen_server.sh` poi apri `http://127.0.0.1:8080` |
 | Usare un'altra porta | `./run_qwen_server.sh --port 9090` |
 | Chat da terminale (programma C++) | `./llm` |
@@ -142,3 +143,4 @@ llm/
 - [x] Integrazione nativa con llama.cpp in `main.cpp`
 - [x] Secondo modello e selettore nella UI (router mode)
 - [x] Memoria persistente (`/ricorda`, `/dimentica`, `/memoria` nella UI)
+- [x] App con un clic (`Altea.app`, `make_app.sh`)
