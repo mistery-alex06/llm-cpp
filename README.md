@@ -20,10 +20,11 @@ Sviluppata e testata su Mac Intel, 8 GB di RAM, solo CPU.
 
 ## Cosa fa
 
-- Risponde alle domande in locale: nessun dato lascia il computer e non serve internet (dopo il download dei modelli).
+- Risponde alle domande in locale: nessun dato lascia il computer e non serve internet (dopo il download dei modelli). Solo se attivi il pulsante *Web*, la tua domanda viene inviata a DuckDuckGo per la ricerca.
 - Parla **italiano** e si esprime **al femminile** (è "Altea").
 - **Tre modelli** selezionabili dalla UI: Qwen3-4B (più capace), Qwen3-1.7B (più veloce) e Qwen2.5-Omni-3B (multimodale).
 - **Immagini e audio** in ingresso con Qwen2.5-Omni-3B.
+- **Ricerca web** opzionale (pulsante *Web*): cerca online e risponde citando le fonti, senza chiavi API.
 - **Memoria persistente**: ricorda da sola i fatti personali duraturi che le dici e li usa nelle chat successive.
 - **Ragionamento** attivabile dal menu per tutti i modelli (spento di default per risposte più rapide).
 - **Avvio con un clic** su macOS: `Altea.app`.
@@ -46,6 +47,7 @@ main.cpp  ──────────────►  libllama / libggml  ◄
 - **`llama-server`**: server locale con API compatibile OpenAI (`/v1/chat/completions`) e interfaccia web incorporata. Parte in *router mode*: legge tutti i `.gguf` presenti nella cartella (e nelle sottocartelle con modello + `mmproj`) e carica il modello scelto quando serve. Ne tiene in memoria uno alla volta.
 - **Interfaccia web**: la UI di llama.cpp (SvelteKit, in `llama.cpp/tools/ui/`), personalizzata: tema in `src/app.css`, sfondo `static/bg-ship.jpg`, testi in italiano, nome Altea. I file della UI vengono incorporati nel binario `llama-server` in fase di compilazione.
 - **Memoria** (`llama.cpp/tools/ui/src/lib/utils/altea-memory.ts`): i fatti sono salvati nel `localStorage` del browser e aggiunti al system prompt di ogni richiesta, insieme all'identità di Altea (italiano, femminile). Dopo ogni risposta, se il messaggio sembra contenere informazioni personali, il modello stesso estrae i fatti duraturi da salvare.
+- **`search_server.py`**: servizio locale (`127.0.0.1:8091`) che interroga DuckDuckGo (HTML, via `curl`) e restituisce i primi risultati; avviato e fermato insieme al server.
 - **`Altea.app`**: generata da `make_app.sh`. Avvia il server, apre una finestra Chrome dedicata e spegne il server quando la finestra viene chiusa.
 - **`src/` e `include/`**: tokenizer, matrici e transformer scritti da zero (progetto iniziale). Non vengono più usati per l'inferenza.
 - **`web/index.html`**: prima pagina web sperimentale, non usata dal server attuale.
@@ -154,6 +156,17 @@ La memoria è salvata nel browser (`localStorage`): cancellando i dati del sito 
 - Su Qwen2.5-Omni, che non lo supporta nativamente, viene chiesto ad Altea nel prompt di ragionare passo per passo: il ragionamento compare nel testo della risposta.
 - `/no_think` all'inizio del messaggio forza la risposta immediata sui Qwen3.
 
+### Ricerca web
+
+Il pulsante **Web**, accanto al **+** nel riquadro dei messaggi, attiva la ricerca (si illumina quando è attiva e il suo stato viene ricordato).
+
+- Con la ricerca attiva, ogni domanda viene prima cercata su DuckDuckGo; i primi 5 risultati (titolo, estratto, indirizzo) e la data di oggi vengono passati ad Altea, che risponde citando le fonti con [1], [2] e un elenco finale «Fonti».
+- Serve la connessione a internet. Se la ricerca non riesce, Altea lo dice e risponde con ciò che sa.
+- Non usa il tool-calling dei modelli (inaffidabile sui modelli piccoli): la ricerca la fa sempre la UI, quindi funziona con tutti e tre i modelli.
+- Ogni ricerca aggiunge circa 500 token di contesto alla domanda; per questo il contesto è di 4096 token. I risultati valgono solo per la domanda corrente.
+- Altea può sbagliare a interpretare i risultati: controlla le fonti per informazioni importanti.
+- I comandi che iniziano con `/` non attivano la ricerca.
+
 ### Immagini e audio
 
 Seleziona **Qwen2.5-Omni-3B** nel selettore del modello, poi usa **+** → *Aggiungi file*. Con gli altri modelli il caricamento di immagini e audio è disattivato. Il video non è stato testato.
@@ -176,7 +189,7 @@ Il server parte con questi parametri (in `run_qwen_server.sh`):
 |---|---|
 | `--models-dir . --models-max 1` | router mode, un solo modello in RAM alla volta |
 | `-ngl 0` | solo CPU (evita contese con la GPU su Mac Intel/8 GB) |
-| `-c 2048` | contesto di 2048 token |
+| `-c 4096` | contesto di 4096 token (2048 se la RAM scarseggia) |
 | `-t 4` | 4 thread |
 | `--reasoning off --reasoning-budget 0` | niente ragionamento di default |
 | `--no-mmproj-offload` | il file di visione/audio resta sulla CPU (altrimenti Omni non si carica: cerca 4,3 GB sulla GPU) |
@@ -185,7 +198,7 @@ Consigli:
 
 - Chiudi le applicazioni pesanti (browser, IDE) prima di avviare.
 - Per risposte più rapide usa il modello 1.7B e lascia il ragionamento spento.
-- Se il contesto da 2048 token si riempie (conversazioni lunghe, immagini), apri una nuova chat.
+- Se il contesto da 4096 token si riempie (conversazioni lunghe, immagini), apri una nuova chat.
 
 ## Personalizzare Altea
 
@@ -208,6 +221,7 @@ llm/
 ├── run_qwen_server.sh      avvia llama-server (UI web, router mode)
 ├── run_qwen.sh             avvia llama-cli (chat da terminale)
 ├── make_app.sh             genera Altea.app sul Desktop
+├── search_server.py        ricerca web locale (DuckDuckGo) per il pulsante Web
 ├── llama.cpp/              llama.cpp completo (motore, server, UI web)
 ├── src/, include/          tokenizer, matrici, transformer custom (storico)
 ├── web/index.html          prima pagina web sperimentale (non usata)
@@ -232,6 +246,8 @@ llm/
 - [x] Identità di Altea: risposte in italiano, al femminile; UI principale tradotta
 - [x] Ragionamento spento di default, attivabile dal menu per tutti i modelli
 - [x] Modello multimodale Qwen2.5-Omni-3B (immagini e audio)
+- [x] Modello predefinito all'apertura: Qwen3-1.7B
+- [x] Ricerca web con fonti citate (pulsante *Web*)
 
 ### Prossimi obiettivi
 
@@ -239,7 +255,6 @@ llm/
 |---|---|---|
 | Alta | Scelta automatica del modello | domande semplici al 1.7B, complesse al 4B |
 | Alta | Documenti locali (RAG) | rispondere su PDF e appunti, con citazione della fonte |
-| Alta | Ricerca web | Altea cerca online e cita le fonti (tool/MCP) |
 | Media | Memoria su file | non legata al browser, condivisa tra browser e backup |
 | Media | Esporta/importa | chat e memoria in un file di backup |
 | Media | Traduzione completa della UI | Impostazioni e messaggi d'errore inclusi |

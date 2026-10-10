@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ICON_CLASS_DEFAULT } from '$lib/constants/css-classes';
-	import { Square, SkipForward } from '@lucide/svelte';
+	import { Square, SkipForward, Globe } from '@lucide/svelte';
+	import { alteaWeb } from '$lib/utils/altea-web.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { ChatService } from '$lib/services';
 	import {
@@ -151,6 +152,20 @@
 				{onMcpResourcesClick}
 				onMcpSettingsClick={() => goto(ROUTES.MCP_SERVERS)}
 			/>
+			<Button
+				type="button"
+				variant={alteaWeb.enabled ? 'secondary' : 'ghost'}
+				size="sm"
+				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {alteaWeb.enabled
+					? 'text-primary'
+					: 'text-muted-foreground'}"
+				title={alteaWeb.enabled ? 'Ricerca web attiva: clicca per disattivarla' : 'Attiva la ricerca web'}
+				onclick={() => alteaWeb.toggle()}
+				{disabled}
+			>
+				<Globe class="h-3.5 w-3.5" />
+				Web
+			</Button>
 		</div>
 	{/if}
 
