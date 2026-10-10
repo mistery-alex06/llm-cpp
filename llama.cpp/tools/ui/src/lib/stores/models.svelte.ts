@@ -577,6 +577,16 @@ class ModelsStore {
 			}
 		}
 
+		// Altea: modello predefinito all'apertura (Qwen3-1.7B, il più veloce)
+		const defaultModel = availableModels.find((m) => /qwen3-1\.7b/i.test(m.model));
+		if (defaultModel) {
+			await this.selectModelById(defaultModel.id);
+			if (this.isModelLoaded(defaultModel.model)) {
+				await this.fetchModelProps(defaultModel.model);
+			}
+			return;
+		}
+
 		// Try a loaded model first
 		const loadedModel = availableModels.find((m) => this.isModelLoaded(m.model));
 		if (loadedModel) {
