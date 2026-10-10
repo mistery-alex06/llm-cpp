@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Edit, Copy, RefreshCw, Trash2, ArrowRight, GitBranch, Mic, Square } from '@lucide/svelte';
+	import { Edit, Copy, RefreshCw, Trash2, ArrowRight, GitBranch } from '@lucide/svelte';
 	import {
 		ActionIcon,
 		ChatMessageActionIconsBranchingControls,
@@ -25,8 +25,6 @@
 			messageTypes: string[];
 		} | null;
 		onCopy: () => void;
-		onSpeak?: () => void;
-		isSpeaking?: boolean;
 		onEdit?: () => void;
 		onRegenerate?: () => void;
 		onContinue?: () => void;
@@ -45,8 +43,6 @@
 		deletionInfo,
 		justify,
 		onCopy,
-		onSpeak,
-		isSpeaking = false,
 		onEdit,
 		onConfirmDelete,
 		onContinue,
@@ -103,14 +99,6 @@
 
 			{#if onEdit}
 				<ActionIcon icon={Edit} tooltip="Modifica" onclick={onEdit} />
-			{/if}
-
-			{#if role === MessageRole.ASSISTANT && onSpeak}
-				<ActionIcon
-					icon={isSpeaking ? Square : Mic}
-					tooltip={isSpeaking ? 'Interrompi la lettura' : 'Leggi ad alta voce'}
-					onclick={onSpeak}
-				/>
 			{/if}
 
 			{#if role === MessageRole.ASSISTANT && onRegenerate}
