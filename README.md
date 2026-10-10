@@ -47,6 +47,7 @@ main.cpp  ──────────────►  libllama / libggml  ◄
 - **`llama-server`**: server locale con API compatibile OpenAI (`/v1/chat/completions`) e interfaccia web incorporata. Parte in *router mode*: legge tutti i `.gguf` presenti nella cartella (e nelle sottocartelle con modello + `mmproj`) e carica il modello scelto quando serve. Ne tiene in memoria uno alla volta.
 - **Interfaccia web**: la UI di llama.cpp (SvelteKit, in `llama.cpp/tools/ui/`), personalizzata: tema in `src/app.css`, sfondo `static/bg-ship.jpg`, testi in italiano, nome Altea. I file della UI vengono incorporati nel binario `llama-server` in fase di compilazione.
 - **Memoria** (`llama.cpp/tools/ui/src/lib/utils/altea-memory.ts`): i fatti sono salvati nel `localStorage` del browser e aggiunti al system prompt di ogni richiesta, insieme all'identità di Altea (italiano, femminile). Dopo ogni risposta, se il messaggio sembra contenere informazioni personali, il modello stesso estrae i fatti duraturi da salvare.
+- **`tts_server.py`**: servizio locale (`127.0.0.1:8090`) che trasforma il testo in audio con le voci di macOS; avviato e fermato insieme al server.
 - **`Altea.app`**: generata da `make_app.sh`. Avvia il server, apre una finestra Chrome dedicata e spegne il server quando la finestra viene chiusa.
 - **`src/` e `include/`**: tokenizer, matrici e transformer scritti da zero (progetto iniziale). Non vengono più usati per l'inferenza.
 - **`web/index.html`**: prima pagina web sperimentale, non usata dal server attuale.
@@ -157,7 +158,12 @@ La memoria è salvata nel browser (`localStorage`): cancellando i dati del sito 
 
 ### Lettura ad alta voce
 
-Quando una risposta è completa, sotto il messaggio compare un pulsante **microfono**: premilo per far leggere la risposta ad Altea, premilo di nuovo (ora è un quadrato) per interrompere. Usa le voci italiane installate su macOS tramite il browser, quindi funziona offline. Altea sceglie una voce femminile (Federica, Emma, Paola, Alice...), preferendo la versione *Premium* o *Enhanced* se installata: puoi scaricarle da Impostazioni di Sistema > Accessibilità > Contenuto letto > Voce di sistema > Gestisci voci. Markdown, codice e link non vengono letti.
+Quando una risposta è completa, sotto il messaggio compare un pulsante **microfono**: premilo per far leggere la risposta ad Altea, premilo di nuovo (ora è un quadrato) per interrompere. Markdown, codice e link non vengono letti.
+
+- **Come funziona:** `run_qwen_server.sh` avvia insieme al server un piccolo servizio locale, `tts_server.py` (porta `8090`), che usa il comando `say` di macOS. Così Altea parla con le voci di sistema **Premium/Enhanced**, molto più naturali di quelle esposte da Chrome. Si spegne insieme al server. Se non è raggiungibile, la UI ripiega sulla sintesi vocale del browser (più robotica).
+- **Voce:** sceglie da sola una voce italiana femminile (Federica, Emma, Paola, Alice...) nella qualità migliore installata. Per forzarne una: `ALTEA_VOICE="Emma (Premium)" ./run_qwen_server.sh`. L'elenco si vede con `say -v '?' | grep it_IT`.
+- **Più voci:** da Impostazioni di Sistema > Accessibilità > Contenuto letto > Voce di sistema > Gestisci voci, scarica le versioni *Premium* o *Enhanced* italiane.
+- **Siri:** le voci di Siri non sono utilizzabili dalle app; le voci Premium usano la stessa tecnologia e sono la scelta più vicina.
 
 ### Immagini e audio
 
@@ -213,6 +219,7 @@ llm/
 ├── run_qwen_server.sh      avvia llama-server (UI web, router mode)
 ├── run_qwen.sh             avvia llama-cli (chat da terminale)
 ├── make_app.sh             genera Altea.app sul Desktop
+├── tts_server.py           sintesi vocale locale (macOS, comando say) per il pulsante microfono
 ├── llama.cpp/              llama.cpp completo (motore, server, UI web)
 ├── src/, include/          tokenizer, matrici, transformer custom (storico)
 ├── web/index.html          prima pagina web sperimentale (non usata)
