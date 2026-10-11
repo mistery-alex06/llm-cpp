@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { alteaAuto } from '$lib/utils/altea-auto.svelte';
 	import { chatStore } from '$lib/stores/chat.svelte';
 	import {
 		modelsStore,
@@ -121,19 +122,25 @@
 	$effect(() => {
 		void modelPropsVersion;
 
-		hasAudioModality = activeModelId ? modelsStore.modelSupportsAudio(activeModelId) : false;
+		hasAudioModality =
+			(activeModelId ? modelsStore.modelSupportsAudio(activeModelId) : false) ||
+			alteaAuto.multimodalOverride();
 	});
 
 	$effect(() => {
 		void modelPropsVersion;
 
-		hasVideoModality = activeModelId ? modelsStore.modelSupportsVideo(activeModelId) : false;
+		hasVideoModality =
+			(activeModelId ? modelsStore.modelSupportsVideo(activeModelId) || modelsStore.modelSupportsVision(activeModelId) : false) ||
+			alteaAuto.multimodalOverride();
 	});
 
 	$effect(() => {
 		void modelPropsVersion;
 
-		hasVisionModality = activeModelId ? modelsStore.modelSupportsVision(activeModelId) : false;
+		hasVisionModality =
+			(activeModelId ? modelsStore.modelSupportsVision(activeModelId) : false) ||
+			alteaAuto.multimodalOverride();
 	});
 
 	$effect(() => {

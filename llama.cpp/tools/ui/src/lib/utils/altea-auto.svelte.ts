@@ -1,5 +1,7 @@
 // Scelta automatica del modello di Altea: domande semplici -> Qwen3-1.7B (veloce),
 // domande complesse -> Qwen3-4B, immagini/audio/video -> Qwen2.5-Omni.
+import { modelsStore } from '$lib/stores/models.svelte';
+
 const KEY = 'Altea.autoModel';
 
 function loadEnabled(): boolean {
@@ -36,6 +38,14 @@ class AlteaAuto {
 		if (/```/.test(text) || (text.match(/\n/g)?.length ?? 0) >= 4) return 'smart';
 		if (text.length > 60 && HARD.test(text)) return 'smart';
 		return 'fast';
+	}
+
+	/**
+	 * Con Auto attivo e Qwen2.5-Omni disponibile, immagini, audio e video si possono allegare
+	 * anche se il modello selezionato non li supporta: all'invio viene scelto Omni.
+	 */
+	multimodalOverride(): boolean {
+		return this.enabled && modelsStore.models.some((m) => /omni/i.test(m.model));
 	}
 
 	pattern(target: AutoTarget): RegExp {

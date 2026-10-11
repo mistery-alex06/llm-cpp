@@ -234,7 +234,7 @@ I progetti sono salvati nel browser (`localStorage`) e inclusi nel backup *Impor
 
 llama.cpp non legge i video: quando ne alleghi uno (*+* → *Video*, o trascinandolo) Altea lo trasforma nel browser in **3-6 fotogrammi** (JPEG, in ordine, lato massimo 448 px, uno ogni ~5 s) più l'**audio** (WAV mono 16 kHz, primi 30 s; assente oltre i 5 minuti di video o se silenzioso). Poi scrivi la domanda (es. *cosa succede in questo video?*).
 
-- Serve il modello **Qwen2.5-Omni** (immagini e audio); con **Auto** attivo viene scelto da solo all'invio.
+- Serve il modello **Qwen2.5-Omni** (immagini e audio). Con **Auto** attivo puoi allegare immagini, audio e video anche se è selezionato un altro modello: all'invio Altea passa da sola a Omni.
 - È un campionamento, non una visione continua: azioni brevi tra due fotogrammi possono sfuggire.
 - Con 4096 token di contesto 6 fotogrammi e 30 s di audio occupano buona parte del contesto: usa video brevi.
 - Tutto avviene sul Mac; il video non viene inviato a nessuno. Limite 500 MB.

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { alteaAuto } from '$lib/utils/altea-auto.svelte';
 	import { page } from '$app/state';
 	import {
 		ChatScreenForm,
@@ -66,9 +67,9 @@
 	const activeModel = useChatScreenActiveModel();
 	const fileUpload = useChatScreenFileUpload({
 		capabilities: () => ({
-			hasVision: activeModel.hasVisionModality,
-			hasAudio: activeModel.hasAudioModality,
-			hasVideo: activeModel.hasVideoModality
+			hasVision: activeModel.hasVisionModality || alteaAuto.multimodalOverride(),
+			hasAudio: activeModel.hasAudioModality || alteaAuto.multimodalOverride(),
+			hasVideo: activeModel.hasVideoModality || alteaAuto.multimodalOverride()
 		}),
 		activeModelId: () => activeModel.activeModelId
 	});
