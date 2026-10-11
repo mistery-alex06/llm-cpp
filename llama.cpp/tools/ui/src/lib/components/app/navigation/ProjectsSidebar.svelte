@@ -21,6 +21,7 @@
 	let creating = $state(false);
 	let openIds = $state<string[]>([]);
 	let editId = $state<string | null>(null);
+	let pickerId = $state<string | null>(null);
 	let renameDraft = $state('');
 	let factDraft = $state('');
 	let innerWidth = $state(0);
@@ -56,6 +57,19 @@
 		if (!isOpen(projectId)) openIds = [...openIds, projectId];
 		await goto(ROUTES.NEW_CHAT);
 	}
+
+	function togglePicker(id: string) {
+		pickerId = pickerId === id ? null : id;
+		if (pickerId && !isOpen(id)) openIds = [...openIds, id];
+	}
+
+	function addExisting(projectId: string, chatId: string) {
+		alteaProjects.assign(projectId, chatId);
+	}
+
+	const freeChats = $derived(
+		conversations().filter((c: { id: string }) => !alteaProjects.projectOf(c.id))
+	);
 
 	function deleteProject(id: string, name: string) {
 		if (!window.confirm(`Eliminare il progetto "${name}"? Le chat non vengono eliminate.`)) return;
@@ -177,9 +191,9 @@
 							<button
 								type="button"
 								class="rounded p-1 opacity-60 hover:bg-foreground/10 hover:opacity-100"
-								title="Nuova chat nel progetto"
-								aria-label="Nuova chat nel progetto"
-								onclick={() => newChatIn(p.id)}><Plus class="h-3.5 w-3.5" /></button
+								title="Aggiungi una chat al progetto"
+								aria-label="Aggiungi una chat al progetto"
+								onclick={() => togglePicker(p.id)}><Plus class="h-3.5 w-3.5" /></button
 							>
 							<button
 								type="button"
@@ -250,6 +264,31 @@
 												>Aggiungi</button
 											>
 										</form>
+									</div>
+								{/if}
+
+								{#if pickerId === p.id}
+									<div class="mb-2 flex flex-col gap-0.5 rounded-lg bg-background/60 p-1">
+										<button
+											type="button"
+											class="rounded-md px-1 py-1 text-left text-xs font-medium text-primary hover:bg-foreground/5"
+											onclick={() => {
+												pickerId = null;
+												newChatIn(p.id);
+											}}>+ Nuova chat nel progetto</button
+										>
+										<span class="px-1 pt-1 text-xs text-muted-foreground">Aggiungi una chat esistente:</span>
+										<div class="flex max-h-48 flex-col gap-0.5 overflow-y-auto">
+											{#each freeChats as c (c.id)}
+												<button
+													type="button"
+													class="truncate rounded-md px-1 py-1 text-left text-xs hover:bg-foreground/10"
+													onclick={() => addExisting(p.id, c.id)}>{c.name}</button
+												>
+											{:else}
+												<span class="px-1 py-1 text-xs text-muted-foreground">Nessuna chat libera.</span>
+											{/each}
+										</div>
 									</div>
 								{/if}
 
