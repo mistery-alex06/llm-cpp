@@ -249,6 +249,10 @@ Il server parte con questi parametri (in `run_qwen_server.sh`):
 | `-c 4096` | contesto di 4096 token (2048 se la RAM scarseggia) |
 | `-t 4` | 4 thread |
 | `--reasoning off --reasoning-budget 0` | niente ragionamento di default |
+| `-fa on` | Flash Attention: generazione ~40% più veloce nel benchmark |
+| `--cache-type-k/v q8_0` | cache KV quantizzata: meno RAM, stessa velocità |
+| `--cache-ram 1024` | limita a 1 GB la cache dei prompt (predefinito 8 GB) |
+| `--sleep-idle-seconds 600` | scarica il modello dopo 10 minuti di inattività e libera la RAM |
 | `--no-mmproj-offload` | il file di visione/audio resta sulla CPU (altrimenti Omni non si carica: cerca 4,3 GB sulla GPU) |
 
 Consigli:
