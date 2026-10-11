@@ -278,9 +278,11 @@
 			}}
 		/>
 
-		<div class="min-w-0 flex-1">
+		<div class="flex min-w-0 flex-1 flex-col">
 			<TopBar />
-			{@render children?.()}
+			<div class="flex min-h-0 flex-1 flex-col">
+				{@render children?.()}
+			</div>
 		</div>
 		<ProjectsSidebar />
 	</div>

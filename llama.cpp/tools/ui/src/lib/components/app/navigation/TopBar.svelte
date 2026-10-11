@@ -85,7 +85,7 @@
 </script>
 
 <div
-	class="sticky top-2 z-10 mx-2 mt-2 hidden h-9 items-center gap-2 rounded-2xl border border-border bg-muted/60 px-3 text-xs shadow-sm backdrop-blur-xl md:flex"
+	class="sticky top-2 z-10 mx-2 mt-2 hidden h-9 shrink-0 items-center gap-2 rounded-2xl border border-border bg-muted/60 px-3 text-xs shadow-sm backdrop-blur-xl md:flex"
 >
 	<select
 		class="rounded-md border border-border bg-background px-1.5 py-1 text-xs"
