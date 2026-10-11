@@ -173,9 +173,9 @@
 			</Button>
 			<Button
 				type="button"
-				variant={alteaDocs.enabled && alteaDocs.docs.length > 0 ? 'secondary' : 'ghost'}
+				variant={alteaDocs.enabled && alteaDocs.globalDocs.length > 0 ? 'secondary' : 'ghost'}
 				size="sm"
-				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {alteaDocs.enabled && alteaDocs.docs.length > 0
+				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {alteaDocs.enabled && alteaDocs.globalDocs.length > 0
 					? 'text-primary'
 					: 'text-muted-foreground'}"
 				title="Documenti di Altea"
@@ -183,7 +183,7 @@
 				{disabled}
 			>
 				<FileText class="h-3.5 w-3.5" />
-				Doc{alteaDocs.docs.length > 0 ? ` (${alteaDocs.docs.length})` : ''}
+				Doc{alteaDocs.globalDocs.length > 0 ? ` (${alteaDocs.globalDocs.length})` : ''}
 			</Button>
 			<Button
 				type="button"

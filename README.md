@@ -190,6 +190,7 @@ Barra laterale **destra** (icona cartella), speculare a quella delle chat: raggr
 | Chat nuova nel progetto | **+** accanto al progetto |
 | Aggiungere una chat esistente | aprila, poi *Aggiungi/Sposta la chat corrente* dentro il progetto |
 | Istruzioni e memoria | matita: istruzioni del progetto e fatti da ricordare; Altea aggiunge da sola i fatti emersi dalle chat (obiettivi, decisioni, scadenze), modificabili a mano |
+| Documenti del progetto | nella matita: *Aggiungi documento* (PDF o testo); li usano solo le chat del progetto, mentre quelli del pulsante *Doc* restano globali |
 | Collegamento tra chat | istruzioni, memoria e titoli delle altre chat del progetto sono passati ad Altea in ogni chat del progetto |
 
 I progetti sono salvati nel browser (`localStorage`) e inclusi nel backup *Importa/Esporta*. Eliminare un progetto non elimina le chat.

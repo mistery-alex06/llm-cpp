@@ -1031,13 +1031,17 @@ class ChatStore {
 	async sendMessage(content: string, extras?: DatabaseMessageExtra[]): Promise<void> {
 		content = handleMemoryCommand(content) ?? content;
 		if (alteaWeb.enabled && content.trim()) await alteaWeb.prepare(content);
-		alteaDocs.prepare(content);
+		const docScope =
+			alteaProjects.projectOf(conversationsStore.activeConversation?.id)?.id ??
+			alteaProjects.pendingProjectId ??
+			undefined;
+		alteaDocs.prepare(content, docScope);
 		if (!content.trim() && (!extras || extras.length === 0)) return;
 		if (alteaAuto.enabled) {
 			const target = alteaAuto.classify(
 				content,
 				extras as { type?: string }[] | undefined,
-				alteaWeb.enabled || alteaDocs.docs.length > 0
+				alteaWeb.enabled || alteaDocs.visibleDocs(docScope).length > 0
 			);
 			const re = alteaAuto.pattern(target);
 			const opt = modelsStore.models.find((m) => re.test(m.model));

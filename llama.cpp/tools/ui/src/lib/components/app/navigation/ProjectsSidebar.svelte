@@ -12,6 +12,7 @@
 		PanelRightClose
 	} from '@lucide/svelte';
 	import { alteaProjects } from '$lib/utils/altea-projects.svelte';
+	import { alteaDocs } from '$lib/utils/altea-docs.svelte';
 	import { conversations } from '$lib/stores/conversations.svelte';
 	import { RouterService } from '$lib/services/router.service';
 	import { ROUTES } from '$lib/constants';
@@ -72,7 +73,13 @@
 	);
 
 	function deleteProject(id: string, name: string) {
-		if (!window.confirm(`Eliminare il progetto "${name}"? Le chat non vengono eliminate.`)) return;
+		if (
+			!window.confirm(
+				`Eliminare il progetto "${name}" e i suoi documenti? Le chat non vengono eliminate.`
+			)
+		)
+			return;
+		for (const d of alteaDocs.docs.filter((x) => x.projectId === id)) void alteaDocs.remove(d.id);
 		alteaProjects.remove(id);
 	}
 
@@ -82,6 +89,11 @@
 		renameDraft = p?.name ?? '';
 		factDraft = '';
 		if (editId && !isOpen(id)) openIds = [...openIds, id];
+	}
+
+	async function addDocs(id: string, files: FileList | null) {
+		if (!files) return;
+		for (const f of Array.from(files)) await alteaDocs.addFile(f, id);
 	}
 
 	function addFact(id: string) {
@@ -246,6 +258,34 @@
 												>
 											</div>
 										{/each}
+										<span class="text-xs text-muted-foreground">Documenti del progetto (solo per le sue chat)</span>
+										{#each alteaDocs.docs.filter((d) => d.projectId === p.id) as d (d.id)}
+											<div class="flex items-start gap-1 text-xs">
+												<span class="flex-1 truncate">📄 {d.name}</span>
+												<button
+													type="button"
+													class="opacity-60 hover:opacity-100"
+													aria-label="Rimuovi documento"
+													onclick={() => alteaDocs.remove(d.id)}><X class="h-3 w-3" /></button
+												>
+											</div>
+										{/each}
+										<label class="cursor-pointer rounded-md border border-dashed border-border px-2 py-1 text-center text-xs hover:bg-foreground/5">
+											{alteaDocs.busy ? 'Caricamento...' : '+ Aggiungi documento (PDF o testo)'}
+											<input
+												type="file"
+												multiple
+												class="hidden"
+												accept=".pdf,.txt,.md,.csv,.json,.py,.js,.ts,.c,.cpp,.h,.m,.tex,text/*,application/pdf"
+												onchange={(e) => {
+													addDocs(p.id, e.currentTarget.files);
+													e.currentTarget.value = '';
+												}}
+											/>
+										</label>
+										{#if alteaDocs.error}
+											<span class="text-xs text-destructive">{alteaDocs.error}</span>
+										{/if}
 										<form
 											class="flex gap-1"
 											onsubmit={(e) => {

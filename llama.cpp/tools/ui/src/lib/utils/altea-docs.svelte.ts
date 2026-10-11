@@ -23,6 +23,8 @@ export interface AlteaDoc {
 	name: string;
 	addedAt: number;
 	chunks: Chunk[];
+	/** Se presente, il documento appartiene a un progetto e lo usano solo le sue chat. */
+	projectId?: string;
 }
 
 interface IndexedChunk {
@@ -137,6 +139,16 @@ class AlteaDocs {
 		}
 	}
 
+	/** Documenti globali (non legati a un progetto). */
+	get globalDocs(): AlteaDoc[] {
+		return this.docs.filter((d) => !d.projectId);
+	}
+
+	/** Documenti usabili da una chat: globali + quelli del suo progetto. */
+	visibleDocs(projectId?: string): AlteaDoc[] {
+		return this.docs.filter((d) => !d.projectId || d.projectId === projectId);
+	}
+
 	get totalChunks(): number {
 		return this.docs.reduce((n, d) => n + d.chunks.length, 0);
 	}
@@ -167,7 +179,7 @@ class AlteaDocs {
 		this.avgLen = this.index.length ? total / this.index.length : 1;
 	}
 
-	async addFile(file: File): Promise<void> {
+	async addFile(file: File, projectId?: string): Promise<void> {
 		this.busy = true;
 		this.error = '';
 		try {
@@ -183,7 +195,8 @@ class AlteaDocs {
 				id: crypto.randomUUID(),
 				name: file.name,
 				addedAt: Date.now(),
-				chunks
+				chunks,
+				...(projectId ? { projectId } : {})
 			};
 			await dbPut(doc);
 			this.docs = [...this.docs, doc];
@@ -209,6 +222,7 @@ class AlteaDocs {
 				id: d.id || crypto.randomUUID(),
 				name: d.name,
 				addedAt: d.addedAt || Date.now(),
+				...(d.projectId ? { projectId: d.projectId } : {}),
 				chunks: d.chunks
 					.filter((c) => c && typeof c.text === 'string')
 					.map((c) => ({ page: Number(c.page) || 1, text: c.text }))
@@ -228,13 +242,15 @@ class AlteaDocs {
 	}
 
 	/** Ricerca BM25: restituisce i blocchi più pertinenti alla domanda. */
-	search(query: string, k = TOP_K): IndexedChunk[] {
+	search(query: string, k = TOP_K, projectId?: string): IndexedChunk[] {
 		const qTokens = [...new Set(tokenize(query))];
 		if (qTokens.length === 0 || this.index.length === 0) return [];
 		const N = this.index.length;
 		const k1 = 1.4;
 		const b = 0.75;
-		const scored = this.index.map((c) => {
+		const scored = this.index
+			.filter((c) => !c.doc.projectId || c.doc.projectId === projectId)
+			.map((c) => {
 			let score = 0;
 			for (const t of qTokens) {
 				const f = c.tf.get(t);
@@ -253,12 +269,12 @@ class AlteaDocs {
 	}
 
 	/** Prepara il contesto per la prossima richiesta. */
-	prepare(question: string): void {
+	prepare(question: string, projectId?: string): void {
 		this.pending = '';
-		if (!this.enabled || this.docs.length === 0) return;
+		if (!this.enabled || this.visibleDocs(projectId).length === 0) return;
 		const q = question.trim();
 		if (q.length < 4 || q.startsWith('/')) return;
-		const hits = this.search(q);
+		const hits = this.search(q, TOP_K, projectId);
 		if (hits.length === 0) {
 			// avvisa solo se la domanda sembra riferirsi ai documenti: evita rumore nelle chat normali
 			if (!/document|\bpdf\b|\bfile\b|capitol|pagin|appunti|dispens|slide|libro|testo|paragraf/i.test(q))

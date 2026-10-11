@@ -40,11 +40,11 @@
 		</div>
 
 		<div class="max-h-64 overflow-y-auto rounded-md border">
-			{#if alteaDocs.docs.length === 0}
+			{#if alteaDocs.globalDocs.length === 0}
 				<p class="p-4 text-center text-sm text-muted-foreground">Nessun documento caricato.</p>
 			{:else}
 				<ul class="divide-y">
-					{#each alteaDocs.docs as doc (doc.id)}
+					{#each alteaDocs.globalDocs as doc (doc.id)}
 						<li class="flex items-center gap-2 px-3 py-2 text-sm">
 							<FileText class="h-4 w-4 shrink-0 text-muted-foreground" />
 							<span class="min-w-0 flex-1 truncate" title={doc.name}>{doc.name}</span>
