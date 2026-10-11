@@ -143,6 +143,52 @@ class AlteaDocs {
 		}
 	}
 
+	/** Se true, la prossima richiesta non usa la ricerca nei documenti (il testo è già nel messaggio). */
+	skipNext = false;
+
+	/** Numero di pagine (o sezioni) del documento. */
+	maxPage(doc: AlteaDoc): number {
+		return doc.chunks.reduce((m, c) => Math.max(m, c.page), 1);
+	}
+
+	/** Testo di una pagina, ricostruito dagli estratti togliendo le sovrapposizioni. */
+	private pageText(doc: AlteaDoc, page: number): string {
+		let out = '';
+		for (const c of doc.chunks.filter((x) => x.page === page)) {
+			if (!out) {
+				out = c.text;
+				continue;
+			}
+			let k = Math.min(CHUNK_OVERLAP + 60, out.length, c.text.length);
+			while (k > 10 && !out.endsWith(c.text.slice(0, k))) k--;
+			out += ' ' + (k > 10 ? c.text.slice(k) : c.text);
+		}
+		return out.trim();
+	}
+
+	/** Testo da pagina `from` in poi, fino a `maxChars` caratteri (almeno una pagina). */
+	studyText(
+		doc: AlteaDoc,
+		from: number,
+		maxChars = 3000
+	): { text: string; from: number; to: number } {
+		const last = this.maxPage(doc);
+		const start = Math.min(Math.max(1, Math.floor(from) || 1), last);
+		let text = '';
+		let to = start;
+		for (let p = start; p <= last; p++) {
+			const t = this.pageText(doc, p);
+			if (!t) continue;
+			const block = (text ? '\n\n' : '') + (last > 1 ? `[pagina ${p}] ` : '') + t;
+			if (text && text.length + block.length > maxChars) break;
+			text += block;
+			to = p;
+			if (text.length >= maxChars) break;
+		}
+		if (text.length > maxChars) text = text.slice(0, maxChars).replace(/\s+\S*$/, '') + '…';
+		return { text, from: start, to };
+	}
+
 	/** Documenti globali (non legati a un progetto). */
 	get globalDocs(): AlteaDoc[] {
 		return this.docs.filter((d) => !d.projectId);
@@ -286,6 +332,10 @@ class AlteaDocs {
 	/** Prepara il contesto per la prossima richiesta. */
 	prepare(question: string, projectId?: string): void {
 		this.pending = '';
+		if (this.skipNext) {
+			this.skipNext = false;
+			return;
+		}
 		if (!this.enabled || this.visibleDocs(projectId).length === 0) return;
 		const q = question.trim();
 		if (q.length < 4 || q.startsWith('/')) return;

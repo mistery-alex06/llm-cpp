@@ -181,6 +181,19 @@ Il pulsante **Doc**, accanto a **Web**, apre la libreria dei documenti.
 - Compatibile con la ricerca web: se sono attivi entrambi, Altea riceve estratti dei documenti e risultati web.
 - Sono documenti nel browser: cancellando i dati del sito si perdono.
 
+### Appunti da lezione
+
+Nella finestra **Doc**, il cappello accanto a ogni documento apre lo studio:
+
+| Passo | Cosa fa |
+|---|---|
+| **Da pagina** | sceglie da dove iniziare; Altea prende circa 3000 caratteri (qualche pagina) alla volta |
+| **Riassunto** | punti elenco con concetti e formule principali |
+| **Flashcard** | 8 coppie domanda/risposta (`D:` / `R:`) |
+| **Quiz** | 5 domande a risposta multipla con risposta corretta e spiegazione |
+
+Il testo dell'estratto viene inserito direttamente nel messaggio (senza ricerca per parole chiave), quindi la risposta si basa solo su quella parte: per continuare imposta la pagina successiva. Con **Auto** attivo la richiesta va al Qwen3-4B, più accurato del 1.7B.
+
 ### Barra superiore
 
 Sopra la chat, tra le due barre laterali (solo su schermo largo):
@@ -339,6 +352,7 @@ llm/
 - [x] Memoria su file (`~/Altea/data`)
 - [x] Barra superiore: ruoli, comandi rapidi e stato del sistema
 - [x] Analisi video (fotogrammi e audio estratti nel browser)
+- [x] Appunti da lezione: riassunti, flashcard e quiz dai documenti
 |---|---|---|
 | Bassa | Azioni sul computer | comandi con conferma esplicita dell'utente |
 | Bassa | Personalizzazione del modello | fine-tuning leggero (LoRA) su stile e conoscenze |

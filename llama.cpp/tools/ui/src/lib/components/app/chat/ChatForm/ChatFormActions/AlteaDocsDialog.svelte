@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Trash2, FilePlus, FileText } from '@lucide/svelte';
+	import { Trash2, FilePlus, FileText, GraduationCap } from '@lucide/svelte';
+	import { chatStore } from '$lib/stores/chat.svelte';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { Button } from '$lib/components/ui/button';
 	import { Switch } from '$lib/components/ui/switch';
@@ -12,6 +13,46 @@
 	let { open = $bindable() }: Props = $props();
 
 	let fileInput: HTMLInputElement | undefined = $state();
+	let studyId = $state<string | null>(null);
+	let fromPage = $state(1);
+
+	const MODES = {
+		riassunto: {
+			label: 'Riassunto',
+			prompt: (n: string, a: number, b: number, t: string) =>
+				`Riassumi in punti elenco chiari e concisi questo estratto degli appunti "${n}" (pagine ${a}-${b}). Evidenzia i concetti e le formule principali.\n\n${t}`
+		},
+		flashcard: {
+			label: 'Flashcard',
+			prompt: (n: string, a: number, b: number, t: string) =>
+				`Crea 8 flashcard per studiare questo estratto degli appunti "${n}" (pagine ${a}-${b}). Per ognuna scrivi "D:" con la domanda e "R:" con la risposta breve, una sotto l'altra.\n\n${t}`
+		},
+		quiz: {
+			label: 'Quiz',
+			prompt: (n: string, a: number, b: number, t: string) =>
+				`Crea 5 domande a risposta multipla (A, B, C, D) su questo estratto degli appunti "${n}" (pagine ${a}-${b}). Dopo ogni domanda indica la risposta corretta e una breve spiegazione.\n\n${t}`
+		}
+	} as const;
+
+	function toggleStudy(id: string) {
+		studyId = studyId === id ? null : id;
+		fromPage = 1;
+	}
+
+	function preview(docId: string) {
+		const doc = alteaDocs.docs.find((d) => d.id === docId);
+		return doc ? alteaDocs.studyText(doc, fromPage) : null;
+	}
+
+	async function study(docId: string, mode: keyof typeof MODES) {
+		const doc = alteaDocs.docs.find((d) => d.id === docId);
+		if (!doc) return;
+		const r = alteaDocs.studyText(doc, fromPage);
+		if (!r.text) return;
+		alteaDocs.skipNext = true;
+		open = false;
+		await chatStore.sendMessage(MODES[mode].prompt(doc.name, r.from, r.to, r.text));
+	}
 
 	async function handleFiles(e: Event) {
 		const input = e.currentTarget as HTMLInputElement;
@@ -53,12 +94,52 @@
 								variant="ghost"
 								size="icon"
 								class="h-7 w-7 shrink-0"
+								title="Studia: riassunto, flashcard, quiz"
+								onclick={() => toggleStudy(doc.id)}
+							>
+								<GraduationCap class="h-4 w-4" />
+							</Button>
+							<Button
+								variant="ghost"
+								size="icon"
+								class="h-7 w-7 shrink-0"
 								title="Rimuovi"
 								onclick={() => alteaDocs.remove(doc.id)}
 							>
 								<Trash2 class="h-4 w-4" />
 							</Button>
 						</li>
+						{#if studyId === doc.id}
+							{@const pv = preview(doc.id)}
+							<li class="flex flex-col gap-2 bg-muted/40 px-3 py-2 text-sm">
+								<div class="flex items-center gap-2">
+									<label for="sp-{doc.id}" class="text-xs text-muted-foreground">Da pagina</label>
+									<input
+										id="sp-{doc.id}"
+										type="number"
+										min="1"
+										max={alteaDocs.maxPage(doc)}
+										bind:value={fromPage}
+										class="w-16 rounded-md border bg-background px-2 py-1 text-xs"
+									/>
+									<span class="text-xs text-muted-foreground">
+										di {alteaDocs.maxPage(doc)}{pv && pv.text ? ` · userà le pagine ${pv.from}-${pv.to}` : ''}
+									</span>
+								</div>
+								<div class="flex gap-2">
+									{#each Object.entries(MODES) as [key, m] (key)}
+										<Button
+											size="sm"
+											variant="secondary"
+											onclick={() => study(doc.id, key as keyof typeof MODES)}>{m.label}</Button
+										>
+									{/each}
+								</div>
+								<p class="text-xs text-muted-foreground">
+									Una parte alla volta (circa 3000 caratteri): per continuare, imposta la pagina successiva.
+								</p>
+							</li>
+						{/if}
 					{/each}
 				</ul>
 			{/if}

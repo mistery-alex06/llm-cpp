@@ -1030,7 +1030,7 @@ class ChatStore {
 
 	async sendMessage(content: string, extras?: DatabaseMessageExtra[]): Promise<void> {
 		content = handleMemoryCommand(content) ?? content;
-		if (alteaWeb.enabled && content.trim()) await alteaWeb.prepare(content);
+		if (alteaWeb.enabled && content.trim() && !alteaDocs.skipNext) await alteaWeb.prepare(content);
 		const docScope =
 			alteaProjects.projectOf(conversationsStore.activeConversation?.id)?.id ??
 			alteaProjects.pendingProjectId ??
