@@ -3,6 +3,7 @@
 	import { Square, SkipForward, Globe, FileText } from '@lucide/svelte';
 	import { alteaWeb } from '$lib/utils/altea-web.svelte';
 	import { alteaDocs } from '$lib/utils/altea-docs.svelte';
+	import { alteaAuto } from '$lib/utils/altea-auto.svelte';
 	import AlteaDocsDialog from './AlteaDocsDialog.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { ChatService } from '$lib/services';
@@ -183,6 +184,21 @@
 			>
 				<FileText class="h-3.5 w-3.5" />
 				Doc{alteaDocs.docs.length > 0 ? ` (${alteaDocs.docs.length})` : ''}
+			</Button>
+			<Button
+				type="button"
+				variant={alteaAuto.enabled ? 'secondary' : 'ghost'}
+				size="sm"
+				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {alteaAuto.enabled
+					? 'text-primary'
+					: 'text-muted-foreground'}"
+				title={alteaAuto.enabled
+					? 'Scelta automatica del modello attiva: clicca per disattivarla'
+					: 'Scegli automaticamente il modello (1.7B veloce, 4B per domande complesse, Omni per media)'}
+				onclick={() => alteaAuto.toggle()}
+				{disabled}
+			>
+				Auto
 			</Button>
 		</div>
 	{/if}

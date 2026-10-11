@@ -180,6 +180,18 @@ Il pulsante **Doc**, accanto a **Web**, apre la libreria dei documenti.
 - Compatibile con la ricerca web: se sono attivi entrambi, Altea riceve estratti dei documenti e risultati web.
 - Sono documenti nel browser: cancellando i dati del sito si perdono.
 
+### Scelta automatica del modello
+
+Il pulsante **Auto** (accanto a *Doc*) sceglie il modello per ogni messaggio:
+
+| Messaggio | Modello |
+|---|---|
+| Domanda breve/semplice | Qwen3-1.7B (veloce) |
+| Testo lungo, codice, spiegazioni/analisi/calcoli, o con Web/Doc attivi | Qwen3-4B |
+| Immagini, audio o video allegati | Qwen2.5-Omni-3B |
+
+Cambiare modello richiede qualche secondo di caricamento (ne resta uno solo in RAM). Disattivato di default; la scelta si ricorda nel browser.
+
 ### Immagini e audio
 
 Seleziona **Qwen2.5-Omni-3B** nel selettore del modello, poi usa **+** → *Aggiungi file*. Con gli altri modelli il caricamento di immagini e audio è disattivato. Il video non è stato testato.
@@ -263,11 +275,10 @@ llm/
 - [x] Ricerca web con fonti citate (pulsante *Web*)
 - [x] Documenti locali (RAG) con citazione di file e pagina (pulsante *Doc*)
 - [x] Traduzione completa della UI in italiano
-### Prossimi obiettivi
+- [x] Scelta automatica del modello (pulsante *Auto*)### Prossimi obiettivi
 
 | Priorità | Obiettivo | Note |
 |---|---|---|
-| Alta | Scelta automatica del modello | domande semplici al 1.7B, complesse al 4B |
 | Media | Memoria su file | non legata al browser, condivisa tra browser e backup |
 | Media | Esporta/importa | chat e memoria in un file di backup |
 | Media | Analisi video | estrazione di fotogrammi da dare a Omni |

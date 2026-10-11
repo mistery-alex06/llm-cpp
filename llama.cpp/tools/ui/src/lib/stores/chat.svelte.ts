@@ -16,6 +16,7 @@ import { DatabaseService } from '$lib/services/database.service';
 import { ChatService } from '$lib/services/chat.service';
 import { alteaWeb } from '$lib/utils/altea-web.svelte';
 import { alteaDocs } from '$lib/utils/altea-docs.svelte';
+import { alteaAuto } from '$lib/utils/altea-auto.svelte';
 import {
 	handleMemoryCommand,
 	looksPersonal,
@@ -1029,6 +1030,17 @@ class ChatStore {
 		if (alteaWeb.enabled && content.trim()) await alteaWeb.prepare(content);
 		alteaDocs.prepare(content);
 		if (!content.trim() && (!extras || extras.length === 0)) return;
+		if (alteaAuto.enabled) {
+			const target = alteaAuto.classify(
+				content,
+				extras as { type?: string }[] | undefined,
+				alteaWeb.enabled || alteaDocs.docs.length > 0
+			);
+			const re = alteaAuto.pattern(target);
+			const opt = modelsStore.models.find((m) => re.test(m.model));
+			if (opt && modelsStore.selectedModelId !== opt.id) await modelsStore.selectModelById(opt.id);
+		}
+
 		const activeConv = conversationsStore.activeConversation;
 
 		// If agentic loop is running, inject as a steering message instead of starting a new flow
