@@ -36,4 +36,12 @@ if [ -f "$DIR/search_server.py" ]; then
     SEARCH_PID=$!
     trap 'kill $SEARCH_PID 2>/dev/null' EXIT
 fi
+
+# Archivio locale (memoria, progetti, documenti in ~/Altea/data), copia di sicurezza fuori dal browser
+if [ -f "$DIR/store_server.py" ]; then
+    python3 "$DIR/store_server.py" >/tmp/altea-store.log 2>&1 &
+    STORE_PID=$!
+    trap 'kill $SEARCH_PID $STORE_PID 2>/dev/null' EXIT
+fi
+
 "$BIN" --models-dir "$DIR" --models-max 1 -ngl 0 -c 4096 -t 4 --reasoning off --reasoning-budget 0 --no-mmproj-offload --host 127.0.0.1 --port 8080 "$@"

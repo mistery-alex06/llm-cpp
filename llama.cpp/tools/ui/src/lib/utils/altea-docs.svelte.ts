@@ -4,6 +4,8 @@
 import { convertPDFToPages } from '$lib/utils/pdf-processing';
 import { readFileAsText } from '$lib/utils/text-files';
 
+import { pushSync } from '$lib/utils/altea-sync';
+
 const DB_NAME = 'AlteaDocs';
 const STORE = 'docs';
 const KEY_ENABLED = 'Altea.docs';
@@ -120,6 +122,8 @@ class AlteaDocs {
 	private df = new Map<string, number>();
 	private avgLen = 1;
 	private pending = '';
+	/** Si risolve quando i documenti sono stati caricati da IndexedDB. */
+	ready: Promise<void> = Promise.resolve();
 
 	constructor() {
 		try {
@@ -128,7 +132,7 @@ class AlteaDocs {
 			/* ignore */
 		}
 		if (typeof indexedDB !== 'undefined') {
-			dbAll()
+			this.ready = dbAll()
 				.then((docs) => {
 					this.docs = docs.sort((a, b) => a.addedAt - b.addedAt);
 					this.rebuild();
@@ -201,6 +205,7 @@ class AlteaDocs {
 			await dbPut(doc);
 			this.docs = [...this.docs, doc];
 			this.rebuild();
+			pushSync('docs', this.exportAll());
 		} catch (e) {
 			this.error = `Impossibile leggere "${file.name}": ${e instanceof Error ? e.message : 'errore'}`;
 		} finally {
@@ -232,12 +237,22 @@ class AlteaDocs {
 			added++;
 		}
 		this.rebuild();
+		if (added) pushSync('docs', this.exportAll());
 		return added;
 	}
 
 	async remove(id: string): Promise<void> {
 		await dbDelete(id);
 		this.docs = this.docs.filter((d) => d.id !== id);
+		this.rebuild();
+		pushSync('docs', this.exportAll());
+	}
+
+	/** Sostituisce tutti i documenti con quelli ricaricati dal file (senza riscriverlo). */
+	async replaceAll(docs: AlteaDoc[]): Promise<void> {
+		for (const d of this.docs) await dbDelete(d.id);
+		for (const d of docs) await dbPut(d);
+		this.docs = [...docs].sort((a, b) => a.addedAt - b.addedAt);
 		this.rebuild();
 	}
 

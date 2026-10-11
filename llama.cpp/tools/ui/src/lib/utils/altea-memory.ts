@@ -1,5 +1,7 @@
 // Memoria persistente di Altea: elenco di fatti salvati nel browser (localStorage)
 // e iniettati come system prompt in ogni conversazione.
+import { pushSync } from '$lib/utils/altea-sync';
+
 const KEY = 'Altea.memory';
 const MAX_ITEMS = 50;
 
@@ -15,6 +17,7 @@ export function loadMemory(): string[] {
 export function saveMemory(items: string[]): void {
 	try {
 		localStorage.setItem(KEY, JSON.stringify(items.slice(-MAX_ITEMS)));
+		pushSync('memory', items.slice(-MAX_ITEMS));
 	} catch {
 		/* ignore */
 	}

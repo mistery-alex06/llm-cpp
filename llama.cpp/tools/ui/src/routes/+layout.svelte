@@ -6,6 +6,7 @@
 	import { page } from '$app/state';
 	import { untrack } from 'svelte';
 	import { onMount } from 'svelte';
+	import { initAlteaSync } from '$lib/utils/altea-sync-init';
 
 	import { SidebarNavigation } from '$lib/components/app';
 	import ProjectsSidebar from '$lib/components/app/navigation/ProjectsSidebar.svelte';
@@ -132,6 +133,7 @@
 	}
 
 	onMount(() => {
+		void initAlteaSync();
 		updateFavicon();
 		// snapshot of every backend running stream on first load, populates the sidebar spinners
 		// so the user sees each conv that has a live inference, even ones not opened yet

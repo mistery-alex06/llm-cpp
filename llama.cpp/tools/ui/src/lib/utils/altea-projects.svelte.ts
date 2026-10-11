@@ -1,6 +1,8 @@
 // Progetti di Altea: raggruppano più chat sullo stesso argomento.
 // Ogni progetto ha istruzioni e una memoria propria, iniettate nel prompt di tutte le sue chat,
 // insieme all'elenco delle altre chat del progetto (così le conversazioni restano collegate).
+import { pushSync } from '$lib/utils/altea-sync';
+
 const KEY = 'Altea.projects';
 const KEY_OPEN = 'Altea.projectsSidebar';
 const MAX_MEMORY = 50;
@@ -52,6 +54,17 @@ class AlteaProjects {
 	private save(): void {
 		try {
 			localStorage.setItem(KEY, JSON.stringify($state.snapshot(this.projects)));
+		} catch {
+			/* ignore */
+		}
+		pushSync('projects', $state.snapshot(this.projects));
+	}
+
+	/** Sostituisce i progetti con quelli ricaricati dal file (senza riscriverlo). */
+	replaceAll(items: AlteaProject[]): void {
+		this.projects = items;
+		try {
+			localStorage.setItem(KEY, JSON.stringify(items));
 		} catch {
 			/* ignore */
 		}

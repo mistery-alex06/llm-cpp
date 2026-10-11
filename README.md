@@ -49,6 +49,7 @@ main.cpp  ──────────────►  libllama / libggml  ◄
 - **Interfaccia web**: la UI di llama.cpp (SvelteKit, in `llama.cpp/tools/ui/`), personalizzata: tema in `src/app.css`, sfondo `static/bg-ship.jpg`, testi in italiano, nome Altea. I file della UI vengono incorporati nel binario `llama-server` in fase di compilazione.
 - **Memoria** (`llama.cpp/tools/ui/src/lib/utils/altea-memory.ts`): i fatti sono salvati nel `localStorage` del browser e aggiunti al system prompt di ogni richiesta, insieme all'identità di Altea (italiano, femminile). Dopo ogni risposta, se il messaggio sembra contenere informazioni personali, il modello stesso estrae i fatti duraturi da salvare.
 - **`search_server.py`**: servizio locale (`127.0.0.1:8091`) che interroga DuckDuckGo (HTML, via `curl`) e restituisce i primi risultati; avviato e fermato insieme al server.
+- **`store_server.py`**: servizio locale (`127.0.0.1:8092`) che salva memoria, progetti e documenti anche in `~/Altea/data/` (`memory.json`, `projects.json`, `docs.json`); avviato e fermato insieme al server, accetta solo richieste dalla UI locale.
 - **Documenti (RAG)** (`llama.cpp/tools/ui/src/lib/utils/altea-docs.svelte.ts`): i file caricati vengono spezzati in estratti da ~700 caratteri e salvati nel browser (IndexedDB). A ogni domanda una ricerca BM25 per parole chiave, senza modelli di embedding, sceglie gli estratti più pertinenti, che vengono aggiunti al prompt.
 - **`Altea.app`**: generata da `make_app.sh`. Avvia il server, apre una finestra Chrome dedicata e spegne il server quando la finestra viene chiusa.
 - **`src/` e `include/`**: tokenizer, matrici e transformer scritti da zero (progetto iniziale). Non vengono più usati per l'inferenza.
@@ -195,6 +196,10 @@ Barra laterale **destra** (icona cartella), speculare a quella delle chat: raggr
 
 I progetti sono salvati nel browser (`localStorage`) e inclusi nel backup *Importa/Esporta*. Eliminare un progetto non elimina le chat.
 
+### Memoria su file
+
+Memoria, progetti e documenti vengono copiati automaticamente in `~/Altea/data/` (cambiabile con la variabile `ALTEA_DATA`). All'apertura, se il browser è vuoto (dati cancellati, altro browser) o il file è più recente, Altea li ricarica dal file; altrimenti aggiorna il file. Se il servizio non è attivo, tutto funziona come prima solo nel browser. Le conversazioni restano nel browser: per queste usa l'esportazione ZIP.
+
 ### Backup (esporta/importa)
 
 *Impostazioni* → *Importa/Esporta*:
@@ -274,6 +279,7 @@ llm/
 ├── run_qwen.sh             avvia llama-cli (chat da terminale)
 ├── make_app.sh             genera Altea.app sul Desktop
 ├── search_server.py        ricerca web locale (DuckDuckGo) per il pulsante Web
+├── store_server.py         archivio su file (~/Altea/data) per memoria, progetti, documenti
 ├── llama.cpp/              llama.cpp completo (motore, server, UI web)
 ├── src/, include/          tokenizer, matrici, transformer custom (storico)
 ├── web/index.html          prima pagina web sperimentale (non usata)
@@ -305,8 +311,8 @@ llm/
 - [x] Scelta automatica del modello (pulsante *Auto*)### Prossimi obiettivi
 - [x] Esporta/importa: conversazioni, memoria e documenti
 - [x] Progetti: barra laterale destra con chat, istruzioni e memoria condivise| Priorità | Obiettivo | Note |
+- [x] Memoria su file (`~/Altea/data`)
 |---|---|---|
-| Media | Memoria su file | non legata al browser, condivisa tra browser e backup |
 | Media | Analisi video | estrazione di fotogrammi da dare a Omni |
 | Bassa | Azioni sul computer | comandi con conferma esplicita dell'utente |
 | Bassa | Personalizzazione del modello | fine-tuning leggero (LoRA) su stile e conoscenze |
