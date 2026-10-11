@@ -7,6 +7,7 @@
  * as reactive getters so validation tracks the model in real time.
  */
 
+import { expandVideos } from '$lib/utils/video-frames';
 import { processFilesToChatUploaded } from '$lib/utils/browser-only';
 import { isFileTypeSupported, filterFilesByModalities } from '$lib/utils';
 
@@ -32,7 +33,8 @@ export function useChatScreenFileUpload(options: UseChatScreenFileUploadOptions)
 		supportedTypes: []
 	});
 
-	async function processFiles(files: File[]) {
+	async function processFiles(inputFiles: File[]) {
+		const files = await expandVideos(inputFiles);
 		const generallySupported: File[] = [];
 		const generallyUnsupported: File[] = [];
 

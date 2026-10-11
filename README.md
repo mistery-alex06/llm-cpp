@@ -208,6 +208,15 @@ Barra laterale **destra** (icona cartella), speculare a quella delle chat: raggr
 
 I progetti sono salvati nel browser (`localStorage`) e inclusi nel backup *Importa/Esporta*. Eliminare un progetto non elimina le chat.
 
+### Analisi video
+
+llama.cpp non legge i video: quando ne alleghi uno (*+* → *Video*, o trascinandolo) Altea lo trasforma nel browser in **3-6 fotogrammi** (JPEG, in ordine, lato massimo 448 px, uno ogni ~5 s) più l'**audio** (WAV mono 16 kHz, primi 30 s; assente oltre i 5 minuti di video o se silenzioso). Poi scrivi la domanda (es. *cosa succede in questo video?*).
+
+- Serve il modello **Qwen2.5-Omni** (immagini e audio); con **Auto** attivo viene scelto da solo all'invio.
+- È un campionamento, non una visione continua: azioni brevi tra due fotogrammi possono sfuggire.
+- Con 4096 token di contesto 6 fotogrammi e 30 s di audio occupano buona parte del contesto: usa video brevi.
+- Tutto avviene sul Mac; il video non viene inviato a nessuno. Limite 500 MB.
+
 ### Memoria su file
 
 Memoria, progetti e documenti vengono copiati automaticamente in `~/Altea/data/` (cambiabile con la variabile `ALTEA_DATA`). All'apertura, se il browser è vuoto (dati cancellati, altro browser) o il file è più recente, Altea li ricarica dal file; altrimenti aggiorna il file. Se il servizio non è attivo, tutto funziona come prima solo nel browser. Le conversazioni restano nel browser: per queste usa l'esportazione ZIP.
@@ -329,8 +338,8 @@ llm/
 - [x] Progetti: barra laterale destra con chat, istruzioni e memoria condivise| Priorità | Obiettivo | Note |
 - [x] Memoria su file (`~/Altea/data`)
 - [x] Barra superiore: ruoli, comandi rapidi e stato del sistema
+- [x] Analisi video (fotogrammi e audio estratti nel browser)
 |---|---|---|
-| Media | Analisi video | estrazione di fotogrammi da dare a Omni |
 | Bassa | Azioni sul computer | comandi con conferma esplicita dell'utente |
 | Bassa | Personalizzazione del modello | fine-tuning leggero (LoRA) su stile e conoscenze |
 | Bassa | Benchmark e quantizzazioni | confronto velocità/qualità per ottimizzare su 8 GB di RAM |
