@@ -8,6 +8,7 @@
 	import { onMount } from 'svelte';
 
 	import { SidebarNavigation } from '$lib/components/app';
+	import ProjectsSidebar from '$lib/components/app/navigation/ProjectsSidebar.svelte';
 	import { PwaMetaTags, PwaRefreshAlert } from '$lib/components/pwa';
 	import { pwaAssetsHead } from 'virtual:pwa-assets/head';
 
@@ -274,9 +275,10 @@
 			}}
 		/>
 
-		<div class="flex-1">
+		<div class="min-w-0 flex-1">
 			{@render children?.()}
 		</div>
+		<ProjectsSidebar />
 	</div>
 
 	<ModeWatcher />

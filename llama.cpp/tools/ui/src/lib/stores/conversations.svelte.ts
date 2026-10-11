@@ -18,6 +18,7 @@
  * @see DatabaseService in services/database.ts for IndexedDB operations
  */
 
+import { alteaProjects } from '$lib/utils/altea-projects.svelte';
 import { goto } from '$app/navigation';
 import { browser } from '$app/environment';
 import { toast } from 'svelte-sonner';
@@ -257,6 +258,7 @@ class ConversationsStore {
 		this.conversations = [conversation, ...this.conversations];
 		this.activeConversation = conversation;
 		this.activeMessages = [];
+		alteaProjects.assignPending(conversation.id);
 
 		await goto(RouterService.chat(conversation.id));
 

@@ -40,7 +40,7 @@
 	function handleAlteaBackupExport() {
 		try {
 			const r = exportAlteaBackup();
-			toast.success(`Backup salvato: ${r.memory} voci di memoria, ${r.docs} documenti`);
+			toast.success(`Backup salvato: ${r.memory} voci di memoria, ${r.docs} documenti, ${r.projects} progetti`);
 		} catch {
 			toast.error('Esportazione del backup non riuscita');
 		}
@@ -55,7 +55,7 @@
 			if (!file) return;
 			try {
 				const r = await importAlteaBackup(file);
-				toast.success(`Importati ${r.memory} voci di memoria e ${r.docs} documenti`);
+				toast.success(`Importati ${r.memory} voci di memoria, ${r.docs} documenti e ${r.projects} progetti`);
 			} catch (e) {
 				toast.error(e instanceof Error ? e.message : 'Importazione non riuscita');
 			}
@@ -311,10 +311,10 @@
 		/>
 	</SettingsGroup>
 
-	<SettingsGroup title="Memoria e documenti di Altea">
+	<SettingsGroup title="Memoria, documenti e progetti di Altea">
 		<SettingsChatImportExportSection
 			title="Esporta"
-			description="Salva memoria e documenti caricati (Doc) in un unico file JSON di backup."
+			description="Salva memoria, documenti (Doc) e progetti in un unico file JSON di backup."
 			IconComponent={Download}
 			buttonText="Esporta backup"
 			onclick={handleAlteaBackupExport}
@@ -322,7 +322,7 @@
 
 		<SettingsChatImportExportSection
 			title="Importa"
-			description="Ripristina un backup di Altea. Memoria e documenti vengono uniti a quelli esistenti, senza duplicati."
+			description="Ripristina un backup di Altea. Memoria, documenti e progetti vengono uniti a quelli esistenti, senza duplicati."
 			IconComponent={Upload}
 			buttonText="Importa backup"
 			onclick={handleAlteaBackupImport}

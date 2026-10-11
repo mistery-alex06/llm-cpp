@@ -1,4 +1,5 @@
 import { memorySystemPrompt } from '$lib/utils/altea-memory';
+import { alteaProjects } from '$lib/utils/altea-projects.svelte';
 import { alteaWeb } from '$lib/utils/altea-web.svelte';
 import { alteaDocs } from '$lib/utils/altea-docs.svelte';
 import { getAuthHeaders, getJsonHeaders } from '$lib/utils/api-headers';
@@ -221,7 +222,12 @@ export class ChatService {
 			enableThinking === true && !modelsStore.checkModelSupportsThinking(options.model ?? '')
 				? '\n\nPrima di rispondere, ragiona passo per passo e mostra il ragionamento, poi dai la risposta finale.'
 				: '';
-		const memoryPrompt = memorySystemPrompt() + forcedReasoning + alteaDocs.consume() + alteaWeb.consume();
+		const memoryPrompt =
+			memorySystemPrompt() +
+			alteaProjects.promptFor(conversationId) +
+			forcedReasoning +
+			alteaDocs.consume() +
+			alteaWeb.consume();
 		if (memoryPrompt) {
 			const first = normalizedMessages[0];
 			if (first && first.role === MessageRole.SYSTEM && typeof first.content === 'string') {

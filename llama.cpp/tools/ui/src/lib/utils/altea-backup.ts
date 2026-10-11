@@ -2,6 +2,7 @@
 // Le conversazioni hanno già il loro export/import (ZIP/JSONL) nella stessa pagina.
 import { loadMemory, saveMemory } from '$lib/utils/altea-memory';
 import { alteaDocs, type AlteaDoc } from '$lib/utils/altea-docs.svelte';
+import { alteaProjects, type AlteaProject } from '$lib/utils/altea-projects.svelte';
 
 interface AlteaBackup {
 	app: 'altea';
@@ -9,15 +10,17 @@ interface AlteaBackup {
 	exportedAt: string;
 	memory: string[];
 	docs: AlteaDoc[];
+	projects?: AlteaProject[];
 }
 
-export function exportAlteaBackup(): { memory: number; docs: number } {
+export function exportAlteaBackup(): { memory: number; docs: number; projects: number } {
 	const data: AlteaBackup = {
 		app: 'altea',
 		version: 1,
 		exportedAt: new Date().toISOString(),
 		memory: loadMemory(),
-		docs: alteaDocs.exportAll()
+		docs: alteaDocs.exportAll(),
+		projects: alteaProjects.exportAll()
 	};
 	const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
 	const url = URL.createObjectURL(blob);
@@ -28,10 +31,10 @@ export function exportAlteaBackup(): { memory: number; docs: number } {
 	a.click();
 	document.body.removeChild(a);
 	URL.revokeObjectURL(url);
-	return { memory: data.memory.length, docs: data.docs.length };
+	return { memory: data.memory.length, docs: data.docs.length, projects: data.projects?.length ?? 0 };
 }
 
-export async function importAlteaBackup(file: File): Promise<{ memory: number; docs: number }> {
+export async function importAlteaBackup(file: File): Promise<{ memory: number; docs: number; projects: number }> {
 	let data: Partial<AlteaBackup>;
 	try {
 		data = JSON.parse(await file.text());
@@ -55,5 +58,6 @@ export async function importAlteaBackup(file: File): Promise<{ memory: number; d
 	}
 	saveMemory(current);
 	const addedDocs = await alteaDocs.importAll(data.docs);
-	return { memory: addedMemory, docs: addedDocs };
+	const addedProjects = Array.isArray(data.projects) ? alteaProjects.importAll(data.projects) : 0;
+	return { memory: addedMemory, docs: addedDocs, projects: addedProjects };
 }

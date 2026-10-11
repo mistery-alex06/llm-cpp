@@ -1,0 +1,193 @@
+// Progetti di Altea: raggruppano più chat sullo stesso argomento.
+// Ogni progetto ha istruzioni e una memoria propria, iniettate nel prompt di tutte le sue chat,
+// insieme all'elenco delle altre chat del progetto (così le conversazioni restano collegate).
+const KEY = 'Altea.projects';
+const KEY_OPEN = 'Altea.projectsSidebar';
+const MAX_MEMORY = 50;
+
+export interface AlteaProject {
+	id: string;
+	name: string;
+	instructions: string;
+	memory: string[];
+	chatIds: string[];
+	createdAt: number;
+}
+
+function load(): AlteaProject[] {
+	try {
+		const v = JSON.parse(localStorage.getItem(KEY) || '[]');
+		if (!Array.isArray(v)) return [];
+		return v
+			.filter((p) => p && typeof p.id === 'string' && typeof p.name === 'string')
+			.map((p) => ({
+				id: p.id,
+				name: p.name,
+				instructions: typeof p.instructions === 'string' ? p.instructions : '',
+				memory: Array.isArray(p.memory) ? p.memory.filter((m: unknown) => typeof m === 'string') : [],
+				chatIds: Array.isArray(p.chatIds) ? p.chatIds.filter((c: unknown) => typeof c === 'string') : [],
+				createdAt: Number(p.createdAt) || Date.now()
+			}));
+	} catch {
+		return [];
+	}
+}
+
+class AlteaProjects {
+	projects = $state<AlteaProject[]>(typeof localStorage !== 'undefined' ? load() : []);
+	sidebarOpen = $state(false);
+	/** Progetto in cui verrà creata la prossima nuova chat. */
+	pendingProjectId = $state<string | null>(null);
+	/** Risolutore dei nomi delle chat (impostato dalla barra laterale). */
+	chatNameOf: (id: string) => string | undefined = () => undefined;
+
+	constructor() {
+		try {
+			this.sidebarOpen = localStorage.getItem(KEY_OPEN) === '1';
+		} catch {
+			/* ignore */
+		}
+	}
+
+	private save(): void {
+		try {
+			localStorage.setItem(KEY, JSON.stringify($state.snapshot(this.projects)));
+		} catch {
+			/* ignore */
+		}
+	}
+
+	toggleSidebar(): void {
+		this.sidebarOpen = !this.sidebarOpen;
+		try {
+			localStorage.setItem(KEY_OPEN, this.sidebarOpen ? '1' : '0');
+		} catch {
+			/* ignore */
+		}
+	}
+
+	create(name: string): AlteaProject | null {
+		const n = name.trim();
+		if (!n) return null;
+		const p: AlteaProject = {
+			id: crypto.randomUUID(),
+			name: n,
+			instructions: '',
+			memory: [],
+			chatIds: [],
+			createdAt: Date.now()
+		};
+		this.projects = [...this.projects, p];
+		this.save();
+		return p;
+	}
+
+	rename(id: string, name: string): void {
+		const p = this.projects.find((x) => x.id === id);
+		if (!p || !name.trim()) return;
+		p.name = name.trim();
+		this.save();
+	}
+
+	setInstructions(id: string, text: string): void {
+		const p = this.projects.find((x) => x.id === id);
+		if (!p) return;
+		p.instructions = text;
+		this.save();
+	}
+
+	addMemory(id: string, fact: string): void {
+		const p = this.projects.find((x) => x.id === id);
+		const f = fact.trim();
+		if (!p || !f || p.memory.includes(f)) return;
+		p.memory = [...p.memory, f].slice(-MAX_MEMORY);
+		this.save();
+	}
+
+	removeMemory(id: string, index: number): void {
+		const p = this.projects.find((x) => x.id === id);
+		if (!p) return;
+		p.memory = p.memory.filter((_, i) => i !== index);
+		this.save();
+	}
+
+	remove(id: string): void {
+		this.projects = this.projects.filter((p) => p.id !== id);
+		if (this.pendingProjectId === id) this.pendingProjectId = null;
+		this.save();
+	}
+
+	projectOf(chatId: string | undefined | null): AlteaProject | undefined {
+		if (!chatId) return undefined;
+		return this.projects.find((p) => p.chatIds.includes(chatId));
+	}
+
+	/** Mette la chat nel progetto (una chat appartiene a un solo progetto). */
+	assign(projectId: string, chatId: string): void {
+		for (const p of this.projects) p.chatIds = p.chatIds.filter((c) => c !== chatId);
+		const p = this.projects.find((x) => x.id === projectId);
+		if (p) p.chatIds = [...p.chatIds, chatId];
+		this.save();
+	}
+
+	unassign(chatId: string): void {
+		for (const p of this.projects) p.chatIds = p.chatIds.filter((c) => c !== chatId);
+		this.save();
+	}
+
+	/** Chiamata alla creazione di una chat: la collega al progetto in attesa. */
+	assignPending(chatId: string): void {
+		if (!this.pendingProjectId) return;
+		this.assign(this.pendingProjectId, chatId);
+		this.pendingProjectId = null;
+	}
+
+	/** Pulisce i riferimenti a chat eliminate. */
+	forget(chatId: string): void {
+		this.unassign(chatId);
+	}
+
+	exportAll(): AlteaProject[] {
+		return $state.snapshot(this.projects) as AlteaProject[];
+	}
+
+	importAll(items: AlteaProject[]): number {
+		let added = 0;
+		for (const p of items) {
+			if (!p || typeof p.name !== 'string' || this.projects.some((x) => x.id === p.id)) continue;
+			this.projects = [
+				...this.projects,
+				{
+					id: p.id || crypto.randomUUID(),
+					name: p.name,
+					instructions: p.instructions || '',
+					memory: Array.isArray(p.memory) ? p.memory : [],
+					chatIds: Array.isArray(p.chatIds) ? p.chatIds : [],
+					createdAt: p.createdAt || Date.now()
+				}
+			];
+			added++;
+		}
+		if (added) this.save();
+		return added;
+	}
+
+	/** Testo da aggiungere al prompt di sistema per le chat di un progetto. */
+	promptFor(chatId: string | undefined): string {
+		const chatNames = this.chatNameOf;
+		const p = this.projectOf(chatId);
+		if (!p) return '';
+		let out = `\n\nStai lavorando nel progetto "${p.name}". Resta coerente con questo argomento.`;
+		if (p.instructions.trim()) out += `\nIstruzioni del progetto: ${p.instructions.trim()}`;
+		if (p.memory.length) out += `\nMemoria del progetto:\n` + p.memory.map((m) => `- ${m}`).join('\n');
+		const others = p.chatIds
+			.filter((c) => c !== chatId)
+			.map((c) => chatNames(c))
+			.filter((n): n is string => Boolean(n))
+			.slice(-10);
+		if (others.length) out += `\nAltre conversazioni dello stesso progetto: ${others.join('; ')}.`;
+		return out;
+	}
+}
+
+export const alteaProjects = new AlteaProjects();
