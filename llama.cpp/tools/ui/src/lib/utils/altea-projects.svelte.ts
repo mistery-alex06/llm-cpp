@@ -172,6 +172,28 @@ class AlteaProjects {
 		return added;
 	}
 
+	/** Aggiunge alla memoria del progetto i fatti estratti dal modello (una riga per fatto). */
+	addExtractedFacts(projectId: string, raw: string): void {
+		const p = this.projects.find((x) => x.id === projectId);
+		if (!p) return;
+		const norm = (x: string) => x.toLowerCase().replace(/[^a-z0-9àèéìòù ]/g, '').trim();
+		let changed = false;
+		for (let line of raw.split('\n')) {
+			line = line.replace(/^[-*•\d.)\s]+/, '').trim();
+			if (
+				line.length < 8 ||
+				line.length > 220 ||
+				/^nessun/i.test(line) ||
+				/non indicat|non specificat|n\/a|<think>/i.test(line)
+			)
+				continue;
+			if (p.memory.some((x) => norm(x) === norm(line))) continue;
+			p.memory = [...p.memory, line].slice(-MAX_MEMORY);
+			changed = true;
+		}
+		if (changed) this.save();
+	}
+
 	/** Testo da aggiungere al prompt di sistema per le chat di un progetto. */
 	promptFor(chatId: string | undefined): string {
 		const chatNames = this.chatNameOf;

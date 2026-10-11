@@ -17,9 +17,12 @@ import { ChatService } from '$lib/services/chat.service';
 import { alteaWeb } from '$lib/utils/altea-web.svelte';
 import { alteaDocs } from '$lib/utils/altea-docs.svelte';
 import { alteaAuto } from '$lib/utils/altea-auto.svelte';
+import { alteaProjects } from '$lib/utils/altea-projects.svelte';
 import {
 	handleMemoryCommand,
 	looksPersonal,
+	looksProjectRelevant,
+	PROJECT_EXTRACT_PROMPT,
 	EXTRACT_PROMPT,
 	addExtractedFacts
 } from '$lib/utils/altea-memory';
@@ -1106,7 +1109,7 @@ class ChatStore {
 				conversationsStore.activeMessages.slice(0, -1),
 				assistantMessage,
 				async () => {
-					void this.autoRemember(content);
+					void this.autoRemember(content, conversationsStore.activeConversation?.id);
 				},
 				undefined,
 				undefined,
@@ -1558,13 +1561,23 @@ class ChatStore {
 		this.clearPendingMessage(convId);
 	}
 
-	private async autoRemember(userContent: string): Promise<void> {
+	private async autoRemember(userContent: string, convId?: string): Promise<void> {
+		const project = alteaProjects.projectOf(convId);
+		if (project && looksProjectRelevant(userContent)) {
+			await this.extractFacts(PROJECT_EXTRACT_PROMPT(project.name, userContent.slice(0, 800)), (out) =>
+				alteaProjects.addExtractedFacts(project.id, out)
+			);
+		}
 		if (!looksPersonal(userContent)) return;
+		await this.extractFacts(EXTRACT_PROMPT(userContent.slice(0, 800)), addExtractedFacts);
+	}
+
+	private async extractFacts(prompt: string, store: (raw: string) => void): Promise<void> {
 		const model = isRouterMode() && selectedModelName() ? selectedModelName() : undefined;
 		let out = '';
 		try {
 			await ChatService.sendMessage(
-				[{ role: MessageRole.USER, content: EXTRACT_PROMPT(userContent.slice(0, 800)) }],
+				[{ role: MessageRole.USER, content: prompt }],
 				{
 					model: model || undefined,
 					stream: true,
@@ -1577,7 +1590,7 @@ class ChatStore {
 		} catch {
 			return;
 		}
-		addExtractedFacts(out);
+		store(out);
 	}
 
 	private async generateTitleWithLLM(

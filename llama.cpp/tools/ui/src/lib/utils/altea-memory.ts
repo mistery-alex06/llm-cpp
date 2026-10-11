@@ -87,6 +87,17 @@ export function looksPersonal(text: string): boolean {
 export const EXTRACT_PROMPT = (msg: string) =>
 	`/no_think Dal seguente messaggio di un utente estrai SOLO fatti personali duraturi su di lui (nome, studi, lavoro, progetti, preferenze, abitudini, istruzioni su come rispondergli). Scrivi ogni fatto come frase breve e autonoma, una per riga, senza elenchi o numeri. Ignora domande, richieste temporanee e informazioni generiche. Se non c'è nessun fatto duraturo rispondi solo: NESSUNO\n\nEsempio\nMessaggio: "Mi chiamo Marco, studio medicina e mi piace il tennis. Cos'è un integrale?"\nFatti:\nL'utente si chiama Marco.\nL'utente studia medicina.\nL'utente ama il tennis.\n\nEsempio\nMessaggio: "Che tempo fa a Roma?"\nFatti:\nNESSUNO\n\nOra tocca a te.\nMessaggio: "${msg}"\nFatti:`;
 
+const PROJECT_RE =
+	/\b(deciso|decidiamo|decisione|useremo|usiamo|uso|voglio|vorrei|devo|dobbiamo|obiettivo|scadenza|consegna|requisit\w*|vincol\w*|il progetto|stiamo|sto (facendo|costruendo|scrivendo|progettando)|ho scelto|abbiamo scelto|scelto|preferisco|ricorda|l'esame|il tema|la tesi)\b/i;
+
+export function looksProjectRelevant(text: string): boolean {
+	const t = text.trim();
+	return t.length >= 20 && !t.startsWith('/') && PROJECT_RE.test(t);
+}
+
+export const PROJECT_EXTRACT_PROMPT = (project: string, msg: string) =>
+	`/no_think Dal seguente messaggio estrai SOLO fatti duraturi sul progetto "${project}": obiettivi, decisioni, scelte tecniche, vincoli, scadenze, requisiti. Scrivi ogni fatto come frase breve e autonoma, una per riga, senza elenchi o numeri. Ignora domande, richieste temporanee e informazioni generiche. Se non c'è nessun fatto duraturo rispondi solo: NESSUNO\n\nEsempio\nMessaggio: "Per l'esame di Controlli useremo MATLAB, la consegna è il 20 giugno. Come si calcola un polo?"\nFatti:\nPer l'esame si usa MATLAB.\nLa consegna è il 20 giugno.\n\nEsempio\nMessaggio: "Che tempo fa a Roma?"\nFatti:\nNESSUNO\n\nOra tocca a te.\nMessaggio: "${msg}"\nFatti:`;
+
 export function addExtractedFacts(raw: string): void {
 	const items = loadMemory();
 	const norm = (x: string) => x.toLowerCase().replace(/[^a-z0-9àèéìòù ]/g, '').trim();
