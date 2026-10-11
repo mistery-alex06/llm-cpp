@@ -10,6 +10,7 @@
 
 	import { SidebarNavigation } from '$lib/components/app';
 	import ProjectsSidebar from '$lib/components/app/navigation/ProjectsSidebar.svelte';
+	import TopBar from '$lib/components/app/navigation/TopBar.svelte';
 	import { PwaMetaTags, PwaRefreshAlert } from '$lib/components/pwa';
 	import { pwaAssetsHead } from 'virtual:pwa-assets/head';
 
@@ -278,6 +279,7 @@
 		/>
 
 		<div class="min-w-0 flex-1">
+			<TopBar />
 			{@render children?.()}
 		</div>
 		<ProjectsSidebar />

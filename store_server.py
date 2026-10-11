@@ -10,6 +10,7 @@ Nomi ammessi: memory, projects, docs. Percorso modificabile con ALTEA_DATA.
 """
 import json
 import os
+import subprocess
 import tempfile
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
@@ -23,6 +24,43 @@ ALLOWED_ORIGINS = {
 }
 
 os.makedirs(DATA_DIR, exist_ok=True)
+
+
+def sh(cmd):
+    try:
+        return subprocess.run(cmd, capture_output=True, text=True, timeout=3).stdout
+    except Exception:
+        return ""
+
+
+def system_stats():
+    """RAM del modello, swap e memoria libera (macOS)."""
+    llama_kb = 0
+    for line in sh(["ps", "-axo", "rss=,comm="]).splitlines():
+        parts = line.strip().split(None, 1)
+        if len(parts) == 2 and parts[1].endswith("llama-server"):
+            llama_kb += int(parts[0])
+    swap = 0.0
+    out = sh(["sysctl", "-n", "vm.swapusage"])  # total = 3072.00M  used = 1797.75M ...
+    if "used" in out:
+        try:
+            swap = float(out.split("used =")[1].split("M")[0])
+        except ValueError:
+            pass
+    page = 4096
+    free_pages = 0
+    for line in sh(["vm_stat"]).splitlines():
+        if "page size of" in line:
+            page = int(line.split("page size of")[1].split()[0])
+        elif line.startswith(("Pages free", "Pages inactive", "Pages speculative")):
+            free_pages += int(line.split(":")[1].strip().rstrip("."))
+    total = int(sh(["sysctl", "-n", "hw.memsize"]).strip() or 0)
+    return {
+        "llamaMB": llama_kb / 1024,
+        "swapUsedMB": swap,
+        "freeMB": free_pages * page / 1048576,
+        "memTotalMB": total / 1048576,
+    }
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -60,6 +98,8 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(200, b'{"ok":true}')
         if not self._origin_ok():
             return self._send(403)
+        if self.path.split("?")[0] == "/stats":
+            return self._send(200, json.dumps(system_stats()).encode())
         name = self._name()
         if not name:
             return self._send(404)

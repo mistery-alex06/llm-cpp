@@ -1,5 +1,6 @@
 import { memorySystemPrompt } from '$lib/utils/altea-memory';
 import { alteaProjects } from '$lib/utils/altea-projects.svelte';
+import { alteaPersonas } from '$lib/utils/altea-personas.svelte';
 import { alteaWeb } from '$lib/utils/altea-web.svelte';
 import { alteaDocs } from '$lib/utils/altea-docs.svelte';
 import { getAuthHeaders, getJsonHeaders } from '$lib/utils/api-headers';
@@ -224,6 +225,7 @@ export class ChatService {
 				: '';
 		const memoryPrompt =
 			memorySystemPrompt() +
+			alteaPersonas.prompt() +
 			alteaProjects.promptFor(conversationId) +
 			forcedReasoning +
 			alteaDocs.consume() +

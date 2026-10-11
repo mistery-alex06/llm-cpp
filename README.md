@@ -181,6 +181,18 @@ Il pulsante **Doc**, accanto a **Web**, apre la libreria dei documenti.
 - Compatibile con la ricerca web: se sono attivi entrambi, Altea riceve estratti dei documenti e risultati web.
 - Sono documenti nel browser: cancellando i dati del sito si perdono.
 
+### Barra superiore
+
+Sopra la chat, tra le due barre laterali (solo su schermo largo):
+
+| Elemento | Cosa fa |
+|---|---|
+| **Ruolo** | Altea, Tutor Polimi, Revisore di codice, Traduttore, Ultra-sintetico: aggiunge un'istruzione al prompt di sistema, vale per tutte le chat |
+| **Comandi rapidi** | *Riassumi, Traduci, Spiega, Correggi, Quiz*: inseriscono un modello di richiesta nel messaggio |
+| **Stato** | modello caricato, velocità dell'ultima risposta (token/s), RAM del modello, swap e memoria libera, indicatori di Web e Archivio |
+
+RAM e swap arrivano da `store_server.py` (endpoint `/stats`), che li legge dal sistema; si aggiornano ogni 6 secondi.
+
 ### Progetti
 
 Barra laterale **destra** (icona cartella), speculare a quella delle chat: raggruppa più chat sullo stesso argomento.
@@ -316,6 +328,7 @@ llm/
 - [x] Esporta/importa: conversazioni, memoria e documenti
 - [x] Progetti: barra laterale destra con chat, istruzioni e memoria condivise| Priorità | Obiettivo | Note |
 - [x] Memoria su file (`~/Altea/data`)
+- [x] Barra superiore: ruoli, comandi rapidi e stato del sistema
 |---|---|---|
 | Media | Analisi video | estrazione di fotogrammi da dare a Omni |
 | Bassa | Azioni sul computer | comandi con conferma esplicita dell'utente |
