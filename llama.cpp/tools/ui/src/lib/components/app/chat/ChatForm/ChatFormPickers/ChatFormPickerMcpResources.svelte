@@ -176,7 +176,7 @@
 		{selectedIndex}
 		bind:searchQuery={internalSearchQuery}
 		{showSearchInput}
-		searchPlaceholder="Search resources..."
+		searchPlaceholder="Cerca risorse..."
 		emptyMessage="No MCP resources available"
 		itemKey={(resource) => resource.serverName + ':' + resource.uri}
 	>
@@ -229,7 +229,7 @@
 				>
 					<FolderOpen class="h-3 w-3" />
 
-					Browse all
+					Sfoglia tutto
 				</Button>
 			{/if}
 		{/snippet}

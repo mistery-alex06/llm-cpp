@@ -244,15 +244,15 @@
 <Dialog.Root {open} onOpenChange={handleOpenChange}>
 	<Dialog.Content class="sm:max-w-2xl">
 		<Dialog.Header>
-			<Dialog.Title class="select-none">Add New MCP Server</Dialog.Title>
+			<Dialog.Title class="select-none">Aggiungi nuovo server MCP</Dialog.Title>
 		</Dialog.Header>
 
 		{#if recommendationsToShow.length > 0}
 			<div class="space-y-3 pt-2">
 				<div class="flex items-center justify-between gap-3">
-					<h3 class="text-sm font-medium">Recommended Servers</h3>
+					<h3 class="text-sm font-medium">Server consigliati</h3>
 					<Button class="text-muted-foreground" variant="ghost" size="sm" onclick={handleDismissAll}
-						>Dismiss</Button
+						>Ignora</Button
 					>
 				</div>
 
@@ -289,7 +289,7 @@
 
 			<Dialog.Footer>
 				<Button variant="secondary" size="sm" onclick={() => handleOpenChange(false)}>
-					Cancel
+					Annulla
 				</Button>
 
 				<Button variant="default" size="sm" type="submit" disabled={!canSave} aria-label="Salva">

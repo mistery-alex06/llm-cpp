@@ -270,7 +270,7 @@
 			</Dialog.Title>
 
 			<Dialog.Description>
-				Browse and attach resources from connected MCP servers to your chat context.
+				Sfoglia e allega risorse dai server MCP collegati al contesto della chat.
 			</Dialog.Description>
 		</Dialog.Header>
 
@@ -324,7 +324,7 @@
 										templatePreviewError = null;
 									}}
 								>
-									Try again
+									Riprova
 								</Button>
 							</div>
 						{:else}
@@ -360,7 +360,7 @@
 					</div>
 				{:else}
 					<div class="flex h-full items-center justify-center text-sm text-muted-foreground">
-						Select a resource to preview
+						Seleziona una risorsa da visualizzare
 					</div>
 				{/if}
 			</div>

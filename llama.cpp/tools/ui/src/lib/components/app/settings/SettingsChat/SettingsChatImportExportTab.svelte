@@ -255,8 +255,8 @@
 <div class="space-y-12" in:fade={{ duration: 150 }}>
 	<SettingsGroup title="Conversazioni">
 		<SettingsChatImportExportSection
-			title="Export"
-			description="Download your conversations as a ZIP of JSONL files. This includes all messages, attachments, and conversation history."
+			title="Esporta"
+			description="Scarica le conversazioni come ZIP di file JSONL, con messaggi, allegati e cronologia."
 			IconComponent={Download}
 			buttonText="Export conversations"
 			onclick={handleExportClick}
@@ -264,8 +264,8 @@
 		/>
 
 		<SettingsChatImportExportSection
-			title="Import"
-			description="Import one or more conversations from a previously exported ZIP or JSONL file. This will merge with your existing conversations."
+			title="Importa"
+			description="Importa conversazioni da un file ZIP o JSONL esportato in precedenza. Verranno unite a quelle esistenti."
 			IconComponent={Upload}
 			buttonText="Import conversations"
 			onclick={handleImportClick}
@@ -273,10 +273,10 @@
 		/>
 
 		<SettingsChatImportExportSection
-			title="Delete All"
-			description="Permanently delete all conversations and their messages. This action cannot be undone. Consider exporting your conversations first if you want to keep a backup."
+			title="Elimina tutto"
+			description="Elimina definitivamente tutte le conversazioni e i messaggi. Non reversibile: esporta prima se vuoi un backup."
 			IconComponent={Trash2}
-			buttonText="Delete all conversations"
+			buttonText="Elimina tutte le conversazioni"
 			onclick={handleDeleteAllClick}
 			titleClass="text-destructive"
 			buttonVariant="destructive"
@@ -286,8 +286,8 @@
 
 	<SettingsGroup title="Impostazioni">
 		<SettingsChatImportExportSection
-			title="Export"
-			description="Export your chat settings and preferences as a JSON file."
+			title="Esporta"
+			description="Esporta impostazioni e preferenze della chat come file JSON."
 			IconComponent={Download}
 			buttonText="Export settings"
 			onclick={handleSettingsExport}
@@ -295,8 +295,8 @@
 		/>
 
 		<SettingsChatImportExportSection
-			title="Import"
-			description="Import chat settings from a previously exported JSON file. This will merge with your existing settings."
+			title="Importa"
+			description="Importa le impostazioni da un file JSON esportato in precedenza. Verranno unite a quelle esistenti."
 			IconComponent={Upload}
 			buttonText="Import settings"
 			onclick={handleSettingsImport}
@@ -332,10 +332,10 @@
 
 <DialogConfirmation
 	bind:open={showDeleteDialog}
-	title="Delete all conversations"
-	description="Are you sure you want to delete all conversations? This action cannot be undone and will permanently remove all your conversations and messages."
-	confirmText="Delete All"
-	cancelText="Cancel"
+	title="Elimina tutte le conversazioni"
+	description="Eliminare tutte le conversazioni? L'azione non è reversibile e rimuove definitivamente conversazioni e messaggi."
+	confirmText="Elimina tutto"
+	cancelText="Annulla"
 	variant="destructive"
 	icon={Trash2}
 	onConfirm={handleDeleteAllConfirm}

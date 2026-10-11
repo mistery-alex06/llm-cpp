@@ -70,7 +70,7 @@
 		class="absolute top-1/2 left-4 z-10 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-background/25 shadow-md backdrop-blur-xs transition-opacity hover:bg-background/45 disabled:pointer-events-none disabled:opacity-0"
 		onclick={scrollLeft}
 		disabled={!canScrollLeft}
-		aria-label="Scroll left"
+		aria-label="Scorri a sinistra"
 	>
 		<ChevronLeft class={ICON_CLASS_DEFAULT} />
 	</button>
@@ -87,7 +87,7 @@
 		class="absolute top-1/2 right-4 z-10 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-background/25 shadow-md backdrop-blur-xs transition-opacity hover:bg-background/45 disabled:pointer-events-none disabled:opacity-0"
 		onclick={scrollRight}
 		disabled={!canScrollRight}
-		aria-label="Scroll right"
+		aria-label="Scorri a destra"
 	>
 		<ChevronRight class={ICON_CLASS_DEFAULT} />
 	</button>

@@ -56,8 +56,8 @@ export { default as DropdownMenuSearchable } from './DropdownMenuSearchable.svel
  *   triggerIcon={MoreHorizontal}
  *   triggerTooltip="More actions"
  *   actions={[
- *     { icon: Edit, label: 'Edit', onclick: handleEdit },
- *     { icon: Trash, label: 'Delete', onclick: handleDelete, variant: 'destructive' }
+ *     { icon: Edit, label: 'Modifica', onclick: handleEdit },
+ *     { icon: Trash, label: 'Elimina', onclick: handleDelete, variant: 'destructive' }
  *   ]}
  * />
  * ```
@@ -172,7 +172,7 @@ export { default as SidebarNavigationActions } from './SidebarNavigation/Sidebar
 /**
  * **SidebarNavigationSearchResults** - Filtered conversation list for search.
  *
- * Pure-presentational rendering of the search-mode subtree: "Search results"
+ * Pure-presentational rendering of the search-mode subtree: "Risultati di ricerca"
  * header, the matching items rendered through {@link SidebarNavigationConversationItem},
  * and contextual empty-state messages. Used both inline inside
  * {@link SidebarNavigationConversationList} (when search mode is active in the

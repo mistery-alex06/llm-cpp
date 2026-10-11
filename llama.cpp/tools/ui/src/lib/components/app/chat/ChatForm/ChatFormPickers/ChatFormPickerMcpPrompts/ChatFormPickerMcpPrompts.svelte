@@ -142,7 +142,7 @@
 			onPromptLoadComplete?.(placeholderId, result);
 		} catch (error) {
 			const errorMessage =
-				error instanceof Error ? error.message : 'Unknown error executing prompt';
+				error instanceof Error ? error.message : 'Errore sconosciuto nell\'esecuzione del prompt';
 			onPromptLoadError?.(placeholderId, errorMessage);
 		}
 	}

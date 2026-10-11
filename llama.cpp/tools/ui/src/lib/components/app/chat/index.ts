@@ -276,7 +276,7 @@ export { default as ChatFormTextarea } from './ChatForm/ChatFormTextarea.svelte'
  * **ChatFormPickerMcpPrompts** - MCP prompt selection interface
  *
  * Floating picker for browsing and selecting MCP Server Prompts.
- * Triggered by typing `/` in the chat input or choosing `MCP Prompt` option in ChatFormActionAddDropdown.
+ * Triggered by typing `/` in the chat input or choosing `Prompt MCP` option in ChatFormActionAddDropdown.
  * Loads prompts from connected MCP servers and allows users to select and configure them.
  *
  * **Architecture:**

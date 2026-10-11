@@ -69,7 +69,7 @@
 				throw new Error('No PDF file available for conversion');
 			}
 		} catch (error) {
-			pdfImagesError = error instanceof Error ? error.message : 'Failed to load PDF images';
+			pdfImagesError = error instanceof Error ? error.message : 'Impossibile caricare le immagini PDF';
 		} finally {
 			pdfImagesLoading = false;
 		}

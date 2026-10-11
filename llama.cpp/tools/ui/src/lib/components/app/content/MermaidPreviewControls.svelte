@@ -34,8 +34,8 @@
 		<button
 			class="mermaid-preview-btn flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-foreground transition-colors hover:bg-muted-foreground/15 active:bg-muted-foreground/25"
 			onclick={onZoomOut}
-			title="Zoom out"
-			aria-label="Zoom out"
+			title="Riduci"
+			aria-label="Riduci"
 		>
 			<ZoomOutIcon class="mermaid-preview-btn-icon {ICON_CLASS_DEFAULT}" />
 		</button>
@@ -46,8 +46,8 @@
 		<button
 			class="mermaid-preview-btn flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-foreground transition-colors hover:bg-muted-foreground/15 active:bg-muted-foreground/25"
 			onclick={onZoomIn}
-			title="Zoom in"
-			aria-label="Zoom in"
+			title="Ingrandisci"
+			aria-label="Ingrandisci"
 		>
 			<ZoomInIcon class="mermaid-preview-btn-icon {ICON_CLASS_DEFAULT}" />
 		</button>
@@ -56,8 +56,8 @@
 		<button
 			class="mermaid-preview-btn flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-foreground transition-colors hover:bg-muted-foreground/15 active:bg-muted-foreground/25"
 			onclick={onResetView}
-			title="Reset view"
-			aria-label="Reset view"
+			title="Reimposta vista"
+			aria-label="Reimposta vista"
 		>
 			<RotateCcwIcon class="mermaid-preview-btn-icon {ICON_CLASS_DEFAULT}" />
 		</button>
@@ -66,8 +66,8 @@
 		<button
 			class="mermaid-preview-btn flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-foreground transition-colors hover:bg-muted-foreground/15 active:bg-muted-foreground/25"
 			onclick={downloadSvg}
-			title="Download SVG"
-			aria-label="Download SVG"
+			title="Scarica SVG"
+			aria-label="Scarica SVG"
 		>
 			<Download class="mermaid-preview-btn-icon {ICON_CLASS_DEFAULT}" />
 		</button>

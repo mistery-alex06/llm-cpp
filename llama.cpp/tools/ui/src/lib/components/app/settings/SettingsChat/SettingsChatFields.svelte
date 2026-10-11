@@ -99,8 +99,8 @@
 								onConfigChange(field.key, '');
 							}}
 							class="absolute top-1/2 right-2 inline-flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded transition-colors hover:bg-muted"
-							aria-label="Reset to default"
-							title="Reset to default"
+							aria-label="Ripristina predefinito"
+							title="Ripristina predefinito"
 						>
 							<RotateCcw class="h-3 w-3" />
 						</button>
@@ -146,7 +146,7 @@
 						/>
 
 						<Label for="showSystemMessage" class="cursor-pointer text-sm font-normal">
-							Show system message in conversations
+							Mostra il messaggio di sistema nelle conversazioni
 						</Label>
 					</div>
 				{/if}
@@ -206,8 +206,8 @@
 									onConfigChange(field.key, '');
 								}}
 								class="absolute top-1/2 right-8 inline-flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded transition-colors hover:bg-muted"
-								aria-label="Reset to default"
-								title="Reset to default"
+								aria-label="Ripristina predefinito"
+								title="Ripristina predefinito"
 							>
 								<RotateCcw class="h-3 w-3" />
 							</button>

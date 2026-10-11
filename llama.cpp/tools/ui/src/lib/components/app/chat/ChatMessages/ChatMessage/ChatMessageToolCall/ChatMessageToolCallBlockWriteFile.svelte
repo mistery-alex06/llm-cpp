@@ -20,7 +20,7 @@
 
 <ToolCallBlock {section} {open} {isStreaming} meta={writeFileMeta} {onToggle}>
 	{#snippet titleSnippet()}
-		<span class="text-muted-foreground">Write file </span>
+		<span class="text-muted-foreground">Scrivi file </span>
 		<span class="font-mono">{writeFileMeta?.filePath}</span>
 		{#if writeFileMeta?.errorMessage}
 			<span class="ml-1 text-xs italic text-muted-foreground/70">(failed)</span>

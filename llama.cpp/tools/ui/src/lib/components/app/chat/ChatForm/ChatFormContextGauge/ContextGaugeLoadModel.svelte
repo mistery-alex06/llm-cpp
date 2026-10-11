@@ -13,7 +13,7 @@
 
 {#if modelId !== null && !isLoading}
 	<div class="flex flex-col gap-2 border-t border-border/50 pt-2 text-xs text-muted-foreground">
-		<span>Available context size is only visible once the model is loaded.</span>
+		<span>La dimensione del contesto è visibile solo dopo il caricamento del modello.</span>
 		<Button size="sm" variant="secondary" class="self-start" onclick={onLoad}>Carica modello</Button>
 	</div>
 {:else if isLoading}

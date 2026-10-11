@@ -54,7 +54,7 @@
 			target="_blank"
 			rel="noopener noreferrer"
 			class="shrink-0 text-muted-foreground hover:text-foreground"
-			aria-label="Open website"
+			aria-label="Apri sito web"
 			onclick={(e) => e.stopPropagation()}
 		>
 			<ExternalLink class="h-3 w-3" />

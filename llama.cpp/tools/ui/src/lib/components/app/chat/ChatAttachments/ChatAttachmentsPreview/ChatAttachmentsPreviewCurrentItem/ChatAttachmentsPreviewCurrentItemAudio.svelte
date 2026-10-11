@@ -15,7 +15,7 @@
 
 		{#if audioSrc}
 			<audio controls class="mb-4 w-full" src={audioSrc}>
-				Your browser does not support the audio element.
+				Il browser non supporta l'elemento audio.
 			</audio>
 		{:else}
 			<p class="mb-4 text-white/70">Anteprima audio non disponibile</p>

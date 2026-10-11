@@ -34,17 +34,17 @@
 		<Button variant="outline" onclick={handleResetClick}>
 			<RotateCcw class="h-3 w-3" />
 
-			Reset to default
+			Ripristina predefinito
 		</Button>
 	</div>
 
-	<Button onclick={handleSave}>Save settings</Button>
+	<Button onclick={handleSave}>Salva impostazioni</Button>
 </div>
 
 <AlertDialog.Root bind:open={showResetDialog}>
 	<AlertDialog.Content>
 		<AlertDialog.Header>
-			<AlertDialog.Title>Reset Settings to Default</AlertDialog.Title>
+			<AlertDialog.Title>Ripristina impostazioni predefinite</AlertDialog.Title>
 			<AlertDialog.Description>
 				Are you sure you want to reset all settings to their default values? This will reset all
 				parameters to the values provided by the server's /props endpoint and remove all your custom
@@ -53,7 +53,7 @@
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Annulla</AlertDialog.Cancel>
-			<AlertDialog.Action onclick={handleConfirmReset}>Reset to Default</AlertDialog.Action>
+			<AlertDialog.Action onclick={handleConfirmReset}>Ripristina predefinito</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>

@@ -28,7 +28,7 @@
 </script>
 
 <div class="fixed top-4.5 right-4 z-50 md:hidden">
-	<ActionIcon icon={X} tooltip="Close" onclick={handleClose} />
+	<ActionIcon icon={X} tooltip="Chiudi" onclick={handleClose} />
 </div>
 
 <div class="min-h-full">

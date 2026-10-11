@@ -36,7 +36,7 @@ export interface AttachmentMenuItem {
 export const ATTACHMENT_FILE_ITEMS: AttachmentMenuItem[] = [
 	{
 		id: AttachmentMenuItemId.IMAGES,
-		label: 'Images',
+		label: 'Immagini',
 		icon: FILE_TYPE_ICONS.image,
 		class: 'images-button',
 		enabledWhen: AttachmentItemEnabledWhen.HAS_VISION_MODALITY,
@@ -45,7 +45,7 @@ export const ATTACHMENT_FILE_ITEMS: AttachmentMenuItem[] = [
 	},
 	{
 		id: AttachmentMenuItemId.AUDIO,
-		label: 'Audio Files',
+		label: 'File audio',
 		icon: FILE_TYPE_ICONS.audio,
 		class: 'audio-button',
 		enabledWhen: AttachmentItemEnabledWhen.HAS_AUDIO_MODALITY,
@@ -54,7 +54,7 @@ export const ATTACHMENT_FILE_ITEMS: AttachmentMenuItem[] = [
 	},
 	{
 		id: AttachmentMenuItemId.VIDEO,
-		label: 'Video Files',
+		label: 'File video',
 		icon: FILE_TYPE_ICONS.video,
 		class: 'video-button',
 		enabledWhen: AttachmentItemEnabledWhen.HAS_VIDEO_MODALITY,
@@ -63,14 +63,14 @@ export const ATTACHMENT_FILE_ITEMS: AttachmentMenuItem[] = [
 	},
 	{
 		id: AttachmentMenuItemId.TEXT,
-		label: 'Text Files',
+		label: 'File di testo',
 		icon: FILE_TYPE_ICONS.text,
 		enabledWhen: AttachmentItemEnabledWhen.ALWAYS,
 		action: AttachmentAction.FILE_UPLOAD
 	},
 	{
 		id: AttachmentMenuItemId.PDF,
-		label: 'PDF Files',
+		label: 'File PDF',
 		icon: FILE_TYPE_ICONS.pdf,
 		enabledWhen: AttachmentItemEnabledWhen.ALWAYS,
 		disabledTooltip: 'PDFs will be converted to text. Image-based PDFs may not work properly.',
@@ -84,7 +84,7 @@ export const ATTACHMENT_EXTRA_ITEMS: AttachmentMenuItem[] = [];
 export const ATTACHMENT_PROMPT_ITEMS: AttachmentMenuItem[] = [
 	{
 		id: AttachmentMenuItemId.SYSTEM_MESSAGE,
-		label: 'System Message',
+		label: 'Messaggio di sistema',
 		icon: MessageSquare,
 		enabledWhen: AttachmentItemEnabledWhen.ALWAYS,
 		hasEnabledTooltip: true,
@@ -92,7 +92,7 @@ export const ATTACHMENT_PROMPT_ITEMS: AttachmentMenuItem[] = [
 	},
 	{
 		id: AttachmentMenuItemId.MCP_PROMPT,
-		label: 'MCP Prompt',
+		label: 'Prompt MCP',
 		icon: Zap,
 		enabledWhen: AttachmentItemEnabledWhen.ALWAYS,
 		action: AttachmentAction.MCP_PROMPT_CLICK,
@@ -103,7 +103,7 @@ export const ATTACHMENT_PROMPT_ITEMS: AttachmentMenuItem[] = [
 export const ATTACHMENT_MCP_ITEMS: AttachmentMenuItem[] = [
 	{
 		id: AttachmentMenuItemId.MCP_RESOURCES,
-		label: 'MCP Resources',
+		label: 'Risorse MCP',
 		icon: FolderOpen,
 		enabledWhen: AttachmentItemEnabledWhen.ALWAYS,
 		action: AttachmentAction.MCP_RESOURCES_CLICK,

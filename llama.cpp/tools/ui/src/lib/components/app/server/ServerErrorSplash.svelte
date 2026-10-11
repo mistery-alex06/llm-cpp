@@ -136,7 +136,7 @@
 				<AlertTriangle class="h-8 w-8 text-destructive" />
 			</div>
 
-			<h2 class="mb-2 text-xl font-semibold">Server Connection Error</h2>
+			<h2 class="mb-2 text-xl font-semibold">Errore di connessione al server</h2>
 
 			<p class="mb-4 text-sm text-muted-foreground">
 				{error}
@@ -147,7 +147,7 @@
 			<div in:fly={{ y: 10, duration: 300, delay: 200 }} class="mb-4">
 				<Button onclick={handleShowApiKeyInput} variant="outline" class="w-full">
 					<Key class={ICON_CLASS_DEFAULT} />
-					Enter API Key
+					Inserisci chiave API
 				</Button>
 			</div>
 		{/if}
@@ -155,12 +155,12 @@
 		{#if showApiKeyInput}
 			<div in:fly={{ y: 10, duration: 300, delay: 200 }} class="mb-4 space-y-3 text-left">
 				<div class="space-y-2">
-					<Label for="api-key-input" class="text-sm font-medium">API Key</Label>
+					<Label for="api-key-input" class="text-sm font-medium">Chiave API</Label>
 
 					<div class="relative">
 						<Input
 							id="api-key-input"
-							placeholder="Enter your API key..."
+							placeholder="Inserisci la tua chiave API..."
 							bind:value={apiKeyInput}
 							onkeydown={handleApiKeyKeydown}
 							class="w-full pr-10 {apiKeyState === 'error'
@@ -228,7 +228,7 @@
 						class="flex-1"
 						disabled={apiKeyState === 'validating'}
 					>
-						Cancel
+						Annulla
 					</Button>
 				</div>
 			</div>
@@ -254,7 +254,7 @@
 			<div class="mt-4 text-left" in:fly={{ y: 10, duration: 300, delay: 400 }}>
 				<details class="text-sm">
 					<summary class="cursor-pointer text-muted-foreground hover:text-foreground">
-						Troubleshooting
+						Risoluzione problemi
 					</summary>
 
 					<div class="mt-2 space-y-3 text-xs text-muted-foreground">
@@ -272,11 +272,11 @@
 							</div>
 						</div>
 						<ul class="list-disc space-y-1 pl-4">
-							<li>Check that the server is accessible at the correct URL</li>
+							<li>Verifica che il server sia raggiungibile all'URL corretto</li>
 
-							<li>Verify your network connection</li>
+							<li>Verifica la connessione di rete</li>
 
-							<li>Check server logs for any error messages</li>
+							<li>Controlla i log del server per eventuali errori</li>
 						</ul>
 					</div>
 				</details>

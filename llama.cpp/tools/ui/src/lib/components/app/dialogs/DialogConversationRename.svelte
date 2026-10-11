@@ -53,22 +53,22 @@
 		<AlertDialog.Header>
 			<AlertDialog.Title class="flex items-center gap-2">
 				<Pencil class="h-5 w-5" />
-				Rename conversation
+				Rinomina conversazione
 			</AlertDialog.Title>
 
-			<AlertDialog.Description>Choose a new title for this conversation.</AlertDialog.Description>
+			<AlertDialog.Description>Scegli un nuovo titolo per questa conversazione.</AlertDialog.Description>
 		</AlertDialog.Header>
 
 		<form onsubmit={handleSubmit} class="space-y-2 pt-2 pb-4">
 			<label for="conversation-rename-input" class="text-sm font-medium text-muted-foreground">
-				Conversation title
+				Titolo conversazione
 			</label>
 
 			<Input
 				id="conversation-rename-input"
 				bind:ref={inputRef}
 				bind:value
-				placeholder="Conversation title"
+				placeholder="Titolo conversazione"
 				maxlength={200}
 				autocomplete="off"
 				autocorrect="off"

@@ -357,7 +357,7 @@ class SettingsStore {
 
 		// UI settings are the admin's defaults for new users: applied once on
 		// the first visit, never on later loads, so the user's config can
-		// diverge. "Reset to Default" is the explicit way back to the baseline.
+		// diverge. "Ripristina predefinito" is the explicit way back to the baseline.
 		if (uiSettings && this.isFirstVisit) {
 			this.isFirstVisit = false;
 
@@ -379,7 +379,7 @@ class SettingsStore {
 
 	/**
 	 * Reset all parameters to their default values (from props)
-	 * This is used by the "Reset to Default" functionality
+	 * This is used by the "Ripristina predefinito" functionality
 	 * Prioritizes Server defaults from /props, falls back to UI defaults
 	 */
 	forceSyncWithServerDefaults(): void {

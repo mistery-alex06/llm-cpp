@@ -132,7 +132,7 @@
 				</DropdownMenuSearchable>
 			{:else}
 				<div class="px-2 py-3 text-center text-sm text-muted-foreground">
-					No MCP servers configured
+					Nessun server MCP configurato
 				</div>
 
 				<DropdownMenu.Separator />

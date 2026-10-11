@@ -17,7 +17,7 @@
 <div class="flex flex-col gap-2">
 	<div class="mb-2 flex items-center gap-4">
 		<SearchInput
-			placeholder="Search resources..."
+			placeholder="Cerca risorse..."
 			value={searchQuery}
 			onInput={(value) => onSearch?.(value)}
 		/>
@@ -28,7 +28,7 @@
 			class="h-8 w-8 p-0"
 			onclick={onRefresh}
 			disabled={isLoading}
-			title="Refresh resources"
+			title="Aggiorna risorse"
 		>
 			{#if isLoading}
 				<Loader2 class="{ICON_CLASS_DEFAULT} animate-spin" />
@@ -38,5 +38,5 @@
 		</Button>
 	</div>
 
-	<h3 class="text-sm font-medium">Available resources</h3>
+	<h3 class="text-sm font-medium">Risorse disponibili</h3>
 </div>

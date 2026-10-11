@@ -19,7 +19,7 @@
 
 <ToolCallBlock {section} {open} {isStreaming} meta={readFileMeta} {onToggle}>
 	{#snippet titleSnippet()}
-		<span class="text-muted-foreground">Read file </span>
+		<span class="text-muted-foreground">Leggi file </span>
 		<span class="font-mono">{readFileMeta?.fileName}</span>
 		{#if readFileMeta?.lineRange}
 			<span class="text-muted-foreground"
@@ -37,7 +37,7 @@
 			/>
 		{:else}
 			<div class="rounded bg-muted/20 p-2 text-xs text-muted-foreground/70 italic">
-				Waiting for file content...
+				In attesa del contenuto del file...
 			</div>
 		{/if}
 	{/snippet}

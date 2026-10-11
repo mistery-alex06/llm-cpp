@@ -22,7 +22,7 @@
 		title,
 		description,
 		confirmText = 'Confirm',
-		cancelText = 'Cancel',
+		cancelText = 'Annulla',
 		variant = 'default',
 		icon,
 		onConfirm,

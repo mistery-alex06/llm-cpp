@@ -23,7 +23,7 @@
 				<ChevronRight class="h-3.5 w-3.5" />
 			{/if}
 
-			<span>Server instructions</span>
+			<span>Istruzioni del server</span>
 		</Collapsible.Trigger>
 
 		<Collapsible.Content class="mt-2">

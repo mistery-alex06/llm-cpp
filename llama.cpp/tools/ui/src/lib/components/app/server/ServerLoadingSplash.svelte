@@ -18,7 +18,7 @@
 				<Server class="h-8 w-8 animate-pulse text-muted-foreground" />
 			</div>
 
-			<h2 class="mb-2 text-xl font-semibold">Connecting to Server</h2>
+			<h2 class="mb-2 text-xl font-semibold">Connessione al server</h2>
 
 			<p class="text-sm text-muted-foreground">
 				{message}

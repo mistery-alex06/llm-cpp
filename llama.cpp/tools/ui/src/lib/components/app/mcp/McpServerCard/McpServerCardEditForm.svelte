@@ -67,7 +67,7 @@
 
 <form onsubmit={handleSubmit} class="contents">
 	<div class="space-y-4">
-		<p class="font-medium">Configure Server</p>
+		<p class="font-medium">Configura server</p>
 
 		<McpServerForm
 			url={editUrl}

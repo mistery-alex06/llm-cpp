@@ -59,7 +59,7 @@
 	{#if ms.loading && ms.options.length === 0 && ms.isRouter}
 		<div class="flex items-center gap-2 text-xs text-muted-foreground">
 			<Loader2 class="h-3.5 w-3.5 animate-spin" />
-			Loading models…
+			Caricamento modelli…
 		</div>
 	{:else if ms.options.length === 0 && ms.isRouter}
 		<p class="text-xs text-muted-foreground">Nessun modello disponibile.</p>
@@ -126,7 +126,7 @@
 						<Sheet.Title>Seleziona modello</Sheet.Title>
 
 						<Sheet.Description class="sr-only">
-							Choose a model to use for the conversation
+							Scegli il modello per la conversazione
 						</Sheet.Description>
 					</Sheet.Header>
 

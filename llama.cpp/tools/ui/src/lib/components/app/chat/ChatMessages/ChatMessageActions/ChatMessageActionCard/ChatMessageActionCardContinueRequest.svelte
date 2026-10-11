@@ -24,7 +24,7 @@
 			class="text-destructive hover:text-destructive"
 			onclick={() => onDecision(false)}
 		>
-			Stop
+			Interrompi
 		</Button>
 	{/snippet}
 </ChatMessageActionCard>

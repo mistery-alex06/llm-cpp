@@ -92,7 +92,7 @@
 				class="h-7 w-7 p-0"
 				onclick={handleDownload}
 				disabled={!extra.content}
-				title="Download content"
+				title="Scarica contenuto"
 			>
 				<Download class="h-3.5 w-3.5" />
 			</Button>
@@ -115,7 +115,7 @@
 				<pre
 					class="max-h-[70vh] overflow-auto rounded-md border bg-muted/30 p-4 font-mono text-sm break-words whitespace-pre-wrap">{extra.content}</pre>
 			{:else}
-				<div class="py-8 text-center text-sm text-muted-foreground">No content available</div>
+				<div class="py-8 text-center text-sm text-muted-foreground">Nessun contenuto disponibile</div>
 			{/if}
 		</div>
 	</Dialog.Content>

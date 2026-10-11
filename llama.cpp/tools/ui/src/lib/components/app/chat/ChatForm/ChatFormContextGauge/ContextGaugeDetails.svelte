@@ -49,7 +49,7 @@
 		{#if hasCumulative}
 			<div>
 				<h3 class="text-[11px] font-medium uppercase tracking-wide text-muted-foreground/70 mb-2">
-					Across all turns
+					Su tutti i turni
 				</h3>
 
 				<div class="flex flex-col gap-2">
@@ -75,7 +75,7 @@
 		{#if hasCurrent}
 			<div>
 				<h3 class="text-[11px] font-medium uppercase tracking-wide text-muted-foreground/70 mb-2">
-					This turn · KV cache
+					Questo turno · cache KV
 				</h3>
 
 				<div class="flex flex-col gap-2">
@@ -98,7 +98,7 @@
 
 					<div class="pt-1 mt-0.5 border-t border-border/30">
 						<div class="flex justify-between">
-							<span class="text-muted-foreground">KV cache total</span>
+							<span class="text-muted-foreground">Totale cache KV</span>
 							<span class="font-mono font-medium">{kvTotal.toLocaleString()} tok</span>
 						</div>
 					</div>
@@ -109,7 +109,7 @@
 		{#if averageTokensPerSecond !== null}
 			<div class="pt-1.5 mt-1 border-t border-border/30">
 				<ContextGaugeDetailRow
-					label="Avg speed"
+					label="Velocità media"
 					value={`${averageTokensPerSecond.toFixed(1)}${STATS_UNITS.TOKENS_PER_SECOND}`}
 				/>
 			</div>

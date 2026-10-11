@@ -262,7 +262,7 @@ llm/
 - [x] Modello predefinito all'apertura: Qwen3-1.7B
 - [x] Ricerca web con fonti citate (pulsante *Web*)
 - [x] Documenti locali (RAG) con citazione di file e pagina (pulsante *Doc*)
-
+- [x] Traduzione completa della UI in italiano
 ### Prossimi obiettivi
 
 | Priorità | Obiettivo | Note |
@@ -270,7 +270,6 @@ llm/
 | Alta | Scelta automatica del modello | domande semplici al 1.7B, complesse al 4B |
 | Media | Memoria su file | non legata al browser, condivisa tra browser e backup |
 | Media | Esporta/importa | chat e memoria in un file di backup |
-| Media | Traduzione completa della UI | Impostazioni e messaggi d'errore inclusi |
 | Media | Analisi video | estrazione di fotogrammi da dare a Omni |
 | Bassa | Azioni sul computer | comandi con conferma esplicita dell'utente |
 | Bassa | Personalizzazione del modello | fine-tuning leggero (LoRA) su stile e conoscenze |

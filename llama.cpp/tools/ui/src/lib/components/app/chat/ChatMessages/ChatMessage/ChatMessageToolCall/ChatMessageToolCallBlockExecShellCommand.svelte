@@ -184,7 +184,7 @@
 		{#if ctx.isPending}
 			<div class="flex items-start gap-2 text-xs text-muted-foreground/70">
 				<Loader2 class="h-3 w-3 animate-spin" />
-				Running...
+				In esecuzione...
 			</div>
 		{:else if execShellError}
 			<div class="flex items-start gap-2 text-xs text-red-600 italic dark:text-red-400">
@@ -214,7 +214,7 @@
 					<div class={exitBadgeClass}>
 						{#if execShellExitStatus.timedOut}
 							<AlertTriangle class="h-3 w-3" />
-							<span>timed out</span>
+							<span>tempo scaduto</span>
 							<span class="exit-sep">&middot;</span>
 							<span>exit {execShellExitStatus.code}</span>
 						{:else if execShellExitStatus.code === 0}

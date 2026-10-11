@@ -110,7 +110,7 @@
 			{/if}
 
 			{#if onForkConversation}
-				<ActionIcon icon={GitBranch} tooltip="Fork conversation" onclick={handleOpenForkDialog} />
+				<ActionIcon icon={GitBranch} tooltip="Crea ramo dalla conversazione" onclick={handleOpenForkDialog} />
 			{/if}
 
 			<ActionIcon icon={Trash2} tooltip="Elimina" onclick={onDelete} />
@@ -137,7 +137,7 @@
 	confirmText={deletionInfo && deletionInfo.totalCount > 1
 		? `Delete ${deletionInfo.totalCount} Messages`
 		: 'Delete'}
-	cancelText="Cancel"
+	cancelText="Annulla"
 	variant="destructive"
 	icon={Trash2}
 	onConfirm={handleConfirmDelete}
@@ -147,9 +147,9 @@
 <DialogConfirmation
 	bind:open={showForkDialog}
 	title="Duplica conversazione"
-	description="Create a new conversation branching from this message."
-	confirmText="Fork"
-	cancelText="Cancel"
+	description="Crea una nuova conversazione a partire da questo messaggio."
+	confirmText="Crea ramo"
+	cancelText="Annulla"
 	icon={GitBranch}
 	onConfirm={handleConfirmFork}
 	onCancel={() => (showForkDialog = false)}
@@ -177,7 +177,7 @@
 			/>
 
 			<Label for="fork-attachments" class="cursor-pointer text-sm font-normal">
-				Include all attachments
+				Includi tutti gli allegati
 			</Label>
 		</div>
 	</div>

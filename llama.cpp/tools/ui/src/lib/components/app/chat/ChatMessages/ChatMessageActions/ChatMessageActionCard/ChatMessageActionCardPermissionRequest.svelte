@@ -33,7 +33,7 @@
 					class="!rounded-r-none !shadow-none"
 					onclick={() => onDecision(ToolPermissionDecision.ONCE)}
 				>
-					Allow once
+					Consenti una volta
 				</Button>
 
 				<ButtonGroup.Separator />
@@ -43,7 +43,7 @@
 						buttonVariants({ variant: 'secondary', size: 'sm' }),
 						'inline-flex cursor-pointer items-center !rounded-l-none !shadow-none !px-2'
 					)}
-					aria-label="More allow options"
+					aria-label="Altre opzioni di consenso"
 				>
 					<ChevronDown class="h-3.5 w-3.5" />
 				</DropdownMenu.Trigger>
@@ -51,7 +51,7 @@
 
 			<DropdownMenu.Content align="start" class="min-w-[8rem]">
 				<DropdownMenu.Item onclick={() => onDecision(ToolPermissionDecision.ALWAYS)}>
-					Always allow <pre>{toolName}</pre>
+					Consenti sempre <pre>{toolName}</pre>
 					tool
 				</DropdownMenu.Item>
 				{#if serverLabel}

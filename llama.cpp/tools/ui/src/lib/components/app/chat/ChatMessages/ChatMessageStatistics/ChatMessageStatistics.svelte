@@ -170,7 +170,7 @@
 				{@render viewButton({
 					view: ChatMessageStatsView.READING,
 					icon: BookOpenText,
-					label: 'Reading',
+					label: 'Lettura',
 					tooltipText: 'Processing'
 				})}
 			{/if}
@@ -178,7 +178,7 @@
 			{@render viewButton({
 				view: ChatMessageStatsView.GENERATION,
 				icon: Sparkles,
-				label: 'Generation',
+				label: 'Generazione',
 				tooltipText: isGenerationDisabled ? 'Waiting for tokens...' : 'Generation',
 				disabled: isGenerationDisabled
 			})}
@@ -187,7 +187,7 @@
 				{@render viewButton({
 					view: ChatMessageStatsView.TOOLS,
 					icon: Wrench,
-					label: 'Tools',
+					label: 'Strumenti',
 					tooltipText: 'Tool calls'
 				})}
 
@@ -195,7 +195,7 @@
 					{@render viewButton({
 						view: ChatMessageStatsView.SUMMARY,
 						icon: Layers,
-						label: 'Summary',
+						label: 'Riepilogo',
 						tooltipText: 'Agentic summary'
 					})}
 				{/if}

@@ -64,9 +64,9 @@
 					<div class="ml-4 border-l border-border/50 pl-2">
 						<!-- Header row -->
 						<div class="flex items-center gap-2 px-2 py-1 text-xs text-muted-foreground">
-							<span class="min-w-0 flex-1">Tool</span>
-							<span class="w-16 shrink-0 text-center">Enabled</span>
-							<span class="w-20 shrink-0 text-center">Always allow</span>
+							<span class="min-w-0 flex-1">Strumento</span>
+							<span class="w-16 shrink-0 text-center">Abilitato</span>
+							<span class="w-20 shrink-0 text-center">Consenti sempre</span>
 						</div>
 
 						{#each group.tools as entry (entry.key)}

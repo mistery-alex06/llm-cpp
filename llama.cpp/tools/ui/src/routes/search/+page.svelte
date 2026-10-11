@@ -37,7 +37,7 @@
 		const conversation = conversations().find((c) => c.id === id);
 		if (!conversation) return;
 
-		const newName = window.prompt('Rename conversation', conversation.name);
+		const newName = window.prompt('Rinomina conversazione', conversation.name);
 		if (newName && newName.trim()) {
 			await conversationsStore.updateConversationName(id, newName.trim());
 		}
@@ -69,7 +69,7 @@
 </script>
 
 <svelte:head>
-	<title>Search · Altea</title>
+	<title>Cerca · Altea</title>
 </svelte:head>
 
 <div class="fixed top-0 z-10 left-0 right-0 p-2">
@@ -78,7 +78,7 @@
 		bind:value={searchQuery}
 		bind:ref={searchInputRef}
 		onClose={handleBack}
-		placeholder="Search conversations..."
+		placeholder="Cerca conversazioni..."
 	/>
 </div>
 

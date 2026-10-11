@@ -59,9 +59,9 @@
 				class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 			>
 				{#if includeSensitiveData}
-					<span class="text-destructive">Include sensitive data (not recommended)</span>
+					<span class="text-destructive">Includi dati sensibili (sconsigliato)</span>
 				{:else}
-					<span>Include sensitive data</span>
+					<span>Includi dati sensibili</span>
 				{/if}
 			</Label>
 		</div>

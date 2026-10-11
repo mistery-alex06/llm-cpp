@@ -358,7 +358,7 @@ class ModelsStore {
 			}
 		} catch (error) {
 			this.models = [];
-			this.error = error instanceof Error ? error.message : 'Failed to load models';
+			this.error = error instanceof Error ? error.message : 'Impossibile caricare i modelli';
 
 			throw error;
 		} finally {
@@ -907,7 +907,7 @@ class ModelsStore {
 			toast.success(`Model loaded: ${this.toDisplayName(modelId)}`);
 		} catch (error) {
 			this.rejectStatus(modelId, error instanceof Error ? error : new Error('load failed'));
-			this.error = error instanceof Error ? error.message : 'Failed to load model';
+			this.error = error instanceof Error ? error.message : 'Impossibile caricare il modello';
 			toast.error(`Failed to load model: ${this.toDisplayName(modelId)}`);
 			throw error;
 		} finally {
@@ -933,7 +933,7 @@ class ModelsStore {
 			toast.info(`Model unloaded: ${this.toDisplayName(modelId)}`);
 		} catch (error) {
 			this.rejectStatus(modelId, error instanceof Error ? error : new Error('unload failed'));
-			this.error = error instanceof Error ? error.message : 'Failed to unload model';
+			this.error = error instanceof Error ? error.message : 'Impossibile scaricare il modello';
 			toast.error(`Failed to unload model: ${this.toDisplayName(modelId)}`);
 			throw error;
 		} finally {

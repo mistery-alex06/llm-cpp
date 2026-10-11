@@ -45,7 +45,7 @@
 					? 'opacity-100'
 					: 'pointer-events-none opacity-0'}"
 				onclick={carousel.scrollLeft}
-				aria-label="Scroll left"
+				aria-label="Scorri a sinistra"
 			>
 				<ChevronLeft class={ICON_CLASS_DEFAULT} />
 			</button>
@@ -99,7 +99,7 @@
 					? 'opacity-100'
 					: 'pointer-events-none opacity-0'}"
 				onclick={carousel.scrollRight}
-				aria-label="Scroll right"
+				aria-label="Scorri a destra"
 			>
 				<ChevronRight class={ICON_CLASS_DEFAULT} />
 			</button>

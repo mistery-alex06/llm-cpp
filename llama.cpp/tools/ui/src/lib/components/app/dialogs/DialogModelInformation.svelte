@@ -84,15 +84,15 @@
 		</style>
 
 		<Dialog.Header>
-			<Dialog.Title>Model Information</Dialog.Title>
+			<Dialog.Title>Informazioni sul modello</Dialog.Title>
 
-			<Dialog.Description>Current model details and capabilities</Dialog.Description>
+			<Dialog.Description>Dettagli e capacità del modello attuale</Dialog.Description>
 		</Dialog.Header>
 
 		<div class="space-y-6 py-4">
 			{#if isLoadingModels || isLoadingRouterProps}
 				<div class="flex items-center justify-center py-8">
-					<div class="text-sm text-muted-foreground">Loading model information...</div>
+					<div class="text-sm text-muted-foreground">Caricamento informazioni sul modello...</div>
 				</div>
 			{:else if firstModel}
 				{@const modelMeta = firstModel.meta}
@@ -101,7 +101,7 @@
 					<Table.Root>
 						<Table.Header>
 							<Table.Row>
-								<Table.Head class="w-[10rem]">Model</Table.Head>
+								<Table.Head class="w-[10rem]">Modello</Table.Head>
 
 								<Table.Head>
 									<div class="inline-flex items-center gap-2">
@@ -124,7 +124,7 @@
 						<Table.Body>
 							<!-- Model Path -->
 							<Table.Row>
-								<Table.Cell class="h-10 align-middle font-medium">File Path</Table.Cell>
+								<Table.Cell class="h-10 align-middle font-medium">Percorso file</Table.Cell>
 
 								<Table.Cell
 									class="inline-flex h-10 items-center gap-2 align-middle font-mono text-xs"
@@ -146,7 +146,7 @@
 							<!-- Context Size -->
 							{#if serverProps?.default_generation_settings?.n_ctx}
 								<Table.Row>
-									<Table.Cell class="h-10 align-middle font-medium">Context Size</Table.Cell>
+									<Table.Cell class="h-10 align-middle font-medium">Dimensione contesto</Table.Cell>
 
 									<Table.Cell
 										>{formatNumber(serverProps.default_generation_settings.n_ctx)} tokens</Table.Cell
@@ -155,17 +155,17 @@
 							{:else}
 								<Table.Row>
 									<Table.Cell class="h-10 align-middle font-medium text-red-500"
-										>Context Size</Table.Cell
+										>Dimensione contesto</Table.Cell
 									>
 
-									<Table.Cell class="text-red-500">Not available</Table.Cell>
+									<Table.Cell class="text-red-500">Non disponibile</Table.Cell>
 								</Table.Row>
 							{/if}
 
 							<!-- Training Context -->
 							{#if modelMeta?.n_ctx_train}
 								<Table.Row>
-									<Table.Cell class="h-10 align-middle font-medium">Training Context</Table.Cell>
+									<Table.Cell class="h-10 align-middle font-medium">Contesto di addestramento</Table.Cell>
 
 									<Table.Cell>{formatNumber(modelMeta.n_ctx_train)} tokens</Table.Cell>
 								</Table.Row>
@@ -174,7 +174,7 @@
 							<!-- Model Size -->
 							{#if modelMeta?.size}
 								<Table.Row>
-									<Table.Cell class="h-10 align-middle font-medium">Model Size</Table.Cell>
+									<Table.Cell class="h-10 align-middle font-medium">Dimensione modello</Table.Cell>
 
 									<Table.Cell>{formatFileSize(modelMeta.size)}</Table.Cell>
 								</Table.Row>
@@ -183,7 +183,7 @@
 							<!-- Parameters -->
 							{#if modelMeta?.n_params}
 								<Table.Row>
-									<Table.Cell class="h-10 align-middle font-medium">Parameters</Table.Cell>
+									<Table.Cell class="h-10 align-middle font-medium">Parametri</Table.Cell>
 
 									<Table.Cell>{formatParameters(modelMeta.n_params)}</Table.Cell>
 								</Table.Row>
@@ -192,7 +192,7 @@
 							<!-- Embedding Size -->
 							{#if modelMeta?.n_embd}
 								<Table.Row>
-									<Table.Cell class="align-middle font-medium">Embedding Size</Table.Cell>
+									<Table.Cell class="align-middle font-medium">Dimensione embedding</Table.Cell>
 
 									<Table.Cell>{formatNumber(modelMeta.n_embd)}</Table.Cell>
 								</Table.Row>
@@ -201,7 +201,7 @@
 							<!-- Vocabulary Size -->
 							{#if modelMeta?.n_vocab}
 								<Table.Row>
-									<Table.Cell class="align-middle font-medium">Vocabulary Size</Table.Cell>
+									<Table.Cell class="align-middle font-medium">Dimensione vocabolario</Table.Cell>
 
 									<Table.Cell>{formatNumber(modelMeta.n_vocab)} tokens</Table.Cell>
 								</Table.Row>
@@ -210,14 +210,14 @@
 							<!-- Vocabulary Type -->
 							{#if modelMeta?.vocab_type}
 								<Table.Row>
-									<Table.Cell class="align-middle font-medium">Vocabulary Type</Table.Cell>
+									<Table.Cell class="align-middle font-medium">Tipo di vocabolario</Table.Cell>
 									<Table.Cell class="align-middle capitalize">{modelMeta.vocab_type}</Table.Cell>
 								</Table.Row>
 							{/if}
 
 							<!-- Total Slots -->
 							<Table.Row>
-								<Table.Cell class="align-middle font-medium">Parallel Slots</Table.Cell>
+								<Table.Cell class="align-middle font-medium">Slot paralleli</Table.Cell>
 
 								<Table.Cell>{serverProps.total_slots}</Table.Cell>
 							</Table.Row>
@@ -225,7 +225,7 @@
 							<!-- Modalities -->
 							{#if modalities.length > 0}
 								<Table.Row>
-									<Table.Cell class="align-middle font-medium">Modalities</Table.Cell>
+									<Table.Cell class="align-middle font-medium">Modalità</Table.Cell>
 
 									<Table.Cell>
 										<div class="flex flex-wrap gap-1">
@@ -237,7 +237,7 @@
 
 							<!-- Build Info -->
 							<Table.Row>
-								<Table.Cell class="align-middle font-medium">Build Info</Table.Cell>
+								<Table.Cell class="align-middle font-medium">Info build</Table.Cell>
 
 								<Table.Cell class="align-middle font-mono text-xs"
 									>{serverProps.build_info}</Table.Cell
@@ -247,7 +247,7 @@
 							<!-- Chat Template -->
 							{#if serverProps.chat_template}
 								<Table.Row>
-									<Table.Cell class="align-middle font-medium">Chat Template</Table.Cell>
+									<Table.Cell class="align-middle font-medium">Template chat</Table.Cell>
 
 									<Table.Cell class="py-10">
 										<div class="rounded-md bg-muted p-4">
@@ -262,7 +262,7 @@
 				{/if}
 			{:else if !isLoadingModels}
 				<div class="flex items-center justify-center py-8">
-					<div class="text-sm text-muted-foreground">No model information available</div>
+					<div class="text-sm text-muted-foreground">Nessuna informazione sul modello</div>
 				</div>
 			{/if}
 		</div>

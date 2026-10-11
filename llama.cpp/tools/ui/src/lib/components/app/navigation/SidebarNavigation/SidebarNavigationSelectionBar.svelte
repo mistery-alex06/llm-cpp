@@ -155,7 +155,7 @@
 		? 'its'
 		: 'their'} messages will be permanently removed, including any forks."
 	confirmText={selectedCount === 1 ? 'Delete' : `Delete ${selectedCount}`}
-	cancelText="Cancel"
+	cancelText="Annulla"
 	variant="destructive"
 	icon={Trash2}
 	onConfirm={handleDeleteConfirm}

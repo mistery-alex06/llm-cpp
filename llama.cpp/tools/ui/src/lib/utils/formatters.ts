@@ -136,7 +136,7 @@ export function formatPerformanceTime(ms: number): string {
  * Formats attachment content for API requests with consistent header style.
  * Used when converting message attachments to text content parts.
  *
- * @param label - Type label (e.g., 'File', 'PDF File', 'MCP Prompt')
+ * @param label - Type label (e.g., 'File', 'PDF File', 'Prompt MCP')
  * @param name - File or attachment name
  * @param content - The actual content to include
  * @param extra - Optional extra info to append to name (e.g., server name for MCP)

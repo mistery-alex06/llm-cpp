@@ -862,7 +862,7 @@
 					</div>
 				</div>
 				<div class="mermaid-loading-placeholder">
-					<span class="mermaid-loading-text">Generating diagram...</span>
+					<span class="mermaid-loading-text">Generazione diagramma...</span>
 				</div>
 			</div>
 		{:else if streamingSvgCode !== null}
@@ -885,7 +885,7 @@
 					</div>
 				{:else}
 					<div class="mermaid-loading-placeholder">
-						<span class="mermaid-loading-text">Rendering svg...</span>
+						<span class="mermaid-loading-text">Rendering SVG...</span>
 					</div>
 				{/if}
 			</div>

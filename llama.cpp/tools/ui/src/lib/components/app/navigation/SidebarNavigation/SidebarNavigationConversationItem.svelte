@@ -256,13 +256,13 @@
 					},
 					{
 						icon: Pencil,
-						label: 'Edit',
+						label: 'Modifica',
 						onclick: handleEdit,
 						shortcut: ['shift', 'cmd', 'e']
 					},
 					{
 						icon: Download,
-						label: 'Export',
+						label: 'Esporta',
 						onclick: (e: Event) => {
 							e.stopPropagation();
 							conversationsStore.downloadConversation(conversation.id);
@@ -271,12 +271,12 @@
 					},
 					{
 						icon: ListChecks,
-						label: 'Select',
+						label: 'Seleziona',
 						onclick: handleEnterSelectionMode
 					},
 					{
 						icon: Trash2,
-						label: 'Delete',
+						label: 'Elimina',
 						onclick: handleDelete,
 						variant: 'destructive',
 						shortcut: ['shift', 'cmd', 'd'],

@@ -27,9 +27,9 @@
 <DialogConfirmation
 	bind:open={showDeleteDialog}
 	title="Elimina conversazione"
-	description="Are you sure you want to delete this conversation? This action cannot be undone and will permanently remove all messages in this conversation."
-	confirmText="Delete"
-	cancelText="Cancel"
+	description="Eliminare questa conversazione? L'azione non è reversibile e rimuove definitivamente tutti i messaggi."
+	confirmText="Elimina"
+	cancelText="Annulla"
 	variant="destructive"
 	icon={Trash2}
 	onConfirm={handleDeleteConfirm}

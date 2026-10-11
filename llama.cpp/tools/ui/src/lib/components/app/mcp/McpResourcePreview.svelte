@@ -76,7 +76,7 @@
 		<div class="flex flex-col items-center justify-center gap-2 py-8 text-muted-foreground">
 			<FileText class="h-8 w-8 opacity-50" />
 
-			<span class="text-sm">Select a resource to preview</span>
+			<span class="text-sm">Seleziona una risorsa da visualizzare</span>
 		</div>
 	{:else}
 		<div class="flex items-start justify-between gap-2">
@@ -103,7 +103,7 @@
 					class="h-7 w-7 p-0"
 					onclick={handleDownload}
 					disabled={isLoading || !getResourceTextContent(content)}
-					title="Download content"
+					title="Scarica contenuto"
 				>
 					<Download class="h-3.5 w-3.5" />
 				</Button>
@@ -136,7 +136,7 @@
 								blob.mimeType ?? MimeTypeApplication.OCTET_STREAM,
 								blob.blob
 							)}
-							alt="Resource content"
+							alt="Contenuto risorsa"
 							class="max-w-full rounded"
 						/>
 					{:else}
@@ -149,7 +149,7 @@
 				{/each}
 
 				{#if !textContent && blobContent.length === 0}
-					<div class="py-4 text-center text-sm text-muted-foreground">No content available</div>
+					<div class="py-4 text-center text-sm text-muted-foreground">Nessun contenuto disponibile</div>
 				{/if}
 			{/if}
 		</div>

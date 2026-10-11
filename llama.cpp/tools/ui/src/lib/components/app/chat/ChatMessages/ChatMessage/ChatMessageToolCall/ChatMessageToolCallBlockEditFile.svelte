@@ -22,7 +22,7 @@
 
 <ToolCallBlock {section} {open} {isStreaming} meta={editFileMeta} {onToggle}>
 	{#snippet titleSnippet()}
-		<span class="text-muted-foreground">Edit file </span>
+		<span class="text-muted-foreground">Modifica file </span>
 		<span class="font-mono">{editFileMeta?.filePath}</span>
 		{#if editFileMeta?.errorMessage}
 			<span class="ml-1 text-xs italic text-muted-foreground/70">(failed)</span>

@@ -20,7 +20,7 @@
 	{#snippet titleSnippet()}
 		{#if fileGlobMeta}
 			<span class="text-muted-foreground"
-				>{fileGlobMeta.include === '**' ? 'List files' : 'Search files'}&nbsp;</span
+				>{fileGlobMeta.include === '**' ? 'List files' : 'Cerca file'}&nbsp;</span
 			>
 			{#if fileGlobMeta.include !== '**'}
 				<span class="font-mono">{fileGlobMeta.include}</span>
@@ -33,7 +33,7 @@
 	{#snippet children(meta, ctx)}
 		{#if ctx.isPending}
 			<div class="rounded bg-muted/20 p-2 text-xs text-muted-foreground/70 italic">
-				Searching...
+				Ricerca...
 			</div>
 		{:else if meta?.errorMessage}
 			<div

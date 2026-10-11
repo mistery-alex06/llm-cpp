@@ -31,7 +31,7 @@
 		 * "Wants Authorization" is the user's *intent* to add a Bearer token
 		 * (separate from `hasAuthorization` which reflects what's already in
 		 * the headers). Bindable so a parent - e.g. the recommendation cards
-		 * on the "Add New Server" dialog - can flip the switch on when the
+		 * on the "Aggiungi nuovo server" dialog - can flip the switch on when the
 		 * picked server ships a `needsAuthorization: true` flag.
 		 */
 		wantsAuthorization?: boolean;
@@ -39,7 +39,7 @@
 		 * Marks the "Authorization" field as required. Locks the toggle so the
 		 * user can't dismiss it, and visually marks the field with a red
 		 * asterisk. The parent is expected to gate its submit affordance on
-		 * the bearer token actually being filled. Used by the "Add New Server"
+		 * the bearer token actually being filled. Used by the "Aggiungi nuovo server"
 		 * dialog for recommendations whose `needsAuthorization` flag is true.
 		 */
 		required?: boolean;
@@ -165,7 +165,7 @@
 
 	<div class="mb-4">
 		<label for="server-name-{id}" class="mb-2 block text-xs font-medium select-none">
-			Display name
+			Nome visualizzato
 		</label>
 
 		<Input
@@ -197,7 +197,7 @@
 				id="bearer-token-{id}"
 				type="password"
 				autocomplete="off"
-				placeholder="Paste token here"
+				placeholder="Incolla il token qui"
 				value={bearerToken}
 				oninput={(e) => updateBearerToken(e.currentTarget.value)}
 				class="pl-16"
@@ -244,7 +244,7 @@
 			/>
 
 			<span>
-				<span class="text-xs text-muted-foreground">Use llama-server proxy</span>
+				<span class="text-xs text-muted-foreground">Usa il proxy llama-server</span>
 
 				<br />
 

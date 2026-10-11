@@ -15,7 +15,7 @@
 		<Badge variant="outline" class="h-5 gap-1 bg-green-50 px-1.5 text-[10px] dark:bg-green-950">
 			<Wrench class="h-3 w-3 text-green-600 dark:text-green-400" />
 
-			Tools
+			Strumenti
 		</Badge>
 	{/if}
 
@@ -23,7 +23,7 @@
 		<Badge variant="outline" class="h-5 gap-1 bg-blue-50 px-1.5 text-[10px] dark:bg-blue-950">
 			<Database class="h-3 w-3 text-blue-600 dark:text-blue-400" />
 
-			Resources
+			Risorse
 		</Badge>
 	{/if}
 
@@ -47,7 +47,7 @@
 		<Badge variant="outline" class="h-5 gap-1 bg-cyan-50 px-1.5 text-[10px] dark:bg-cyan-950">
 			<Sparkles class="h-3 w-3 text-cyan-600 dark:text-cyan-400" />
 
-			Completions
+			Completamenti
 		</Badge>
 	{/if}
 

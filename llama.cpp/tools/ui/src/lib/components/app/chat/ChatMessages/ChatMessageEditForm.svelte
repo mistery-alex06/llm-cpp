@@ -101,7 +101,7 @@
 		value={editCtx.editedContent}
 		attachments={editCtx.editedExtras}
 		bind:uploadedFiles={editCtx.editedUploadedFiles}
-		placeholder="Edit your message..."
+		placeholder="Modifica il messaggio..."
 		showMcpPromptButton
 		showAddButton={editCtx.messageRole === MessageRole.USER}
 		showModelSelector={editCtx.messageRole === MessageRole.USER}
@@ -119,7 +119,7 @@
 			<Switch id="save-only-switch" bind:checked={saveWithoutRegenerate} class="scale-75" />
 
 			<label for="save-only-switch" class="cursor-pointer text-xs text-muted-foreground">
-				Update without re-sending
+				Aggiorna senza reinviare
 			</label>
 		</div>
 	{:else if isAssistantMessage}
@@ -127,7 +127,7 @@
 			<Switch id="branch-after-edit" bind:checked={branchAfterEdit} class="scale-75" />
 
 			<label for="branch-after-edit" class="cursor-pointer text-xs text-muted-foreground">
-				Branch conversation after edit
+				Crea un ramo dopo la modifica
 			</label>
 		</div>
 	{:else}
@@ -137,16 +137,16 @@
 	<Button class="h-7 px-3 text-xs" onclick={attemptCancel} size="sm" variant="ghost">
 		<X class="mr-1 h-3 w-3" />
 
-		Cancel
+		Annulla
 	</Button>
 </div>
 
 <DialogConfirmation
 	bind:open={showDiscardDialog}
 	title="Scartare le modifiche?"
-	description="You have unsaved changes. Are you sure you want to discard them?"
-	confirmText="Discard"
-	cancelText="Keep editing"
+	description="Ci sono modifiche non salvate. Scartarle?"
+	confirmText="Scarta"
+	cancelText="Continua a modificare"
 	variant="destructive"
 	icon={AlertTriangle}
 	onConfirm={editCtx.cancel}

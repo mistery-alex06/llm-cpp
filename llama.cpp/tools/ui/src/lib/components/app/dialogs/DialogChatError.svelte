@@ -57,14 +57,14 @@
 			{#if contextInfo}
 				<div class="mt-2 space-y-1 text-xs opacity-80">
 					<p>
-						<span class="font-medium">Prompt tokens:</span>
+						<span class="font-medium">Token del prompt:</span>
 
 						{contextInfo.n_prompt_tokens.toLocaleString()}
 					</p>
 
 					{#if contextInfo.n_ctx}
 						<p>
-							<span class="font-medium">Context size:</span>
+							<span class="font-medium">Dimensione contesto:</span>
 
 							{contextInfo.n_ctx.toLocaleString()}
 						</p>

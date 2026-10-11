@@ -102,7 +102,7 @@
 				>
 					<Pin class="h-3.5 w-3.5" />
 
-					<span>Pinned</span>
+					<span>Fissate</span>
 				</div>
 			</div>
 
@@ -141,7 +141,7 @@
 				<div
 					class="text-muted-foreground flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium"
 				>
-					Recent conversations
+					Conversazioni recenti
 				</div>
 			{/if}
 

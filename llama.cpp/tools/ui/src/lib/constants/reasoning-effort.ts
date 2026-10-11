@@ -15,10 +15,10 @@ export const REASONING_EFFORT_LABELS: Record<string, string> = {
 };
 
 export const REASONING_EFFORT_LEVELS: ReasoningEffortLevel[] = [
-	{ value: ReasoningEffort.DEFAULT, label: 'Default' },
-	{ value: ReasoningEffort.OFF, label: 'Off' },
-	{ value: ReasoningEffort.LOW, label: 'Low' },
-	{ value: ReasoningEffort.MEDIUM, label: 'Medium' },
-	{ value: ReasoningEffort.HIGH, label: 'High' },
-	{ value: ReasoningEffort.MAX, label: 'Max', hasInfo: true }
+	{ value: ReasoningEffort.DEFAULT, label: 'Predefinito' },
+	{ value: ReasoningEffort.OFF, label: 'Disattivato' },
+	{ value: ReasoningEffort.LOW, label: 'Basso' },
+	{ value: ReasoningEffort.MEDIUM, label: 'Medio' },
+	{ value: ReasoningEffort.HIGH, label: 'Alto' },
+	{ value: ReasoningEffort.MAX, label: 'Massimo', hasInfo: true }
 ];

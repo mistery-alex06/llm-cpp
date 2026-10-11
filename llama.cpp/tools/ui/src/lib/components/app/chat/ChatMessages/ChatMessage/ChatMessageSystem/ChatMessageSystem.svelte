@@ -126,7 +126,7 @@
 				<Button class="h-8 px-3" onclick={editCtx.cancel} size="sm" variant="outline">
 					<X class="mr-1 h-3 w-3" />
 
-					Cancel
+					Annulla
 				</Button>
 
 				<Button
@@ -190,7 +190,7 @@
 										size="sm"
 										variant="outline"
 									>
-										Show full system message
+										Mostra il messaggio di sistema completo
 									</Button>
 								</div>
 							{/if}
@@ -207,7 +207,7 @@
 									size="sm"
 									variant="outline"
 								>
-									Collapse System Message
+									Comprimi messaggio di sistema
 								</Button>
 							</div>
 						{/if}

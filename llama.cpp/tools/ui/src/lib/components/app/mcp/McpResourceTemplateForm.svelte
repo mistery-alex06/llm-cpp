@@ -157,7 +157,7 @@
 
 	{#if isComplete}
 		<div class="rounded-md bg-muted/50 px-3 py-2">
-			<p class="text-xs text-muted-foreground">Resolved URI:</p>
+			<p class="text-xs text-muted-foreground">URI risolto:</p>
 
 			<p class="mt-0.5 font-mono text-xs break-all">{expandedUri}</p>
 		</div>
@@ -166,6 +166,6 @@
 	<div class="flex justify-end gap-2 pt-1">
 		<Button type="button" size="sm" variant="secondary" onclick={onCancel}>Annulla</Button>
 
-		<Button size="sm" type="submit" disabled={!isComplete}>Read Resource</Button>
+		<Button size="sm" type="submit" disabled={!isComplete}>Leggi risorsa</Button>
 	</div>
 </form>

@@ -111,7 +111,7 @@ export async function processFilesToChatUploaded(
 					toast.info(`You can enable parsing PDF as images with vision models.`, {
 						duration: 8000,
 						action: {
-							label: 'Enable PDF as Images',
+							label: 'Abilita PDF come immagini',
 							onClick: () => {
 								settingsStore.updateConfig(SETTINGS_KEYS.PDF_AS_IMAGE, true);
 								toast.success('PDF parsing as images enabled!', {

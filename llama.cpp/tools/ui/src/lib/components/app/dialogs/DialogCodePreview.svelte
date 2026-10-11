@@ -44,11 +44,11 @@
 
 			<DialogPrimitive.Close
 				class="code-preview-close absolute top-4 right-4 border-none bg-transparent text-white opacity-70 mix-blend-difference transition-opacity hover:opacity-100 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-8"
-				aria-label="Close preview"
+				aria-label="Chiudi anteprima"
 			>
 				<XIcon />
 
-				<span class="sr-only">Close preview</span>
+				<span class="sr-only">Chiudi anteprima</span>
 			</DialogPrimitive.Close>
 		</DialogPrimitive.Content>
 	</DialogPrimitive.Portal>

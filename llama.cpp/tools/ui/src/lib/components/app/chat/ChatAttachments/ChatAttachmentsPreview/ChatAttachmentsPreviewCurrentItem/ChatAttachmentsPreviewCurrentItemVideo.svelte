@@ -16,7 +16,7 @@
 		{#if videoSrc}
 			<video controls class="mb-4 w-full" src={videoSrc}>
 				<track kind="captions" src="" />
-				Your browser does not support the video element.
+				Il browser non supporta l'elemento video.
 			</video>
 		{:else}
 			<p class="mb-4 text-white/70">Anteprima video non disponibile</p>

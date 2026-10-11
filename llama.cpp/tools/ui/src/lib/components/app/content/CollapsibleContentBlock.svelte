@@ -85,7 +85,7 @@
 			)}
 		/>
 
-		<span class="sr-only">Toggle content</span>
+		<span class="sr-only">Mostra/nascondi contenuto</span>
 	</Collapsible.Trigger>
 
 	<Collapsible.Content>

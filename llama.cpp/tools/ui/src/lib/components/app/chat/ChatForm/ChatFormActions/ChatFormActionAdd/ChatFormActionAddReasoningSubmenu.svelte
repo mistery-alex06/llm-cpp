@@ -24,7 +24,7 @@
 					? 'text-muted-foreground'
 					: ''}"
 			>
-				Reasoning
+				Ragionamento
 
 				<span class="capitalize text-muted-foreground">
 					{reasoning.currentEffort}
@@ -65,7 +65,7 @@
 								<Info class="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
 							</Tooltip.Trigger>
 							<Tooltip.Content side="left">
-								<p>Maximum reasoning effort with extended context usage</p>
+								<p>Massimo ragionamento con uso esteso del contesto</p>
 							</Tooltip.Content>
 						</Tooltip.Root>
 					{/if}

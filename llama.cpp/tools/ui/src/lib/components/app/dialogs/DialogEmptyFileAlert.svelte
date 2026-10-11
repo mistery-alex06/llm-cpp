@@ -22,11 +22,11 @@
 			<AlertDialog.Title class="flex items-center gap-2">
 				<FileX class="h-5 w-5 text-destructive" />
 
-				Empty Files Detected
+				Rilevati file vuoti
 			</AlertDialog.Title>
 
 			<AlertDialog.Description>
-				The following files are empty and have been removed from your attachments:
+				I seguenti file sono vuoti e sono stati rimossi dagli allegati:
 			</AlertDialog.Description>
 		</AlertDialog.Header>
 
@@ -42,20 +42,20 @@
 			</div>
 
 			<div>
-				<div class="mb-2 font-medium">What happened:</div>
+				<div class="mb-2 font-medium">Cos'è successo:</div>
 
 				<ul class="list-inside list-disc space-y-1 text-muted-foreground">
-					<li>Empty files cannot be processed or sent to the AI model</li>
+					<li>I file vuoti non possono essere elaborati né inviati al modello</li>
 
-					<li>These files have been automatically removed from your attachments</li>
+					<li>Questi file sono stati rimossi automaticamente dagli allegati</li>
 
-					<li>You can try uploading files with content instead</li>
+					<li>Prova a caricare file con contenuto</li>
 				</ul>
 			</div>
 		</div>
 
 		<AlertDialog.Footer>
-			<AlertDialog.Action onclick={() => handleOpenChange(false)}>Got it</AlertDialog.Action>
+			<AlertDialog.Action onclick={() => handleOpenChange(false)}>Ho capito</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>

@@ -97,7 +97,7 @@
 				<Sheet.Title>Aggiungi alla chat</Sheet.Title>
 
 				<Sheet.Description class="sr-only">
-					Add files, system prompt or configure MCP servers
+					Aggiungi file, prompt di sistema o configura server MCP
 				</Sheet.Description>
 			</Sheet.Header>
 
@@ -272,7 +272,7 @@
 
 							{#if mcpServers.length === 0}
 								<div class="px-3 py-2 text-center text-sm text-muted-foreground">
-									No MCP servers configured
+									Nessun server MCP configurato
 								</div>
 							{/if}
 						</div>

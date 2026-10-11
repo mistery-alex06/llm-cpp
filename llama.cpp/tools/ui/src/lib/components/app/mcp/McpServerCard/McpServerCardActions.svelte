@@ -23,7 +23,7 @@
 		class="h-7 w-7"
 		onclick={onRefresh}
 		disabled={isHealthChecking}
-		aria-label="Refresh"
+		aria-label="Aggiorna"
 	>
 		<RefreshCw class="h-3.5 w-3.5" />
 	</Button>

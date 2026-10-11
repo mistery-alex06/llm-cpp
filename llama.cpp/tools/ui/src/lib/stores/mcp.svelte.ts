@@ -1348,7 +1348,7 @@ class MCPStore {
 		if (!trimmedUrl) {
 			this.updateHealthCheck(server.id, {
 				status: HealthCheckStatus.ERROR,
-				message: 'Please enter a server URL first.',
+				message: 'Inserisci prima l\'URL del server.',
 				logs: []
 			});
 			return;
@@ -1430,7 +1430,7 @@ class MCPStore {
 				await MCPService.disconnect(connection);
 			}
 		} catch (error) {
-			const message = error instanceof Error ? error.message : 'Unknown error occurred';
+			const message = error instanceof Error ? error.message : 'Si è verificato un errore sconosciuto';
 
 			if (logs.at(-1)?.phase !== MCPConnectionPhase.ERROR) {
 				logs.push({

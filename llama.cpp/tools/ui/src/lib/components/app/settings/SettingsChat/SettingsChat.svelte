@@ -168,7 +168,7 @@
 								<div class="flex justify-end">
 									<Button variant="outline" onclick={() => window.location.reload()}>
 										<RefreshCw class="h-3 w-3" />
-										Reload app
+										Ricarica app
 									</Button>
 								</div>
 							{/if}
@@ -177,7 +177,7 @@
 				</div>
 
 				<div class="mt-8 border-t border-border/30 pt-6">
-					<p class="text-xs text-muted-foreground">Settings are saved in browser's localStorage</p>
+					<p class="text-xs text-muted-foreground">Le impostazioni sono salvate nel localStorage del browser</p>
 				</div>
 			</div>
 

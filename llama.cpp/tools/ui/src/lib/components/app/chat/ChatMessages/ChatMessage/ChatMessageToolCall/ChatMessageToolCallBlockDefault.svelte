@@ -52,13 +52,13 @@
 				/>
 			{:else if ctx.isStreaming}
 				<div class="rounded bg-muted/20 p-2 text-xs text-muted-foreground/70 italic">
-					Receiving arguments...
+					Ricezione argomenti...
 				</div>
 			{:else}
 				<div
 					class="rounded bg-yellow-500/10 p-2 text-xs text-yellow-600 italic dark:text-yellow-400"
 				>
-					Response was truncated
+					Risposta troncata
 				</div>
 			{/if}
 		{:else}
@@ -86,7 +86,7 @@
 			</div>
 			{#if ctx.isPending}
 				<div class="rounded bg-muted/20 p-2 text-xs text-muted-foreground/70 italic">
-					Waiting for result...
+					In attesa del risultato...
 				</div>
 			{:else if section.toolResult}
 				{#if outputKind === ToolResultKind.JSON}
