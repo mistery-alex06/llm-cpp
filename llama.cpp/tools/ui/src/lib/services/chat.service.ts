@@ -1,6 +1,7 @@
 import { memorySystemPrompt } from '$lib/utils/altea-memory';
 import { alteaProjects } from '$lib/utils/altea-projects.svelte';
 import { alteaPersonas } from '$lib/utils/altea-personas.svelte';
+import { alteaHistory } from '$lib/utils/altea-history.svelte';
 import { alteaWeb } from '$lib/utils/altea-web.svelte';
 import { alteaDocs } from '$lib/utils/altea-docs.svelte';
 import { getAuthHeaders, getJsonHeaders } from '$lib/utils/api-headers';
@@ -229,6 +230,7 @@ export class ChatService {
 			alteaProjects.promptFor(conversationId) +
 			forcedReasoning +
 			alteaDocs.consume() +
+			alteaHistory.consume() +
 			alteaWeb.consume();
 		if (memoryPrompt) {
 			const first = normalizedMessages[0];

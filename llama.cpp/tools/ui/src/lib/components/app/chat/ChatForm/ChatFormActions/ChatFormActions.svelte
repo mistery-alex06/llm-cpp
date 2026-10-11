@@ -4,6 +4,7 @@
 	import { alteaWeb } from '$lib/utils/altea-web.svelte';
 	import { alteaDocs } from '$lib/utils/altea-docs.svelte';
 	import { alteaAuto } from '$lib/utils/altea-auto.svelte';
+	import { alteaHistory } from '$lib/utils/altea-history.svelte';
 	import AlteaDocsDialog from './AlteaDocsDialog.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { ChatService } from '$lib/services';
@@ -199,6 +200,21 @@
 				{disabled}
 			>
 				Auto
+			</Button>
+			<Button
+				type="button"
+				variant={alteaHistory.enabled ? 'secondary' : 'ghost'}
+				size="sm"
+				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {alteaHistory.enabled
+					? 'text-primary'
+					: 'text-muted-foreground'}"
+				title={alteaHistory.enabled
+					? 'Ricerca nelle chat passate attiva: clicca per disattivarla'
+					: 'Cerca anche nelle chat passate'}
+				onclick={() => alteaHistory.toggle()}
+				{disabled}
+			>
+				Storico
 			</Button>
 		</div>
 	{/if}

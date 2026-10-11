@@ -17,6 +17,7 @@ import { ChatService } from '$lib/services/chat.service';
 import { alteaWeb } from '$lib/utils/altea-web.svelte';
 import { alteaDocs } from '$lib/utils/altea-docs.svelte';
 import { alteaAuto } from '$lib/utils/altea-auto.svelte';
+import { alteaHistory } from '$lib/utils/altea-history.svelte';
 import { alteaProjects } from '$lib/utils/altea-projects.svelte';
 import {
 	handleMemoryCommand,
@@ -1030,12 +1031,14 @@ class ChatStore {
 
 	async sendMessage(content: string, extras?: DatabaseMessageExtra[]): Promise<void> {
 		content = handleMemoryCommand(content) ?? content;
-		if (alteaWeb.enabled && content.trim() && !alteaDocs.skipNext) await alteaWeb.prepare(content);
+		const skipCtx = alteaDocs.skipNext;
+		if (alteaWeb.enabled && content.trim() && !skipCtx) await alteaWeb.prepare(content);
 		const docScope =
 			alteaProjects.projectOf(conversationsStore.activeConversation?.id)?.id ??
 			alteaProjects.pendingProjectId ??
 			undefined;
 		alteaDocs.prepare(content, docScope);
+		if (!skipCtx) await alteaHistory.prepare(content, conversationsStore.activeConversation?.id);
 		if (!content.trim() && (!extras || extras.length === 0)) return;
 		if (alteaAuto.enabled) {
 			const target = alteaAuto.classify(

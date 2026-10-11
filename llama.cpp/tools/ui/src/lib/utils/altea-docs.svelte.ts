@@ -46,7 +46,7 @@ const STOP = new Set(
 	).split(' ')
 );
 
-function tokenize(text: string): string[] {
+export function tokenize(text: string): string[] {
 	return text
 		.toLowerCase()
 		.normalize('NFD')

@@ -181,6 +181,15 @@ Il pulsante **Doc**, accanto a **Web**, apre la libreria dei documenti.
 - Compatibile con la ricerca web: se sono attivi entrambi, Altea riceve estratti dei documenti e risultati web.
 - Sono documenti nel browser: cancellando i dati del sito si perdono.
 
+### Ricerca nelle chat passate
+
+Il pulsante **Storico** (accanto ad *Auto*) fa cercare ad Altea anche nelle tue altre conversazioni. A ogni domanda, una ricerca per parole chiave (BM25, tutto in locale) sceglie fino a 3 messaggi pertinenti di altre chat e li passa ad Altea, che li usa solo se servono e cita il titolo della chat.
+
+- Cerca in tutte le chat tranne quella corrente (un estratto per chat); se non c'è nulla di pertinente non aggiunge niente.
+- L'indice si costruisce al primo uso e si aggiorna ogni ~45 secondi; con molte chat il primo avvio può richiedere un attimo.
+- Funziona meglio se la domanda usa le stesse parole della conversazione cercata. Disattivato di default.
+- Compatibile con Web e Doc: se sono attivi insieme, Altea riceve tutte le fonti.
+
 ### Appunti da lezione
 
 Nella finestra **Doc**, il cappello accanto a ogni documento apre lo studio:
@@ -353,6 +362,7 @@ llm/
 - [x] Barra superiore: ruoli, comandi rapidi e stato del sistema
 - [x] Analisi video (fotogrammi e audio estratti nel browser)
 - [x] Appunti da lezione: riassunti, flashcard e quiz dai documenti
+- [x] Ricerca nelle chat passate (pulsante *Storico*)
 |---|---|---|
 | Bassa | Azioni sul computer | comandi con conferma esplicita dell'utente |
 | Bassa | Personalizzazione del modello | fine-tuning leggero (LoRA) su stile e conoscenze |
