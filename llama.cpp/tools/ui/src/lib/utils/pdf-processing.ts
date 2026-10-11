@@ -82,6 +82,29 @@ export async function convertPDFToText(file: File): Promise<string> {
 }
 
 /**
+ * Extract the text of each page of a PDF (one string per page)
+ * @param file - The PDF file to process
+ * @returns Promise resolving to an array with the text of every page
+ */
+export async function convertPDFToPages(file: File): Promise<string[]> {
+	if (!browser) {
+		throw new Error('PDF processing is only available in the browser');
+	}
+
+	const buffer = await getFileAsBuffer(file);
+	const pdf = await pdfjs.getDocument({ data: buffer }).promise;
+	const pages: string[] = [];
+
+	for (let i = 1; i <= pdf.numPages; i++) {
+		const page = await pdf.getPage(i);
+		const content = (await page.getTextContent()) as TextContent;
+		pages.push(content.items.map((item) => item.str ?? '').join(' '));
+	}
+
+	return pages;
+}
+
+/**
  * Convert PDF pages to PNG images as data URLs
  * @param file - The PDF file to convert
  * @param scale - Rendering scale factor (default: 1.5)

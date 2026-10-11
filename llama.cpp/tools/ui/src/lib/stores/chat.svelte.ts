@@ -15,6 +15,7 @@ import { SvelteMap, SvelteSet } from 'svelte/reactivity';
 import { DatabaseService } from '$lib/services/database.service';
 import { ChatService } from '$lib/services/chat.service';
 import { alteaWeb } from '$lib/utils/altea-web.svelte';
+import { alteaDocs } from '$lib/utils/altea-docs.svelte';
 import {
 	handleMemoryCommand,
 	looksPersonal,
@@ -1026,6 +1027,7 @@ class ChatStore {
 	async sendMessage(content: string, extras?: DatabaseMessageExtra[]): Promise<void> {
 		content = handleMemoryCommand(content) ?? content;
 		if (alteaWeb.enabled && content.trim()) await alteaWeb.prepare(content);
+		alteaDocs.prepare(content);
 		if (!content.trim() && (!extras || extras.length === 0)) return;
 		const activeConv = conversationsStore.activeConversation;
 

@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { ICON_CLASS_DEFAULT } from '$lib/constants/css-classes';
-	import { Square, SkipForward, Globe } from '@lucide/svelte';
+	import { Square, SkipForward, Globe, FileText } from '@lucide/svelte';
 	import { alteaWeb } from '$lib/utils/altea-web.svelte';
+	import { alteaDocs } from '$lib/utils/altea-docs.svelte';
+	import AlteaDocsDialog from './AlteaDocsDialog.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { ChatService } from '$lib/services';
 	import {
@@ -131,6 +133,8 @@
 		const liveOutputTokens = processingState.outputTokensUsed ?? 0;
 		return livePromptTokens > 0 || liveOutputTokens > 0;
 	});
+
+	let docsOpen = $state(false);
 </script>
 
 <div
@@ -165,6 +169,20 @@
 			>
 				<Globe class="h-3.5 w-3.5" />
 				Web
+			</Button>
+			<Button
+				type="button"
+				variant={alteaDocs.enabled && alteaDocs.docs.length > 0 ? 'secondary' : 'ghost'}
+				size="sm"
+				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {alteaDocs.enabled && alteaDocs.docs.length > 0
+					? 'text-primary'
+					: 'text-muted-foreground'}"
+				title="Documenti di Altea"
+				onclick={() => (docsOpen = true)}
+				{disabled}
+			>
+				<FileText class="h-3.5 w-3.5" />
+				Doc{alteaDocs.docs.length > 0 ? ` (${alteaDocs.docs.length})` : ''}
 			</Button>
 		</div>
 	{/if}
@@ -231,3 +249,5 @@
 		/>
 	{/if}
 </div>
+
+<AlteaDocsDialog bind:open={docsOpen} />

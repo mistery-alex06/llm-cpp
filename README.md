@@ -24,6 +24,7 @@ Sviluppata e testata su Mac Intel, 8 GB di RAM, solo CPU.
 - Parla **italiano** e si esprime **al femminile** (è "Altea").
 - **Tre modelli** selezionabili dalla UI: Qwen3-4B (più capace), Qwen3-1.7B (più veloce) e Qwen2.5-Omni-3B (multimodale).
 - **Immagini e audio** in ingresso con Qwen2.5-Omni-3B.
+- **Documenti locali (RAG)**: carichi PDF e file di testo e Altea risponde citando file e pagina (pulsante *Doc*).
 - **Ricerca web** opzionale (pulsante *Web*): cerca online e risponde citando le fonti, senza chiavi API.
 - **Memoria persistente**: ricorda da sola i fatti personali duraturi che le dici e li usa nelle chat successive.
 - **Ragionamento** attivabile dal menu per tutti i modelli (spento di default per risposte più rapide).
@@ -48,6 +49,7 @@ main.cpp  ──────────────►  libllama / libggml  ◄
 - **Interfaccia web**: la UI di llama.cpp (SvelteKit, in `llama.cpp/tools/ui/`), personalizzata: tema in `src/app.css`, sfondo `static/bg-ship.jpg`, testi in italiano, nome Altea. I file della UI vengono incorporati nel binario `llama-server` in fase di compilazione.
 - **Memoria** (`llama.cpp/tools/ui/src/lib/utils/altea-memory.ts`): i fatti sono salvati nel `localStorage` del browser e aggiunti al system prompt di ogni richiesta, insieme all'identità di Altea (italiano, femminile). Dopo ogni risposta, se il messaggio sembra contenere informazioni personali, il modello stesso estrae i fatti duraturi da salvare.
 - **`search_server.py`**: servizio locale (`127.0.0.1:8091`) che interroga DuckDuckGo (HTML, via `curl`) e restituisce i primi risultati; avviato e fermato insieme al server.
+- **Documenti (RAG)** (`llama.cpp/tools/ui/src/lib/utils/altea-docs.svelte.ts`): i file caricati vengono spezzati in estratti da ~700 caratteri e salvati nel browser (IndexedDB). A ogni domanda una ricerca BM25 per parole chiave, senza modelli di embedding, sceglie gli estratti più pertinenti, che vengono aggiunti al prompt.
 - **`Altea.app`**: generata da `make_app.sh`. Avvia il server, apre una finestra Chrome dedicata e spegne il server quando la finestra viene chiusa.
 - **`src/` e `include/`**: tokenizer, matrici e transformer scritti da zero (progetto iniziale). Non vengono più usati per l'inferenza.
 - **`web/index.html`**: prima pagina web sperimentale, non usata dal server attuale.
@@ -167,6 +169,17 @@ Il pulsante **Web**, accanto al **+** nel riquadro dei messaggi, attiva la ricer
 - Altea può sbagliare a interpretare i risultati: controlla le fonti per informazioni importanti.
 - I comandi che iniziano con `/` non attivano la ricerca.
 
+### Documenti locali (RAG)
+
+Il pulsante **Doc**, accanto a **Web**, apre la libreria dei documenti.
+
+- **Aggiungi documento**: PDF e file di testo (`.txt`, `.md`, `.csv`, codice...). Il testo viene estratto e diviso in estratti; resta nel browser (IndexedDB) e non viene inviato a nessuno.
+- Ogni domanda cerca gli estratti più pertinenti (fino a 4, ~2600 caratteri) e li passa ad Altea, che risponde citando file e pagina, es. *(manuale.pdf, p. 3)*. Se la risposta non è nei documenti, lo dice.
+- L'interruttore *Usa i documenti nelle risposte* li attiva o disattiva senza cancellarli; il cestino rimuove un documento.
+- La ricerca è per parole chiave: funziona meglio se la domanda usa le stesse parole del testo. Le scansioni (PDF di sole immagini) non hanno testo e non vengono lette.
+- Compatibile con la ricerca web: se sono attivi entrambi, Altea riceve estratti dei documenti e risultati web.
+- Sono documenti nel browser: cancellando i dati del sito si perdono.
+
 ### Immagini e audio
 
 Seleziona **Qwen2.5-Omni-3B** nel selettore del modello, poi usa **+** → *Aggiungi file*. Con gli altri modelli il caricamento di immagini e audio è disattivato. Il video non è stato testato.
@@ -248,13 +261,13 @@ llm/
 - [x] Modello multimodale Qwen2.5-Omni-3B (immagini e audio)
 - [x] Modello predefinito all'apertura: Qwen3-1.7B
 - [x] Ricerca web con fonti citate (pulsante *Web*)
+- [x] Documenti locali (RAG) con citazione di file e pagina (pulsante *Doc*)
 
 ### Prossimi obiettivi
 
 | Priorità | Obiettivo | Note |
 |---|---|---|
 | Alta | Scelta automatica del modello | domande semplici al 1.7B, complesse al 4B |
-| Alta | Documenti locali (RAG) | rispondere su PDF e appunti, con citazione della fonte |
 | Media | Memoria su file | non legata al browser, condivisa tra browser e backup |
 | Media | Esporta/importa | chat e memoria in un file di backup |
 | Media | Traduzione completa della UI | Impostazioni e messaggi d'errore inclusi |
