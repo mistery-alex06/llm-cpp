@@ -195,6 +195,32 @@ class AlteaDocs {
 		}
 	}
 
+	exportAll(): AlteaDoc[] {
+		return $state.snapshot(this.docs) as AlteaDoc[];
+	}
+
+	/** Aggiunge i documenti di un backup (salta quelli già presenti per id o nome). */
+	async importAll(docs: AlteaDoc[]): Promise<number> {
+		let added = 0;
+		for (const d of docs) {
+			if (!d || typeof d.name !== 'string' || !Array.isArray(d.chunks)) continue;
+			if (this.docs.some((x) => x.id === d.id || x.name === d.name)) continue;
+			const doc: AlteaDoc = {
+				id: d.id || crypto.randomUUID(),
+				name: d.name,
+				addedAt: d.addedAt || Date.now(),
+				chunks: d.chunks
+					.filter((c) => c && typeof c.text === 'string')
+					.map((c) => ({ page: Number(c.page) || 1, text: c.text }))
+			};
+			await dbPut(doc);
+			this.docs = [...this.docs, doc];
+			added++;
+		}
+		this.rebuild();
+		return added;
+	}
+
 	async remove(id: string): Promise<void> {
 		await dbDelete(id);
 		this.docs = this.docs.filter((d) => d.id !== id);

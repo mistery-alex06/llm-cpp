@@ -180,6 +180,18 @@ Il pulsante **Doc**, accanto a **Web**, apre la libreria dei documenti.
 - Compatibile con la ricerca web: se sono attivi entrambi, Altea riceve estratti dei documenti e risultati web.
 - Sono documenti nel browser: cancellando i dati del sito si perdono.
 
+### Backup (esporta/importa)
+
+*Impostazioni* → *Importa/Esporta*:
+
+| Cosa | Formato | Note |
+|---|---|---|
+| Conversazioni | ZIP di JSONL | importazione con unione alle esistenti |
+| Memoria e documenti (Doc) | JSON (`altea_backup_AAAA-MM-GG.json`) | importazione senza duplicati |
+| Impostazioni | JSON | chiavi sensibili escluse di default |
+
+Usalo per spostare Altea su un altro browser o prima di cancellare i dati del sito.
+
 ### Scelta automatica del modello
 
 Il pulsante **Auto** (accanto a *Doc*) sceglie il modello per ogni messaggio:
@@ -276,11 +288,10 @@ llm/
 - [x] Documenti locali (RAG) con citazione di file e pagina (pulsante *Doc*)
 - [x] Traduzione completa della UI in italiano
 - [x] Scelta automatica del modello (pulsante *Auto*)### Prossimi obiettivi
-
+- [x] Esporta/importa: conversazioni, memoria e documenti
 | Priorità | Obiettivo | Note |
 |---|---|---|
 | Media | Memoria su file | non legata al browser, condivisa tra browser e backup |
-| Media | Esporta/importa | chat e memoria in un file di backup |
 | Media | Analisi video | estrazione di fotogrammi da dare a Omni |
 | Bassa | Azioni sul computer | comandi con conferma esplicita dell'utente |
 | Bassa | Personalizzazione del modello | fine-tuning leggero (LoRA) su stile e conoscenze |

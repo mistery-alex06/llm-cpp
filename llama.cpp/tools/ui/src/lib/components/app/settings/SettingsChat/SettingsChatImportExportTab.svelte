@@ -9,6 +9,7 @@
 	import { settingsStore } from '$lib/stores/settings.svelte';
 	import { conversationsStore, conversations } from '$lib/stores/conversations.svelte';
 	import { toast } from 'svelte-sonner';
+	import { exportAlteaBackup, importAlteaBackup } from '$lib/utils/altea-backup';
 	import { fade } from 'svelte/transition';
 	import { ConversationSelectionMode, HtmlInputType, FileExtensionText } from '$lib/enums';
 	import SettingsChatImportExportSection from './SettingsChatImportExportSection.svelte';
@@ -36,6 +37,32 @@
 	let showSettingsExportDialog = $state(false);
 	let includeSensitiveData = $state(false);
 
+	function handleAlteaBackupExport() {
+		try {
+			const r = exportAlteaBackup();
+			toast.success(`Backup salvato: ${r.memory} voci di memoria, ${r.docs} documenti`);
+		} catch {
+			toast.error('Esportazione del backup non riuscita');
+		}
+	}
+
+	function handleAlteaBackupImport() {
+		const input = document.createElement('input');
+		input.type = 'file';
+		input.accept = '.json,application/json';
+		input.onchange = async () => {
+			const file = input.files?.[0];
+			if (!file) return;
+			try {
+				const r = await importAlteaBackup(file);
+				toast.success(`Importati ${r.memory} voci di memoria e ${r.docs} documenti`);
+			} catch (e) {
+				toast.error(e instanceof Error ? e.message : 'Importazione non riuscita');
+			}
+		};
+		input.click();
+	}
+
 	function handleSettingsExport() {
 		showSettingsExportDialog = true;
 		includeSensitiveData = false;
@@ -58,10 +85,10 @@
 
 			showSettingsExportSummary = true;
 			showSettingsImportSummary = false;
-			toast.success('Settings exported');
+			toast.success('Impostazioni esportate');
 		} catch (err) {
 			console.error('Failed to export settings:', err);
-			toast.error('Failed to export settings');
+			toast.error('Esportazione impostazioni non riuscita');
 		}
 	}
 
@@ -84,7 +111,7 @@
 					const data = JSON.parse(text);
 
 					if (!data || typeof data !== 'object' || !data.config) {
-						toast.error('Invalid settings file: missing config');
+						toast.error('File impostazioni non valido');
 						return;
 					}
 
@@ -92,17 +119,17 @@
 
 					showSettingsImportSummary = true;
 					showSettingsExportSummary = false;
-					toast.success('Settings imported successfully');
+					toast.success('Impostazioni importate');
 				} catch (err) {
 					console.error('Failed to import settings:', err);
-					toast.error('Failed to import settings');
+					toast.error('Importazione impostazioni non riuscita');
 				}
 			};
 
 			input.click();
 		} catch (err) {
 			console.error('Failed to open file picker:', err);
-			toast.error('Failed to open file picker');
+			toast.error('Impossibile aprire la selezione file');
 		}
 	}
 
@@ -110,7 +137,7 @@
 		try {
 			const allConversations = conversations();
 			if (allConversations.length === 0) {
-				toast.info('No conversations to export');
+				toast.info('Nessuna conversazione da esportare');
 				return;
 			}
 
@@ -126,7 +153,7 @@
 			showExportDialog = true;
 		} catch (err) {
 			console.error('Failed to load conversations:', err);
-			alert('Failed to load conversations');
+			alert('Impossibile caricare le conversazioni');
 		}
 	}
 
@@ -226,14 +253,14 @@
 			const allConversations = conversations();
 
 			if (allConversations.length === 0) {
-				toast.info('No conversations to delete');
+				toast.info('Nessuna conversazione da eliminare');
 				return;
 			}
 
 			showDeleteDialog = true;
 		} catch (err) {
 			console.error('Failed to load conversations for deletion:', err);
-			toast.error('Failed to load conversations');
+			toast.error('Impossibile caricare le conversazioni');
 		}
 	}
 
@@ -258,18 +285,18 @@
 			title="Esporta"
 			description="Scarica le conversazioni come ZIP di file JSONL, con messaggi, allegati e cronologia."
 			IconComponent={Download}
-			buttonText="Export conversations"
+			buttonText="Esporta conversazioni"
 			onclick={handleExportClick}
-			summary={{ show: showExportSummary, verb: 'Exported', items: exportedConversations }}
+			summary={{ show: showExportSummary, verb: 'Esportate', items: exportedConversations }}
 		/>
 
 		<SettingsChatImportExportSection
 			title="Importa"
 			description="Importa conversazioni da un file ZIP o JSONL esportato in precedenza. Verranno unite a quelle esistenti."
 			IconComponent={Upload}
-			buttonText="Import conversations"
+			buttonText="Importa conversazioni"
 			onclick={handleImportClick}
-			summary={{ show: showImportSummary, verb: 'Imported', items: importedConversations }}
+			summary={{ show: showImportSummary, verb: 'Importate', items: importedConversations }}
 		/>
 
 		<SettingsChatImportExportSection
@@ -284,23 +311,41 @@
 		/>
 	</SettingsGroup>
 
+	<SettingsGroup title="Memoria e documenti di Altea">
+		<SettingsChatImportExportSection
+			title="Esporta"
+			description="Salva memoria e documenti caricati (Doc) in un unico file JSON di backup."
+			IconComponent={Download}
+			buttonText="Esporta backup"
+			onclick={handleAlteaBackupExport}
+		/>
+
+		<SettingsChatImportExportSection
+			title="Importa"
+			description="Ripristina un backup di Altea. Memoria e documenti vengono uniti a quelli esistenti, senza duplicati."
+			IconComponent={Upload}
+			buttonText="Importa backup"
+			onclick={handleAlteaBackupImport}
+		/>
+	</SettingsGroup>
+
 	<SettingsGroup title="Impostazioni">
 		<SettingsChatImportExportSection
 			title="Esporta"
 			description="Esporta impostazioni e preferenze della chat come file JSON."
 			IconComponent={Download}
-			buttonText="Export settings"
+			buttonText="Esporta impostazioni"
 			onclick={handleSettingsExport}
-			summary={{ show: showSettingsExportSummary, verb: 'Exported', items: [] }}
+			summary={{ show: showSettingsExportSummary, verb: 'Esportate', items: [] }}
 		/>
 
 		<SettingsChatImportExportSection
 			title="Importa"
 			description="Importa le impostazioni da un file JSON esportato in precedenza. Verranno unite a quelle esistenti."
 			IconComponent={Upload}
-			buttonText="Import settings"
+			buttonText="Importa impostazioni"
 			onclick={handleSettingsImport}
-			summary={{ show: showSettingsImportSummary, verb: 'Imported', items: [] }}
+			summary={{ show: showSettingsImportSummary, verb: 'Importate', items: [] }}
 		/>
 	</SettingsGroup>
 </div>
