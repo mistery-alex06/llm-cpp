@@ -3,6 +3,8 @@
 	import { alteaPersonas, PERSONAS } from '$lib/utils/altea-personas.svelte';
 	import { modelsStore } from '$lib/stores/models.svelte';
 	import { conversationsStore } from '$lib/stores/conversations.svelte';
+	import { exportChatMarkdown } from '$lib/utils/altea-export';
+	import { toast } from 'svelte-sonner';
 
 	const COMMANDS: { label: string; text: string }[] = [
 		{ label: 'Riassumi', text: 'Riassumi in modo conciso il seguente testo:\n\n' },
@@ -38,6 +40,20 @@
 		}
 		return 0;
 	});
+
+	const hasChat = $derived(
+		(conversationsStore.activeMessages as { role: string }[]).some(
+			(m) => m.role === 'user' || m.role === 'assistant'
+		)
+	);
+
+	function exportChat() {
+		const ok = exportChatMarkdown(
+			conversationsStore.activeConversation?.name ?? 'chat',
+			conversationsStore.activeMessages
+		);
+		if (!ok) toast.info('Nessun messaggio da esportare');
+	}
 
 	function insert(text: string) {
 		const ta = document.querySelector('textarea') as HTMLTextAreaElement | null;
@@ -109,6 +125,15 @@
 			>
 		{/each}
 	</div>
+
+	<button
+		type="button"
+		class="rounded-full px-2 py-1 hover:bg-foreground/10 disabled:opacity-40 disabled:hover:bg-transparent"
+		title="Scarica questa chat in Markdown (solo domande e risposte)"
+		disabled={!hasChat}
+		onclick={exportChat}>Esporta .md</button
+	>
+
 
 	<div class="ml-auto flex items-center gap-3 text-muted-foreground">
 		<span title="Modello caricato in memoria">

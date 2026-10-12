@@ -243,6 +243,10 @@ llama.cpp non legge i video: quando ne alleghi uno (*+* → *Video*, o trascinan
 
 Memoria, progetti e documenti vengono copiati automaticamente in `~/Altea/data/` (cambiabile con la variabile `ALTEA_DATA`). All'apertura, se il browser è vuoto (dati cancellati, altro browser) o il file è più recente, Altea li ricarica dal file; altrimenti aggiorna il file. Se il servizio non è attivo, tutto funziona come prima solo nel browser. Le conversazioni restano nel browser: per queste usa l'esportazione ZIP.
 
+### Esporta chat in Markdown
+
+Pulsante **Esporta .md** nella barra superiore (attivo con una chat aperta). Scarica `<titolo>_<data>.md` con solo titolo, `## Domanda` e `## Risposta`: niente metadati, allegati o ragionamento interno. Esporta il ramo visualizzato.
+
 ### Backup (esporta/importa)
 
 *Impostazioni* → *Importa/Esporta*:
