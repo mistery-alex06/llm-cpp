@@ -11,6 +11,7 @@
  * @see ChatService in services/chat.service.ts for API operations
  */
 
+import { alteaNotify } from '$lib/utils/altea-notify.svelte';
 import { SvelteMap, SvelteSet } from 'svelte/reactivity';
 import { DatabaseService } from '$lib/services/database.service';
 import { ChatService } from '$lib/services/chat.service';
@@ -1402,7 +1403,7 @@ class ChatStore {
 					}).catch(console.error);
 				}
 
-				cleanupStreamingState();
+				cleanupStreamingState(); alteaNotify.done();
 
 				if (onComplete) onComplete(streamedContent);
 				if (isRouterMode()) modelsStore.fetchRouterModels().catch(console.error);
@@ -1516,7 +1517,7 @@ class ChatStore {
 					if (resolvedModel) uiUpdate.model = resolvedModel;
 					conversationsStore.updateMessageAtIndex(idx, uiUpdate);
 					await conversationsStore.updateCurrentNode(currentMessageId);
-					cleanupStreamingState();
+					cleanupStreamingState(); alteaNotify.done();
 					if (onComplete) await onComplete(content);
 					if (isRouterMode()) modelsStore.fetchRouterModels().catch(console.error);
 

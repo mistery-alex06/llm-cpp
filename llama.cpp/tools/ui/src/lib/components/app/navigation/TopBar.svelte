@@ -4,6 +4,7 @@
 	import { modelsStore } from '$lib/stores/models.svelte';
 	import { conversationsStore } from '$lib/stores/conversations.svelte';
 	import { exportChatMarkdown } from '$lib/utils/altea-export';
+	import { alteaNotify } from '$lib/utils/altea-notify.svelte';
 	import { toast } from 'svelte-sonner';
 
 	const COMMANDS: { label: string; text: string }[] = [
@@ -135,6 +136,12 @@
 	>
 
 
+	<button
+		type="button"
+		class="rounded-full px-2 py-1 hover:bg-foreground/10 {alteaNotify.enabled ? '' : 'opacity-50'}"
+		title="Suono e notifica a fine risposta (solo se la finestra non è in primo piano)"
+		onclick={() => alteaNotify.toggle()}>Avviso: {alteaNotify.enabled ? 'on' : 'off'}</button
+	>
 	<div class="ml-auto flex items-center gap-3 text-muted-foreground">
 		<span title="Modello caricato in memoria">
 			{loadedNames.length ? loadedNames.join(', ') : 'nessun modello caricato'}

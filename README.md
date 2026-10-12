@@ -107,6 +107,7 @@ bash make_app.sh
 
 | Cosa vuoi fare | Comando |
 |---|---|
+| **Avvio con un clic (Windows)** | doppio clic su `Altea.bat` (serve llama.cpp compilato, vedi sotto) |
 | **Avvio con un clic (macOS)** | doppio clic su `Altea.app` (sul Desktop, creata da `make_app.sh`) |
 | Avviare l'interfaccia web | `./run_qwen_server.sh` poi apri `http://127.0.0.1:8080` |
 | Avviare con il ragionamento sempre attivo | `./run_qwen_server.sh --reasoning on` |
@@ -126,6 +127,14 @@ bash make_app.sh
 - Usa il tuo profilo Chrome, quindi chat e memoria sono le stesse del browser.
 - **Prima apertura:** macOS chiede il permesso per la cartella Desktop e per controllare Google Chrome. Vanno accettati; se neghi il secondo, il server non si spegne più da solo.
 - Se sposti la cartella `llm/`, rigenera l'app con `bash make_app.sh`.
+
+### Altea su Windows
+
+- Compila llama.cpp con CMake (Visual Studio Build Tools) con gli stessi comandi di sopra; `llama-server.exe` finisce in `llama.cpp\build\bin\Release\`.
+- Python 3 (comando `py` o `python`) serve per ricerca web e archivio su file; senza, Altea parte lo stesso ma senza quelle funzioni. La ricerca usa `curl.exe`, incluso in Windows 10/11.
+- **`Altea.bat`**: avvia il server, apre Altea in una finestra senza barra (Edge, oppure Chrome) e spegne il server alla chiusura. Usa il profilo del browser, quindi chat e memoria restano le stesse.
+- `run_qwen_server.ps1`: solo il server (`powershell -ExecutionPolicy Bypass -File run_qwen_server.ps1`).
+- Non testato su Windows (sviluppato su Mac). Se la chiusura della finestra non viene rilevata, il launcher chiede di premere Invio per spegnere il server. Le statistiche RAM/swap nella barra superiore sono pensate per macOS e su Windows possono risultare vuote.
 
 ### Ricompilare la UI dopo averla modificata
 
@@ -242,6 +251,10 @@ llama.cpp non legge i video: quando ne alleghi uno (*+* → *Video*, o trascinan
 ### Memoria su file
 
 Memoria, progetti e documenti vengono copiati automaticamente in `~/Altea/data/` (cambiabile con la variabile `ALTEA_DATA`). All'apertura, se il browser è vuoto (dati cancellati, altro browser) o il file è più recente, Altea li ricarica dal file; altrimenti aggiorna il file. Se il servizio non è attivo, tutto funziona come prima solo nel browser. Le conversazioni restano nel browser: per queste usa l'esportazione ZIP.
+
+### Avviso a fine risposta
+
+Pulsante **Avviso: on/off** nella barra superiore. Quando una risposta finisce e la finestra non è in primo piano, Altea emette un suono breve e una notifica di sistema (il browser chiede il permesso la prima volta). Con la finestra in primo piano non fa nulla.
 
 ### Esporta chat in Markdown
 
