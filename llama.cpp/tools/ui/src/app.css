@@ -3,6 +3,12 @@
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 @import 'tw-animate-css';
+@import '@fontsource-variable/plus-jakarta-sans';
+
+@theme {
+	--font-sans:
+		'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
 
 @custom-variant dark (&:is(.dark *));
 

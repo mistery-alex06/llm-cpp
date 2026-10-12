@@ -252,6 +252,10 @@ llama.cpp non legge i video: quando ne alleghi uno (*+* → *Video*, o trascinan
 
 Memoria, progetti e documenti vengono copiati automaticamente in `~/Altea/data/` (cambiabile con la variabile `ALTEA_DATA`). All'apertura, se il browser è vuoto (dati cancellati, altro browser) o il file è più recente, Altea li ricarica dal file; altrimenti aggiorna il file. Se il servizio non è attivo, tutto funziona come prima solo nel browser. Le conversazioni restano nel browser: per queste usa l'esportazione ZIP.
 
+### Aspetto
+
+Font: **Plus Jakarta Sans** (variabile), incluso nella build tramite `@fontsource-variable/plus-jakarta-sans`: funziona offline. Per cambiarlo, installa un altro pacchetto `@fontsource-variable/...` e aggiorna `@import` e `--font-sans` in `llama.cpp/tools/ui/src/app.css`.
+
 ### Stima del tempo di risposta
 
 Mentre Altea scrive, la barra superiore mostra "~N s rimasti". La stima usa la lunghezza media e la velocità (tok/s) delle ultime 5 risposte e il testo già generato; compare dopo la prima risposta della sessione. È solo un ordine di grandezza: non include l'elaborazione iniziale del prompt e sbaglia se la risposta è insolitamente breve o lunga.
