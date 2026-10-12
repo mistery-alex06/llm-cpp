@@ -43,7 +43,7 @@ export function exportChatMarkdown(title: string, messages: Msg[]): boolean {
 	if (!messages.some((m) => (m.role === 'user' || m.role === 'assistant') && clean(m.content ?? ''))) {
 		return false;
 	}
-	const url = URL.createObjectURL(new Blob([md], { type: 'text/markdown;charset=utf-8' }));
+	const url = URL.createObjectURL(new Blob(['\uFEFF' + md], { type: 'text/markdown;charset=utf-8' }));
 	const a = document.createElement('a');
 	a.href = url;
 	a.download = fileName(title);
