@@ -5,16 +5,11 @@
 	import { conversationsStore } from '$lib/stores/conversations.svelte';
 	import { exportChatMarkdown } from '$lib/utils/altea-export';
 	import { alteaNotify } from '$lib/utils/altea-notify.svelte';
+	import { COMMANDS } from '$lib/utils/altea-commands';
+	import SlashMenu from './SlashMenu.svelte';
 	import MemoryPanel from './MemoryPanel.svelte';
 	import { toast } from 'svelte-sonner';
 
-	const COMMANDS: { label: string; text: string }[] = [
-		{ label: 'Riassumi', text: 'Riassumi in modo conciso il seguente testo:\n\n' },
-		{ label: 'Traduci', text: 'Traduci in inglese il seguente testo:\n\n' },
-		{ label: 'Spiega', text: 'Spiegami in modo semplice, con un esempio: ' },
-		{ label: 'Correggi', text: 'Correggi grammatica e stile del seguente testo senza cambiarne il senso:\n\n' },
-		{ label: 'Quiz', text: 'Crea 5 domande di verifica a risposta multipla su: ' }
-	];
 
 	interface Stats {
 		llamaMB: number;
@@ -175,3 +170,5 @@
 {#if showMemory}
 	<MemoryPanel onclose={() => (showMemory = false)} />
 {/if}
+
+<SlashMenu onMemory={() => (showMemory = true)} onExport={exportChat} />
