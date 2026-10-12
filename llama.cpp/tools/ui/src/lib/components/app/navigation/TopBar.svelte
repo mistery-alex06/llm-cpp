@@ -5,6 +5,7 @@
 	import { conversationsStore } from '$lib/stores/conversations.svelte';
 	import { exportChatMarkdown } from '$lib/utils/altea-export';
 	import { alteaNotify } from '$lib/utils/altea-notify.svelte';
+	import MemoryPanel from './MemoryPanel.svelte';
 	import { toast } from 'svelte-sonner';
 
 	const COMMANDS: { label: string; text: string }[] = [
@@ -47,6 +48,8 @@
 			(m) => m.role === 'user' || m.role === 'assistant'
 		)
 	);
+
+	let showMemory = $state(false);
 
 	function exportChat() {
 		const ok = exportChatMarkdown(
@@ -138,6 +141,12 @@
 
 	<button
 		type="button"
+		class="rounded-full px-2 py-1 hover:bg-foreground/10"
+		title="Vedi, modifica ed elimina ciò che Altea ricorda"
+		onclick={() => (showMemory = true)}>Memoria</button
+	>
+	<button
+		type="button"
 		class="rounded-full px-2 py-1 hover:bg-foreground/10 {alteaNotify.enabled ? '' : 'opacity-50'}"
 		title="Suono e notifica a fine risposta (solo se la finestra non è in primo piano)"
 		onclick={() => alteaNotify.toggle()}>Avviso: {alteaNotify.enabled ? 'on' : 'off'}</button
@@ -162,3 +171,7 @@
 		</span>
 	</div>
 </div>
+
+{#if showMemory}
+	<MemoryPanel onclose={() => (showMemory = false)} />
+{/if}

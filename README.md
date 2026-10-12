@@ -252,6 +252,10 @@ llama.cpp non legge i video: quando ne alleghi uno (*+* → *Video*, o trascinan
 
 Memoria, progetti e documenti vengono copiati automaticamente in `~/Altea/data/` (cambiabile con la variabile `ALTEA_DATA`). All'apertura, se il browser è vuoto (dati cancellati, altro browser) o il file è più recente, Altea li ricarica dal file; altrimenti aggiorna il file. Se il servizio non è attivo, tutto funziona come prima solo nel browser. Le conversazioni restano nel browser: per queste usa l'esportazione ZIP.
 
+### Pannello Memoria
+
+Pulsante **Memoria** nella barra superiore: elenca i fatti che Altea ricorda in tutte le chat (max 50). Puoi aggiungerne, modificarli, eliminarli o cancellare tutto; le modifiche valgono dal messaggio successivo e vengono salvate anche su file. La memoria dei singoli progetti si gestisce dalla barra dei progetti.
+
 ### Avviso a fine risposta
 
 Pulsante **Avviso: on/off** nella barra superiore. Quando una risposta finisce e la finestra non è in primo piano, Altea emette un suono breve e una notifica di sistema (il browser chiede il permesso la prima volta). Con la finestra in primo piano non fa nulla.
