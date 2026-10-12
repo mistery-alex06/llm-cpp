@@ -252,6 +252,10 @@ llama.cpp non legge i video: quando ne alleghi uno (*+* → *Video*, o trascinan
 
 Memoria, progetti e documenti vengono copiati automaticamente in `~/Altea/data/` (cambiabile con la variabile `ALTEA_DATA`). All'apertura, se il browser è vuoto (dati cancellati, altro browser) o il file è più recente, Altea li ricarica dal file; altrimenti aggiorna il file. Se il servizio non è attivo, tutto funziona come prima solo nel browser. Le conversazioni restano nel browser: per queste usa l'esportazione ZIP.
 
+### Temi e dimensione del testo
+
+Pulsante **Tema** nella barra superiore: **Chiaro**, **Scuro** (predefinito), **Seppia** (chiaro caldo, adatto alla lettura), **Mezzanotte** (scuro neutro con accento indaco) e **Foresta** (scuro verde). Sotto, la dimensione del testo: Piccolo / Normale / Grande. Le scelte sono salvate nel browser. Per aggiungere un tema: tavolozza `html.palette-<nome>` in `app.css` e voce in `altea-theme.svelte.ts`.
+
 ### Aspetto
 
 Font: interfaccia in **Plus Jakarta Sans**, risposte di Altea in **Lora** (serif dal tratto calligrafico, a metà tra corsivo e sans), codice in monospazio. Entrambi i font sono variabili e inclusi nella build (`@fontsource-variable/...`): funzionano offline. Per cambiarlo, installa un altro pacchetto `@fontsource-variable/...` e aggiorna `@import` e `--font-sans` in `llama.cpp/tools/ui/src/app.css`.

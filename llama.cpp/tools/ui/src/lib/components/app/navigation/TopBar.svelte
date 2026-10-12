@@ -8,6 +8,7 @@
 	import { COMMANDS } from '$lib/utils/altea-commands';
 	import SlashMenu from './SlashMenu.svelte';
 	import { chatStore } from '$lib/stores/chat.svelte';
+	import ThemePicker from './ThemePicker.svelte';
 	import MemoryPanel from './MemoryPanel.svelte';
 	import { toast } from 'svelte-sonner';
 
@@ -155,6 +156,7 @@
 	>
 
 
+	<ThemePicker />
 	<button
 		type="button"
 		class="rounded-full px-2 py-1 hover:bg-foreground/10"
