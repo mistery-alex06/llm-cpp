@@ -24,7 +24,7 @@
 	>
 	{#if open}
 		<div
-			class="absolute left-0 top-full z-50 mt-2 w-60 rounded-xl border border-border bg-background p-3 text-sm shadow-xl"
+			class="absolute right-0 top-full z-50 mt-2 w-60 rounded-xl border border-border bg-background p-3 text-sm shadow-xl"
 		>
 			<div class="mb-1 text-xs text-muted-foreground">Tema</div>
 			<div class="grid grid-cols-2 gap-1.5">

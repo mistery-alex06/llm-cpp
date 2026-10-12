@@ -254,7 +254,7 @@ Memoria, progetti e documenti vengono copiati automaticamente in `~/Altea/data/`
 
 ### Temi e dimensione del testo
 
-Pulsante **Tema** nella barra superiore: **Chiaro**, **Scuro** (predefinito), **Seppia** (chiaro caldo, adatto alla lettura), **Mezzanotte** (scuro neutro con accento indaco) e **Foresta** (scuro verde). Sotto, la dimensione del testo: Piccolo / Normale / Grande. Le scelte sono salvate nel browser. Per aggiungere un tema: tavolozza `html.palette-<nome>` in `app.css` e voce in `altea-theme.svelte.ts`.
+Pulsante **Tema** nella barra superiore (in alto a destra, accanto al modello caricato), 9 temi. Chiari: **Chiaro**, **Seppia** (carta color sabbia, con sfondo virato seppia), **Lavanda**, **Menta**. Scuri: **Scuro** (predefinito, blu-oro), **Mezzanotte** (indaco), **Foresta** (verde), **Oceano** (ciano), **Grafite** (grigio caldo con accento arancio). Sotto, la dimensione del testo: Piccolo / Normale / Grande. Le scelte sono salvate nel browser. Per aggiungere un tema: tavolozza `html.palette-<nome>` in `app.css` e voce in `altea-theme.svelte.ts`.
 
 ### Aspetto
 

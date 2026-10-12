@@ -156,7 +156,6 @@
 	>
 
 
-	<ThemePicker />
 	<button
 		type="button"
 		class="rounded-full px-2 py-1 hover:bg-foreground/10"
@@ -170,6 +169,7 @@
 		onclick={() => alteaNotify.toggle()}>Avviso: {alteaNotify.enabled ? 'on' : 'off'}</button
 	>
 	<div class="ml-auto flex items-center gap-3 text-muted-foreground">
+		<ThemePicker />
 		<span title="Modello caricato in memoria">
 			{loadedNames.length ? loadedNames.join(', ') : 'nessun modello caricato'}
 		</span>
