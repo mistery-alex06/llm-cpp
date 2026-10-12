@@ -7,6 +7,7 @@
 	import { alteaNotify } from '$lib/utils/altea-notify.svelte';
 	import { COMMANDS } from '$lib/utils/altea-commands';
 	import SlashMenu from './SlashMenu.svelte';
+	import { chatStore } from '$lib/stores/chat.svelte';
 	import MemoryPanel from './MemoryPanel.svelte';
 	import { toast } from 'svelte-sonner';
 
@@ -36,6 +37,26 @@
 			if (msgs[i].role === 'assistant' && v) return v;
 		}
 		return 0;
+	});
+
+	// Stima del tempo rimanente: lunghezza media delle ultime risposte e velocità misurata
+	const eta = $derived.by((): string => {
+		if (!chatStore.isLoading) return '';
+		const msgs = conversationsStore.activeMessages as {
+			role: string;
+			content?: string;
+			timings?: { predicted_per_second?: number; predicted_n?: number };
+		}[];
+		const done = msgs.filter((m) => m.role === 'assistant' && m.timings?.predicted_n && m.timings?.predicted_per_second).slice(-5);
+		if (!done.length) return '';
+		const avgN = done.reduce((a, m) => a + (m.timings!.predicted_n ?? 0), 0) / done.length;
+		const speed = done.reduce((a, m) => a + (m.timings!.predicted_per_second ?? 0), 0) / done.length;
+		const last = msgs[msgs.length - 1];
+		const cur = last && last.role === 'assistant' && !last.timings ? (last.content?.length ?? 0) / 3.5 : 0;
+		const remaining = (avgN - cur) / speed;
+		if (remaining <= 1) return 'quasi finito';
+		if (remaining < 90) return `~${Math.round(remaining)} s rimasti`;
+		return `~${Math.round(remaining / 60)} min rimasti`;
 	});
 
 	const hasChat = $derived(
@@ -150,6 +171,9 @@
 		<span title="Modello caricato in memoria">
 			{loadedNames.length ? loadedNames.join(', ') : 'nessun modello caricato'}
 		</span>
+		{#if eta}
+			<span title="Stima basata sulle ultime risposte">{eta}</span>
+		{/if}
 		{#if lastSpeed}
 			<span title="Velocità dell'ultima risposta">{lastSpeed.toFixed(1)} tok/s</span>
 		{/if}

@@ -252,6 +252,10 @@ llama.cpp non legge i video: quando ne alleghi uno (*+* → *Video*, o trascinan
 
 Memoria, progetti e documenti vengono copiati automaticamente in `~/Altea/data/` (cambiabile con la variabile `ALTEA_DATA`). All'apertura, se il browser è vuoto (dati cancellati, altro browser) o il file è più recente, Altea li ricarica dal file; altrimenti aggiorna il file. Se il servizio non è attivo, tutto funziona come prima solo nel browser. Le conversazioni restano nel browser: per queste usa l'esportazione ZIP.
 
+### Stima del tempo di risposta
+
+Mentre Altea scrive, la barra superiore mostra "~N s rimasti". La stima usa la lunghezza media e la velocità (tok/s) delle ultime 5 risposte e il testo già generato; compare dopo la prima risposta della sessione. È solo un ordine di grandezza: non include l'elaborazione iniziale del prompt e sbaglia se la risposta è insolitamente breve o lunga.
+
 ### Menu comandi `/`
 
 Scrivendo `/` come primo carattere nella casella di testo si apre una tendina con i comandi; continuando a scrivere la lista si filtra. Frecce per scegliere, Invio o Tab per confermare, Esc per chiudere.
