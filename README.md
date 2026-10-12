@@ -254,7 +254,7 @@ Memoria, progetti e documenti vengono copiati automaticamente in `~/Altea/data/`
 
 ### Aspetto
 
-Font: **Plus Jakarta Sans** (variabile), incluso nella build tramite `@fontsource-variable/plus-jakarta-sans`: funziona offline. Per cambiarlo, installa un altro pacchetto `@fontsource-variable/...` e aggiorna `@import` e `--font-sans` in `llama.cpp/tools/ui/src/app.css`.
+Font: interfaccia in **Plus Jakarta Sans**, risposte di Altea in **Lora** (serif dal tratto calligrafico, a metà tra corsivo e sans), codice in monospazio. Entrambi i font sono variabili e inclusi nella build (`@fontsource-variable/...`): funzionano offline. Per cambiarlo, installa un altro pacchetto `@fontsource-variable/...` e aggiorna `@import` e `--font-sans` in `llama.cpp/tools/ui/src/app.css`.
 
 ### Stima del tempo di risposta
 

@@ -4,8 +4,10 @@
 @plugin '@tailwindcss/typography';
 @import 'tw-animate-css';
 @import '@fontsource-variable/plus-jakarta-sans';
+@import '@fontsource-variable/lora';
 
 @theme {
+	--font-prose: 'Lora Variable', Georgia, 'Times New Roman', serif;
 	--font-sans:
 		'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
@@ -296,4 +298,14 @@ aside,
 	.conversation-chat-form {
 		max-width: 112rem !important;
 	}
+}
+
+/* Risposte di Altea: serif calligrafico (Lora) per un tono più elegante; interfaccia e codice restano invariati */
+.markdown-content {
+	font-family: var(--font-prose);
+	font-size: 1.02em;
+	line-height: 1.65;
+}
+.markdown-content :where(code, pre, kbd, samp) {
+	font-family: var(--font-mono);
 }
