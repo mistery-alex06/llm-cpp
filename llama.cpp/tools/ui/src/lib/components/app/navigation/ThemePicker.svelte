@@ -18,7 +18,7 @@
 <div class="relative" bind:this={root}>
 	<button
 		type="button"
-		class="rounded-full px-2 py-1 hover:bg-foreground/10"
+		class="rounded-full px-2 py-1 text-foreground hover:bg-foreground/10"
 		title="Tema e dimensione del testo"
 		onclick={() => (open = !open)}>Tema</button
 	>
