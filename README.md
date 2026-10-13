@@ -252,6 +252,10 @@ llama.cpp non legge i video: quando ne alleghi uno (*+* → *Video*, o trascinan
 
 Memoria, progetti e documenti vengono copiati automaticamente in `~/Altea/data/` (cambiabile con la variabile `ALTEA_DATA`). All'apertura, se il browser è vuoto (dati cancellati, altro browser) o il file è più recente, Altea li ricarica dal file; altrimenti aggiorna il file. Se il servizio non è attivo, tutto funziona come prima solo nel browser. Le conversazioni restano nel browser: per queste usa l'esportazione ZIP.
 
+### Aggiornamento automatico della UI
+
+Dopo una modifica alla UI (ricompilata e riavviato il server), la pagina aperta rileva la nuova versione (subito all'apertura, al ritorno sulla finestra e ogni minuto), la applica e si ricarica da sola, aspettando che non ci sia una risposta in corso. Non serve più svuotare la cache né fare "Unregister" del service worker; chat, memoria e impostazioni non vengono toccate. Solo la prima volta dopo questo aggiornamento può servire un ricaricamento manuale (Cmd+Shift+R, oppure il pulsante "Reload" dell'avviso "Aggiornamento disponibile").
+
 ### Azioni sul computer
 
 Pulsante **Azioni: on/off** nella barra superiore (spento di default; anche `/azioni`). Con le azioni attive Altea può proporre, alla fine di una risposta, un blocco ` ```azione {json} ``` ` che la UI mostra in una finestra di conferma: **non succede nulla finché non premi Consenti**.

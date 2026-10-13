@@ -1,5 +1,6 @@
 import { browser } from '$app/environment';
 import { useRegisterSW } from 'virtual:pwa-register/svelte';
+import { chatStore } from '$lib/stores/chat.svelte';
 import { versionStore } from '$lib/stores/version.svelte';
 import { BUILD_VERSION_LOCALSTORAGE_KEY } from '$lib/constants/storage';
 import { SW_CONFIG } from '$lib/constants/pwa';
@@ -21,6 +22,11 @@ export function usePwa() {
 		updateServiceWorker
 	} = useRegisterSW({
 		onRegisteredSW(swUrl: string, r: ServiceWorkerRegistration | undefined) {
+			// Controlla subito e ogni volta che la finestra torna in primo piano
+			r?.update().catch(() => {});
+			document.addEventListener('visibilitychange', () => {
+				if (document.visibilityState === 'visible') r?.update().catch(() => {});
+			});
 			if (swCheckInterval) {
 				clearInterval(swCheckInterval);
 			}
@@ -46,6 +52,17 @@ export function usePwa() {
 		onRegisterError(error: unknown) {
 			console.error('[PWA] SW registration error:', error);
 		}
+	});
+
+	// Aggiornamento automatico: quando c'è una nuova versione la applica e ricarica la pagina,
+	// ma solo quando Altea non sta generando una risposta. Chat, memoria e impostazioni restano.
+	pwaNeedRefresh.subscribe((need: boolean) => {
+		if (!need) return;
+		const tick = () => {
+			if (chatStore.isLoading) setTimeout(tick, 2000);
+			else updateServiceWorker(true);
+		};
+		tick();
 	});
 
 	// Detect version mismatch via localStorage.
