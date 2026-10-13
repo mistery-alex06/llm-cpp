@@ -1,0 +1,6 @@
+{
+  "token": "INCOLLA_QUI_IL_TOKEN_DEL_BOT",
+  "allowed_user_ids": [123456789012345678],
+  "model": "Qwen3-1.7B-Q4_K_M",
+  "server_url": "http://127.0.0.1:8080"
+}

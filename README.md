@@ -256,6 +256,19 @@ Memoria, progetti e documenti vengono copiati automaticamente in `~/Altea/data/`
 
 Dopo una modifica alla UI (ricompilata e riavviato il server), la pagina aperta rileva la nuova versione (subito all'apertura, al ritorno sulla finestra e ogni minuto), la applica e si ricarica da sola, aspettando che non ci sia una risposta in corso. Non serve più svuotare la cache né fare "Unregister" del service worker; chat, memoria e impostazioni non vengono toccate. Solo la prima volta dopo questo aggiornamento può servire un ricaricamento manuale (Cmd+Shift+R, oppure il pulsante "Reload" dell'avviso "Aggiornamento disponibile").
 
+### Altea su Discord (bot)
+
+Un bot ufficiale di Discord che inoltra i messaggi al server locale di Altea: risponde ai **messaggi privati** e, nei server, **solo quando viene menzionato**, e **solo agli utenti ammessi**. Usa la stessa memoria di Altea (se c'è l'archivio `~/Altea/data/memory.json`) e ricorda gli ultimi messaggi di ogni conversazione (`!reset` li azzera). Non ha accesso ad azioni né a funzioni di gestione dei server. Il Mac deve essere acceso con Altea avviata; la risposta arriva con la velocità del modello.
+
+**Configurazione (una volta)**
+1. Su <https://discord.com/developers/applications> → *New Application* → scheda **Bot** → *Reset Token* e copia il token. Attiva **Message Content Intent**.
+2. *OAuth2 → URL Generator*: scope `bot`, permessi *Send Messages* e *Read Message History*; apri l'URL generato per invitare il bot in un tuo server (serve per poterti scrivere in privato).
+3. In Discord: Impostazioni → Avanzate → Modalità sviluppatore; clic destro sul tuo nome → *Copia ID utente*.
+4. Crea `~/Altea/discord.json` (fuori dalla repo, **mai versionarlo**; metti i permessi `chmod 600`) partendo da `discord.example.json`: token, `allowed_user_ids` (il tuo ID), modello facoltativo.
+5. `pip3 install discord.py`.
+
+**Avvio:** `./run_qwen_server.sh` (o Altea.app), poi in un altro terminale `bash run_discord_bot.sh`. Prova del solo collegamento col modello: `python3 discord_bot.py --test "ciao"`. Se il token viene esposto, rigeneralo dal Developer Portal.
+
 ### Azioni sul computer
 
 Pulsante **Azioni: on/off** nella barra superiore (spento di default; anche `/azioni`). Con le azioni attive Altea può proporre, alla fine di una risposta, un blocco ` ```azione {json} ``` ` che la UI mostra in una finestra di conferma: **non succede nulla finché non premi Consenti**.
