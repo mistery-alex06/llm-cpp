@@ -11,6 +11,7 @@
 	import ThemePicker from './ThemePicker.svelte';
 	import ActionPrompt from './ActionPrompt.svelte';
 	import { alteaActions } from '$lib/utils/altea-actions.svelte';
+	import HelpPanel from './HelpPanel.svelte';
 	import MemoryPanel from './MemoryPanel.svelte';
 	import { toast } from 'svelte-sonner';
 
@@ -69,6 +70,7 @@
 	);
 
 	let showMemory = $state(false);
+	let showHelp = $state(false);
 
 	function exportChat() {
 		const ok = exportChatMarkdown(
@@ -205,6 +207,10 @@
 	<MemoryPanel onclose={() => (showMemory = false)} />
 {/if}
 
-<SlashMenu onMemory={() => (showMemory = true)} onExport={exportChat} />
+<SlashMenu onMemory={() => (showMemory = true)} onExport={exportChat} onHelp={() => (showHelp = true)} />
+
+{#if showHelp}
+	<HelpPanel onclose={() => (showHelp = false)} />
+{/if}
 
 <ActionPrompt />

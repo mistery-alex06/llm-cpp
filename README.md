@@ -289,6 +289,7 @@ Scrivendo `/` come primo carattere nella casella di testo si apre una tendina co
 | Comando | Effetto |
 |---|---|
 | `/riassumi` `/traduci` `/spiega` `/correggi` `/quiz` | inserisce il modello di richiesta nella casella |
+| `/help` | guida con tutti i comandi, le azioni e le funzioni (il testo sta in `src/lib/utils/altea-help.ts`) |
 | `/nuova` | nuova chat |
 | `/memoria` | apre il pannello Memoria |
 | `/esporta` | scarica la chat in Markdown |

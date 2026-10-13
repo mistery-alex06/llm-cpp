@@ -9,7 +9,7 @@
 	import { alteaActions } from '$lib/utils/altea-actions.svelte';
 	import { alteaNotify } from '$lib/utils/altea-notify.svelte';
 
-	let { onMemory, onExport }: { onMemory: () => void; onExport: () => void } = $props();
+	let { onMemory, onExport, onHelp }: { onMemory: () => void; onExport: () => void; onHelp: () => void } = $props();
 
 	interface Item {
 		key: string;
@@ -21,6 +21,7 @@
 	}
 
 	const ITEMS: Item[] = [
+		{ key: 'help', desc: 'Guida con tutti i comandi, le azioni e le funzioni', run: () => onHelp() },
 		...COMMANDS.map((c) => ({ key: c.label.toLowerCase(), desc: c.text.trim().replace(/:$/, '…'), insert: c.text })),
 		{ key: 'nuova', desc: 'Inizia una nuova chat', run: () => goto(ROUTES.NEW_CHAT) },
 		{ key: 'memoria', desc: 'Apri il pannello Memoria', run: () => onMemory() },
