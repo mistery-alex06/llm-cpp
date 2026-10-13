@@ -9,6 +9,8 @@
 	import SlashMenu from './SlashMenu.svelte';
 	import { chatStore } from '$lib/stores/chat.svelte';
 	import ThemePicker from './ThemePicker.svelte';
+	import ActionPrompt from './ActionPrompt.svelte';
+	import { alteaActions } from '$lib/utils/altea-actions.svelte';
 	import MemoryPanel from './MemoryPanel.svelte';
 	import { toast } from 'svelte-sonner';
 
@@ -164,6 +166,12 @@
 	>
 	<button
 		type="button"
+		class="rounded-full px-2 py-1 hover:bg-foreground/10 {alteaActions.enabled ? '' : 'opacity-50'}"
+		title="Permette ad Altea di proporre azioni sul computer (file nella sua cartella di lavoro, aprire indirizzi), sempre con la tua conferma"
+		onclick={() => alteaActions.toggle()}>Azioni: {alteaActions.enabled ? 'on' : 'off'}</button
+	>
+	<button
+		type="button"
 		class="rounded-full px-2 py-1 hover:bg-foreground/10 {alteaNotify.enabled ? '' : 'opacity-50'}"
 		title="Suono e notifica a fine risposta (solo se la finestra non è in primo piano)"
 		onclick={() => alteaNotify.toggle()}>Avviso: {alteaNotify.enabled ? 'on' : 'off'}</button
@@ -198,3 +206,5 @@
 {/if}
 
 <SlashMenu onMemory={() => (showMemory = true)} onExport={exportChat} />
+
+<ActionPrompt />

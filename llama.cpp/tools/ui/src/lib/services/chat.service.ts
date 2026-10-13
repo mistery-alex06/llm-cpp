@@ -1,3 +1,4 @@
+import { alteaActions } from '$lib/utils/altea-actions.svelte';
 import { memorySystemPrompt } from '$lib/utils/altea-memory';
 import { alteaProjects } from '$lib/utils/altea-projects.svelte';
 import { alteaPersonas } from '$lib/utils/altea-personas.svelte';
@@ -231,7 +232,8 @@ export class ChatService {
 			forcedReasoning +
 			alteaDocs.consume() +
 			alteaHistory.consume() +
-			alteaWeb.consume();
+			alteaWeb.consume() +
+			alteaActions.prompt();
 		if (memoryPrompt) {
 			const first = normalizedMessages[0];
 			if (first && first.role === MessageRole.SYSTEM && typeof first.content === 'string') {

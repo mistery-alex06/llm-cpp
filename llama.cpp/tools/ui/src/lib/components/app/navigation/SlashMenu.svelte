@@ -6,6 +6,7 @@
 	import { alteaPersonas, PERSONAS } from '$lib/utils/altea-personas.svelte';
 	import { alteaWeb } from '$lib/utils/altea-web.svelte';
 	import { alteaAuto } from '$lib/utils/altea-auto.svelte';
+	import { alteaActions } from '$lib/utils/altea-actions.svelte';
 	import { alteaNotify } from '$lib/utils/altea-notify.svelte';
 
 	let { onMemory, onExport }: { onMemory: () => void; onExport: () => void } = $props();
@@ -26,6 +27,7 @@
 		{ key: 'esporta', desc: 'Scarica la chat in Markdown', run: () => onExport() },
 		{ key: 'web', desc: 'Attiva/disattiva la ricerca web', run: () => alteaWeb.toggle() },
 		{ key: 'auto', desc: 'Attiva/disattiva la scelta automatica del modello', run: () => alteaAuto.toggle() },
+		{ key: 'azioni', desc: 'Attiva/disattiva le azioni sul computer', run: () => alteaActions.toggle() },
 		{ key: 'avviso', desc: 'Attiva/disattiva l\'avviso a fine risposta', run: () => alteaNotify.toggle() },
 		...PERSONAS.map((p) => ({
 			key: 'ruolo-' + p.id,

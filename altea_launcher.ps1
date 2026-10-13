@@ -9,7 +9,7 @@ function Test-Server { try { Invoke-WebRequest "$Url/health" -UseBasicParsing -T
 
 function Stop-Server {
     if ($script:Started) {
-        Get-CimInstance Win32_Process | Where-Object { $_.Name -in 'llama-server.exe', 'python.exe', 'py.exe' -and ($_.CommandLine -match 'llama-server|search_server|store_server') } |
+        Get-CimInstance Win32_Process | Where-Object { $_.Name -in 'llama-server.exe', 'python.exe', 'py.exe' -and ($_.CommandLine -match 'llama-server|search_server|store_server|actions_server') } |
             ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
         Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'run_qwen_server\.ps1' } |
             ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }

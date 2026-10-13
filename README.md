@@ -252,6 +252,20 @@ llama.cpp non legge i video: quando ne alleghi uno (*+* → *Video*, o trascinan
 
 Memoria, progetti e documenti vengono copiati automaticamente in `~/Altea/data/` (cambiabile con la variabile `ALTEA_DATA`). All'apertura, se il browser è vuoto (dati cancellati, altro browser) o il file è più recente, Altea li ricarica dal file; altrimenti aggiorna il file. Se il servizio non è attivo, tutto funziona come prima solo nel browser. Le conversazioni restano nel browser: per queste usa l'esportazione ZIP.
 
+### Azioni sul computer
+
+Pulsante **Azioni: on/off** nella barra superiore (spento di default; anche `/azioni`). Con le azioni attive Altea può proporre, alla fine di una risposta, un blocco ` ```azione {json} ``` ` che la UI mostra in una finestra di conferma: **non succede nulla finché non premi Consenti**.
+
+| Azione | Cosa fa |
+|---|---|
+| `elenca_file` | elenca i file della cartella di lavoro |
+| `leggi_file` | legge un file di testo (max 20.000 caratteri; il contenuto torna ad Altea) |
+| `scrivi_file` | crea o sovrascrive un file (max 200 KB; la conferma mostra il contenuto) |
+| `apri_file` | apre un file con l'app predefinita (solo documenti, immagini, PDF: mai script o eseguibili) |
+| `apri_url` | apre un indirizzo http/https nel browser |
+
+Sicurezza: i file sono confinati in `~/Altea/workspace` (cambiabile con `ALTEA_WORKSPACE`; i percorsi fuori cartella e i symlink che escono vengono rifiutati); non esiste esecuzione di comandi; il servizio `actions_server.py` (porta 8093, solo locale) accetta richieste solo dalla UI di Altea. Limite pratico: i modelli piccoli (1.7B/4B) rispettano il formato in modo irregolare, quindi a volte il blocco non viene generato o è malformato (in quel caso non succede nulla). Chiedi in modo esplicito, ad esempio "scrivi un file appunti.md con questo riassunto".
+
 ### Temi e dimensione del testo
 
 Pulsante **Tema** nella barra superiore (in alto a destra, accanto al modello caricato), 9 temi. Chiari: **Chiaro**, **Seppia** (carta color sabbia, con sfondo virato seppia), **Lavanda**, **Menta**. Scuri: **Scuro** (predefinito, blu-oro), **Mezzanotte** (indaco), **Foresta** (verde), **Oceano** (ciano), **Grafite** (grigio caldo con accento arancio). Sotto, la dimensione del testo: Piccolo / Normale / Grande. Le scelte sono salvate nel browser. Per aggiungere un tema: tavolozza `html.palette-<nome>` in `app.css` e voce in `altea-theme.svelte.ts`.
