@@ -2,7 +2,12 @@
 
 Altea è un'IA locale in C++ che gira interamente sul tuo computer: chat da terminale e interfaccia web in italiano, basate su [llama.cpp](https://github.com/ggml-org/llama.cpp) e modelli Qwen in formato GGUF. Sviluppata e testata su Mac Intel, 8 GB di RAM, solo CPU.
 
-**Documentazione completa: [Wiki](https://github.com/mistery-alex06/llm-cpp/wiki)**
+[![Documentazione: Wiki](https://img.shields.io/badge/%F0%9F%93%96%20Documentazione-Wiki-2563eb?style=for-the-badge)](https://github.com/mistery-alex06/llm-cpp/wiki)
+
+> ## 📖 La documentazione completa è nella [Wiki](https://github.com/mistery-alex06/llm-cpp/wiki)
+> Installazione, avvio su macOS e Windows, tutte le funzioni, comandi, temi, azioni sul computer, bot Discord e roadmap. Qui sotto trovi solo l'essenziale.
+>
+> **[Apri la Wiki →](https://github.com/mistery-alex06/llm-cpp/wiki)**
 
 ## In breve
 
@@ -24,7 +29,7 @@ cmake --build build --config Release -j4 && cd ..
 ./run_qwen_server.sh
 ```
 
-## Documentazione
+## 📖 Documentazione nella [Wiki](https://github.com/mistery-alex06/llm-cpp/wiki)
 
 | Pagina | Contenuto |
 |---|---|
