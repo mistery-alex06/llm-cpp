@@ -16,6 +16,41 @@ Altea è un'IA locale in C++ che gira interamente sul tuo computer: chat da term
 - Interfaccia web con temi, comandi `/` (scrivi `/help`), azioni sul computer con conferma, bot Discord.
 - Avvio con un clic su macOS (`Altea.app`) e Windows (`Altea.bat`).
 
+## Come è fatta
+
+```mermaid
+flowchart TB
+  U([Tu]) --> UI
+  DC([Discord]) --> BOT[Bot Discord]
+  subgraph PC[Il tuo computer - tutto in locale]
+    UI[Interfaccia web SvelteKit<br/>chat, temi, comandi /, memoria, progetti]
+    BOT
+    SRV[llama-server<br/>router, porta 8080]
+    subgraph AUX[Servizi ausiliari]
+      SEARCH[search_server 8091<br/>ricerca web]
+      STORE[store_server 8092<br/>documenti e RAG]
+      ACT[actions_server 8093<br/>azioni con conferma]
+    end
+    subgraph MOD[Modelli GGUF su CPU]
+      M1[Qwen3-1.7B default]
+      M2[Qwen3-4B]
+      M3[Qwen2.5-Omni-3B]
+    end
+    WS[(Workspace ~/Altea/workspace)]
+  end
+  UI -->|API OpenAI| SRV
+  BOT -->|API OpenAI| SRV
+  UI --> SEARCH
+  UI --> STORE
+  UI -->|dopo il tuo Consenti| ACT
+  SRV --> M1
+  SRV --> M2
+  SRV --> M3
+  ACT --> WS
+```
+
+Approfondimenti: [Come funziona](https://github.com/mistery-alex06/llm-cpp/wiki/Come-funziona) · [Interfaccia](https://github.com/mistery-alex06/llm-cpp/wiki/Interfaccia) · [Azioni sul computer](https://github.com/mistery-alex06/llm-cpp/wiki/Azioni-sul-computer) · [Discord](https://github.com/mistery-alex06/llm-cpp/wiki/Discord) · [Modelli e prestazioni](https://github.com/mistery-alex06/llm-cpp/wiki/Modelli-e-prestazioni)
+
 ## Avvio rapido
 
 ```bash
