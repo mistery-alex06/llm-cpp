@@ -2,6 +2,8 @@
 
 Altea è un'IA locale in C++ che gira interamente sul tuo computer: chat da terminale e interfaccia web in italiano, basate su [llama.cpp](https://github.com/ggml-org/llama.cpp) e modelli Qwen in formato GGUF. Sviluppata e testata su Mac Intel, 8 GB di RAM, solo CPU.
 
+![Licenza MIT](https://img.shields.io/badge/licenza-MIT-green?style=flat-square) ![100% locale](https://img.shields.io/badge/100%25-locale-blueviolet?style=flat-square) ![C++](https://img.shields.io/badge/C%2B%2B-llama.cpp-00599C?style=flat-square) ![Lingua](https://img.shields.io/badge/lingua-italiano-orange?style=flat-square)
+
 [![Documentazione: Wiki](https://img.shields.io/badge/%F0%9F%93%96%20Documentazione-Wiki-2563eb?style=for-the-badge)](https://github.com/mistery-alex06/llm-cpp/wiki)
 
 > ## 📖 La documentazione completa è nella [Wiki](https://github.com/mistery-alex06/llm-cpp/wiki)
@@ -15,6 +17,17 @@ Altea è un'IA locale in C++ che gira interamente sul tuo computer: chat da term
 - Ricerca web opzionale, documenti locali (RAG), memoria persistente, progetti, immagini, audio e video.
 - Interfaccia web con temi, comandi `/` (scrivi `/help`), azioni sul computer con conferma, bot Discord.
 - Avvio con un clic su macOS (`Altea.app`) e Windows (`Altea.bat`).
+
+## Anteprima
+
+
+| Menu dei comandi `/` | Tema Lavanda | Tema Seppia |
+|---|---|---|
+| <img src="docs/img/comandi.png" width="300"> | <img src="docs/img/tema-lavanda.png" width="300"> | <img src="docs/img/tema-seppia.png" width="300"> |
+
+| Tema Oceano | Tema Foresta |
+|---|---|
+| <img src="docs/img/tema-oceano.png" width="300"> | <img src="docs/img/tema-foresta.png" width="300"> |
 
 ## Come è fatta
 
