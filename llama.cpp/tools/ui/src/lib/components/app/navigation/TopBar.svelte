@@ -126,7 +126,7 @@
 </script>
 
 <div
-	class="sticky top-2 z-10 mx-2 mt-2 hidden h-9 shrink-0 items-center gap-2 rounded-2xl border border-border bg-muted/60 px-3 text-xs shadow-sm backdrop-blur-xl md:flex"
+	class="sticky top-2 z-10 mx-2 mt-2 hidden h-9 shrink-0 items-center gap-2 rounded-2xl border border-border bg-muted/60 overflow-hidden px-3 text-xs whitespace-nowrap shadow-sm backdrop-blur-xl md:flex"
 >
 	<select
 		class="rounded-md border border-border bg-background px-1.5 py-1 text-xs"
@@ -140,7 +140,7 @@
 		{/each}
 	</select>
 
-	<div class="flex items-center gap-1">
+	<div class="hidden items-center gap-1 2xl:flex">
 		{#each COMMANDS as c (c.label)}
 			<button
 				type="button"
@@ -178,9 +178,9 @@
 		title="Suono e notifica a fine risposta (solo se la finestra non è in primo piano)"
 		onclick={() => alteaNotify.toggle()}>Avviso: {alteaNotify.enabled ? 'on' : 'off'}</button
 	>
-	<div class="ml-auto flex items-center gap-3 text-muted-foreground">
+	<div class="ml-auto flex min-w-0 items-center gap-3 text-muted-foreground [&>*]:shrink-0">
 		<ThemePicker />
-		<span title="Modello caricato in memoria">
+		<span class="hidden lg:inline !shrink min-w-16 max-w-48 truncate" title="Modello caricato in memoria">
 			{loadedNames.length ? loadedNames.join(', ') : 'nessun modello caricato'}
 		</span>
 		{#if eta}
@@ -190,7 +190,7 @@
 			<span title="Velocità dell'ultima risposta">{lastSpeed.toFixed(1)} tok/s</span>
 		{/if}
 		{#if stats}
-			<span title="RAM usata dal modello · swap in uso · memoria libera">
+			<span class="hidden min-[1800px]:inline" title="RAM usata dal modello · swap in uso · memoria libera">
 				RAM {gb(stats.llamaMB)} GB · swap {gb(stats.swapUsedMB)} GB · libera {gb(stats.freeMB)} GB
 			</span>
 		{/if}
