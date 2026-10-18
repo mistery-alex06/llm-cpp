@@ -14,6 +14,9 @@
 	import HelpPanel from './HelpPanel.svelte';
 	import MemoryPanel from './MemoryPanel.svelte';
 	import { toast } from 'svelte-sonner';
+	import { goto } from '$app/navigation';
+	import { ROUTES } from '$lib/constants';
+	import { bananaTheme, THEMES } from '$lib/utils/banana-theme.svelte';
 
 
 	interface Stats {
@@ -80,6 +83,49 @@
 		if (!ok) toast.info('Nessun messaggio da esportare');
 	}
 
+	// Scorciatoie: Alt + tasto (si usa event.code, quindi valgono anche con la tastiera Mac/Opzione)
+	function onKey(e: KeyboardEvent) {
+		if (!e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || e.repeat) return;
+		let handled = true;
+		switch (e.code) {
+			case 'KeyN':
+				goto(ROUTES.NEW_CHAT);
+				break;
+			case 'KeyM':
+				showMemory = !showMemory;
+				break;
+			case 'KeyE':
+				exportChat();
+				break;
+			case 'KeyH':
+				showHelp = !showHelp;
+				break;
+			case 'KeyR': {
+				const i = PERSONAS.findIndex((p) => p.id === bananaPersonas.id);
+				const next = PERSONAS[(i + 1) % PERSONAS.length];
+				bananaPersonas.set(next.id);
+				toast.info(`Ruolo: ${next.name}`);
+				break;
+			}
+			case 'KeyT': {
+				// senza tema scelto si parte da quello attualmente visibile (chiaro/scuro)
+				const cur =
+					bananaTheme.themeId || (document.documentElement.classList.contains('dark') ? 'scuro' : 'chiaro');
+				const i = THEMES.findIndex((t) => t.id === cur);
+				const next = THEMES[(i + 1) % THEMES.length];
+				bananaTheme.setTheme(next.id);
+				toast.info(`Tema: ${next.name}`);
+				break;
+			}
+			case 'KeyL':
+				(document.querySelector('textarea') as HTMLTextAreaElement | null)?.focus();
+				break;
+			default:
+				handled = false;
+		}
+		if (handled) e.preventDefault();
+	}
+
 	function insert(text: string) {
 		const ta = document.querySelector('textarea') as HTMLTextAreaElement | null;
 		if (!ta) return;
@@ -124,6 +170,8 @@
 
 	const gb = (mb: number) => (mb / 1024).toFixed(1);
 </script>
+
+<svelte:window onkeydown={onKey} />
 
 <div
 	class="sticky top-2 z-10 mx-2 mt-2 hidden h-9 shrink-0 items-center gap-2 rounded-2xl border border-border bg-muted/60 overflow-hidden px-3 text-xs whitespace-nowrap shadow-sm backdrop-blur-xl md:flex"

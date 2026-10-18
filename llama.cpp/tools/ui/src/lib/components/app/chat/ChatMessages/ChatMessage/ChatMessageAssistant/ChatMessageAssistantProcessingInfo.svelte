@@ -14,7 +14,8 @@
 </script>
 
 <div class="{marginClass} w-full max-w-3xl" in:fade>
-	<div class="flex flex-col items-start gap-2">
+	<div class="flex items-center gap-2.5">
+		<span class="typing-dots" aria-hidden="true"><i></i><i></i><i></i></span>
 		<span class="shimmer-text text-sm">
 			{modelLoadingText ??
 				processingState.getPromptProgressText() ??

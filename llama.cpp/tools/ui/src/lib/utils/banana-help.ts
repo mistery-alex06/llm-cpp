@@ -82,5 +82,17 @@ export const HELP: HelpSection[] = [
 			{ name: 'Frecce ↑ ↓ / Tab', desc: 'Scorrono e confermano le voci del menu "/".' },
 			{ name: 'Esc', desc: 'Chiude menu e finestre.' }
 		]
+	},
+	{
+		title: 'Scorciatoie (Alt + tasto)',
+		items: [
+			{ name: 'Alt + N', desc: 'Nuova chat.' },
+			{ name: 'Alt + L', desc: 'Porta il cursore nella casella di testo.' },
+			{ name: 'Alt + M', desc: 'Apre/chiude il pannello Memoria.' },
+			{ name: 'Alt + E', desc: 'Esporta la chat in Markdown.' },
+			{ name: 'Alt + H', desc: 'Apre/chiude questa guida.' },
+			{ name: 'Alt + R', desc: 'Passa al ruolo successivo.' },
+			{ name: 'Alt + T', desc: 'Passa al tema successivo.' }
+		]
 	}
 ];
