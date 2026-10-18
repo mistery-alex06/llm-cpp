@@ -1,4 +1,4 @@
-// Backup di Altea: memoria + documenti (RAG) in un unico file JSON.
+// Backup di Banana: memoria + documenti (RAG) in un unico file JSON.
 // Le conversazioni hanno già il loro export/import (ZIP/JSONL) nella stessa pagina.
 import { loadMemory, saveMemory } from '$lib/utils/altea-memory';
 import { alteaDocs, type AlteaDoc } from '$lib/utils/altea-docs.svelte';
@@ -42,7 +42,7 @@ export async function importAlteaBackup(file: File): Promise<{ memory: number; d
 		throw new Error('File non valido');
 	}
 	if (data.app !== 'altea' || !Array.isArray(data.memory) || !Array.isArray(data.docs)) {
-		throw new Error('Non è un backup di Altea');
+		throw new Error('Non è un backup di Banana');
 	}
 	// Memoria: unisce senza duplicati.
 	const current = loadMemory();

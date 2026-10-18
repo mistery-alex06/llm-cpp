@@ -1,6 +1,6 @@
-# Altea (llm-cpp)
+# Banana (llm-cpp)
 
-Altea è un'IA locale in C++ che gira interamente sul tuo computer: chat da terminale e interfaccia web in italiano, basate su [llama.cpp](https://github.com/ggml-org/llama.cpp) e modelli Qwen in formato GGUF. Sviluppata e testata su Mac Intel, 8 GB di RAM, solo CPU.
+Banana è un'IA locale in C++ che gira interamente sul tuo computer: chat da terminale e interfaccia web in italiano, basate su [llama.cpp](https://github.com/ggml-org/llama.cpp) e modelli Qwen in formato GGUF. Sviluppata e testata su Mac Intel, 8 GB di RAM, solo CPU.
 
 ![Licenza MIT](https://img.shields.io/badge/licenza-MIT-green?style=flat-square) ![100% locale](https://img.shields.io/badge/100%25-locale-blueviolet?style=flat-square) ![C++](https://img.shields.io/badge/C%2B%2B-llama.cpp-00599C?style=flat-square) ![Lingua](https://img.shields.io/badge/lingua-italiano-orange?style=flat-square)
 
@@ -16,7 +16,7 @@ Altea è un'IA locale in C++ che gira interamente sul tuo computer: chat da term
 - Risponde in locale, in italiano e al femminile; tre modelli (Qwen3-1.7B, Qwen3-4B, Qwen2.5-Omni-3B).
 - Ricerca web opzionale, documenti locali (RAG), memoria persistente, progetti, immagini, audio e video.
 - Interfaccia web con temi, comandi `/` (scrivi `/help`), azioni sul computer con conferma, bot Discord.
-- Avvio con un clic su macOS (`Altea.app`) e Windows (`Altea.bat`).
+- Avvio con un clic su macOS (`Banana.app`) e Windows (`Banana.bat`).
 
 ## Anteprima
 
@@ -83,7 +83,7 @@ cmake --build build --config Release -j4 && cd ..
 |---|---|
 | [Installazione](https://github.com/mistery-alex06/llm-cpp/wiki/Installazione) | requisiti, compilazione, modelli |
 | [Avvio](https://github.com/mistery-alex06/llm-cpp/wiki/Avvio) | macOS, Windows, terminale |
-| [Uso di Altea](https://github.com/mistery-alex06/llm-cpp/wiki/Uso-di-Altea) | memoria, ricerca web, documenti, video, backup |
+| [Uso di Banana](https://github.com/mistery-alex06/llm-cpp/wiki/Uso-di-Banana) | memoria, ricerca web, documenti, video, backup |
 | [Interfaccia](https://github.com/mistery-alex06/llm-cpp/wiki/Interfaccia) | barra superiore, progetti, comandi, temi |
 | [Azioni sul computer](https://github.com/mistery-alex06/llm-cpp/wiki/Azioni-sul-computer) | azioni con conferma e sicurezza |
 | [Discord](https://github.com/mistery-alex06/llm-cpp/wiki/Discord) | bot Discord |

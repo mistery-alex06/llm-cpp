@@ -67,10 +67,10 @@
 		<Dialog.Header>
 			<Dialog.Title class="flex items-center gap-2">
 				<FileText class="h-5 w-5" />
-				Documenti di Altea
+				Documenti di Banana
 			</Dialog.Title>
 			<Dialog.Description>
-				Carica PDF o file di testo: Altea cerca negli estratti più pertinenti a ogni domanda e cita
+				Carica PDF o file di testo: Banana cerca negli estratti più pertinenti a ogni domanda e cita
 				file e pagina. I documenti restano nel tuo browser e non vengono inviati a nessuno.
 			</Dialog.Description>
 		</Dialog.Header>

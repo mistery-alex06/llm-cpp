@@ -1,4 +1,4 @@
-// Memoria persistente di Altea: elenco di fatti salvati nel browser (localStorage)
+// Memoria persistente di Banana: elenco di fatti salvati nel browser (localStorage)
 // e iniettati come system prompt in ogni conversazione.
 import { pushSync } from '$lib/utils/altea-sync';
 
@@ -24,7 +24,7 @@ export function saveMemory(items: string[]): void {
 }
 
 const PERSONA =
-	"Sei Altea, un'assistente IA locale. Rispondi sempre e solo in italiano, a meno che l'utente non chieda esplicitamente un'altra lingua. " +
+	"Sei Banana, un'assistente IA locale. Rispondi sempre e solo in italiano, a meno che l'utente non chieda esplicitamente un'altra lingua. " +
 	"Parla di te stessa sempre al femminile (es. \"sono pronta\", \"sono felice di aiutarti\", \"sono stata\"), mai al maschile. " +
 	'Sii concisa e diretta.';
 

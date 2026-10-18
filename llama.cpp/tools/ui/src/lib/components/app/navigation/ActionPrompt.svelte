@@ -38,7 +38,7 @@
 			return;
 		}
 		if (req.azione === 'elenca_file' || req.azione === 'leggi_file') {
-			// Il risultato torna ad Altea come messaggio, così può usarlo
+			// Il risultato torna ad Banana come messaggio, così può usarlo
 			chatStore.sendMessage(`Risultato dell'azione ${req.azione}:\n\n${r.testo}`);
 		} else {
 			toast.success(r.testo);
@@ -51,14 +51,14 @@
 		class="fixed bottom-6 right-6 z-50 w-96 max-w-[calc(100vw-2rem)] rounded-xl border border-border bg-background p-4 text-sm shadow-xl"
 		role="alertdialog"
 	>
-		<div class="mb-1 font-semibold">Altea chiede di eseguire un'azione</div>
+		<div class="mb-1 font-semibold">Banana chiede di eseguire un'azione</div>
 		<p class="mb-2">{alteaActions.describe(pending.req)}</p>
 		{#if pending.req.azione === 'scrivi_file'}
 			<pre
 				class="mb-2 max-h-40 overflow-auto rounded-lg bg-muted p-2 text-xs whitespace-pre-wrap">{(pending.req.contenuto ?? '').slice(0, 800)}{(pending.req.contenuto ?? '').length > 800 ? '\n…' : ''}</pre>
 		{/if}
 		<p class="mb-3 text-xs text-muted-foreground">
-			Verrà eseguita solo se confermi. I file restano nella cartella di lavoro di Altea.
+			Verrà eseguita solo se confermi. I file restano nella cartella di lavoro di Banana.
 		</p>
 		<div class="flex justify-end gap-2">
 			<button type="button" class="rounded-lg border border-border px-3 py-1 hover:bg-foreground/10" onclick={() => (pending = null)}>

@@ -1,6 +1,6 @@
-// Documenti locali di Altea (RAG): PDF e file di testo vengono spezzati in blocchi,
+// Documenti locali di Banana (RAG): PDF e file di testo vengono spezzati in blocchi,
 // salvati nel browser (IndexedDB) e, a ogni domanda, i blocchi più pertinenti
-// (ricerca BM25 per parole chiave, senza modelli di embedding) vengono passati ad Altea.
+// (ricerca BM25 per parole chiave, senza modelli di embedding) vengono passati ad Banana.
 import { convertPDFToPages } from '$lib/utils/pdf-processing';
 import { readFileAsText } from '$lib/utils/text-files';
 

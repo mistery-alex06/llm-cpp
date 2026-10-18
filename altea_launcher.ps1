@@ -1,5 +1,5 @@
-# altea_launcher.ps1 - avvia il server, apre Altea in una finestra dedicata (Edge o Chrome)
-# e, alla chiusura della finestra, spegne il server. Equivalente di Altea.app per Windows.
+# altea_launcher.ps1 - avvia il server, apre Banana in una finestra dedicata (Edge o Chrome)
+# e, alla chiusura della finestra, spegne il server. Equivalente di Banana.app per Windows.
 $Dir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Url = 'http://127.0.0.1:8080'
 $Log = Join-Path $env:TEMP 'altea.log'
@@ -24,7 +24,7 @@ if (-not (Test-Server)) {
 }
 if (-not (Test-Server)) {
     Add-Type -AssemblyName PresentationFramework
-    [System.Windows.MessageBox]::Show("Il server non e' partito. Controlla $Log", 'Altea') | Out-Null
+    [System.Windows.MessageBox]::Show("Il server non e' partito. Controlla $Log", 'Banana') | Out-Null
     Stop-Server; exit 1
 }
 
@@ -39,8 +39,8 @@ if (-not $B) { Start-Process $Url; Write-Host 'Nessun Edge/Chrome trovato: apert
 
 Start-Process $B.p -ArgumentList "--app=$Url"
 
-# Finestra di Altea = finestra del browser con "Altea" nel titolo
-function Count-Windows { @(Get-Process $B.n -ErrorAction SilentlyContinue | Where-Object { $_.MainWindowTitle -match 'Altea|127\.0\.0\.1:8080|llama' }).Count }
+# Finestra di Banana = finestra del browser con "Banana" nel titolo
+function Count-Windows { @(Get-Process $B.n -ErrorAction SilentlyContinue | Where-Object { $_.MainWindowTitle -match 'Banana|127\.0\.0\.1:8080|llama' }).Count }
 
 $seen = $false
 1..30 | ForEach-Object { if (-not $seen) { if ((Count-Windows) -gt 0) { $seen = $true } else { Start-Sleep 1 } } }

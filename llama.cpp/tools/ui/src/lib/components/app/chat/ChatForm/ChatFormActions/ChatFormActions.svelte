@@ -179,7 +179,7 @@
 				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {alteaDocs.enabled && alteaDocs.globalDocs.length > 0
 					? 'text-primary'
 					: 'text-muted-foreground'}"
-				title="Documenti di Altea"
+				title="Documenti di Banana"
 				onclick={() => (docsOpen = true)}
 				{disabled}
 			>

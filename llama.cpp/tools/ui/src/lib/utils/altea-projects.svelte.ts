@@ -1,4 +1,4 @@
-// Progetti di Altea: raggruppano più chat sullo stesso argomento.
+// Progetti di Banana: raggruppano più chat sullo stesso argomento.
 // Ogni progetto ha istruzioni e una memoria propria, iniettate nel prompt di tutte le sue chat,
 // insieme all'elenco delle altre chat del progetto (così le conversazioni restano collegate).
 import { pushSync } from '$lib/utils/altea-sync';

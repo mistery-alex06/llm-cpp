@@ -1,4 +1,4 @@
-// Scelta automatica del modello di Altea: domande semplici -> Qwen3-1.7B (veloce),
+// Scelta automatica del modello di Banana: domande semplici -> Qwen3-1.7B (veloce),
 // domande complesse -> Qwen3-4B, immagini/audio/video -> Qwen2.5-Omni.
 import { modelsStore } from '$lib/stores/models.svelte';
 

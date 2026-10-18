@@ -130,8 +130,8 @@
 >
 	<select
 		class="rounded-md border border-border bg-background px-1.5 py-1 text-xs"
-		title="Ruolo di Altea"
-		aria-label="Ruolo di Altea"
+		title="Ruolo di Banana"
+		aria-label="Ruolo di Banana"
 		value={alteaPersonas.id}
 		onchange={(e) => alteaPersonas.set(e.currentTarget.value)}
 	>
@@ -163,13 +163,13 @@
 	<button
 		type="button"
 		class="rounded-full px-2 py-1 hover:bg-foreground/10"
-		title="Vedi, modifica ed elimina ciò che Altea ricorda"
+		title="Vedi, modifica ed elimina ciò che Banana ricorda"
 		onclick={() => (showMemory = true)}>Memoria</button
 	>
 	<button
 		type="button"
 		class="rounded-full px-2 py-1 hover:bg-foreground/10 {alteaActions.enabled ? '' : 'opacity-50'}"
-		title="Permette ad Altea di proporre azioni sul computer (file nella sua cartella di lavoro, aprire indirizzi), sempre con la tua conferma"
+		title="Permette ad Banana di proporre azioni sul computer (file nella sua cartella di lavoro, aprire indirizzi), sempre con la tua conferma"
 		onclick={() => alteaActions.toggle()}>Azioni: {alteaActions.enabled ? 'on' : 'off'}</button
 	>
 	<button

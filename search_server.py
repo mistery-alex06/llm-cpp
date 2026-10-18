@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""search_server.py — ricerca web locale per Altea (solo libreria standard).
+"""search_server.py — ricerca web locale per Banana (solo libreria standard).
 
 Endpoint: GET http://127.0.0.1:8091/search?q=<testo>[&n=5]  ->  JSON
     [{"title": "...", "url": "...", "snippet": "..."}, ...]
@@ -109,5 +109,5 @@ class Handler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    print(f"Altea ricerca web su http://127.0.0.1:{PORT}", flush=True)
+    print(f"Banana ricerca web su http://127.0.0.1:{PORT}", flush=True)
     ThreadingHTTPServer(("127.0.0.1", PORT), Handler).serve_forever()

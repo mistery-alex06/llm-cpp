@@ -1,4 +1,4 @@
-// Sincronizzazione su file di Altea: memoria, progetti e documenti vengono copiati anche
+// Sincronizzazione su file di Banana: memoria, progetti e documenti vengono copiati anche
 // in ~/Altea/data/ tramite il servizio locale store_server.py (porta 8092).
 // Se il servizio non è raggiungibile, la UI continua a funzionare solo con il browser.
 const STORE_URL = 'http://127.0.0.1:8092/store';

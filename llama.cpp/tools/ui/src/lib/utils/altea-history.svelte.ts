@@ -1,5 +1,5 @@
-// Ricerca nelle chat passate di Altea: se il pulsante "Storico" è attivo, a ogni domanda
-// Altea cerca (BM25 per parole chiave, tutto in locale) nelle altre conversazioni salvate
+// Ricerca nelle chat passate di Banana: se il pulsante "Storico" è attivo, a ogni domanda
+// Banana cerca (BM25 per parole chiave, tutto in locale) nelle altre conversazioni salvate
 // e passa al modello i messaggi più pertinenti, citando il titolo della chat.
 import { DatabaseService } from '$lib/services/database.service';
 import { tokenize } from '$lib/utils/altea-docs.svelte';
@@ -146,7 +146,7 @@ class AlteaHistory {
 		if (hits.length === 0) return;
 		const parts = hits.map((h, i) => {
 			const date = new Date(h.time).toLocaleDateString('it-IT');
-			const who = h.role === 'user' ? "l'utente" : 'Altea';
+			const who = h.role === 'user' ? "l'utente" : 'Banana';
 			const snip = h.text.length > SNIPPET ? h.text.slice(0, SNIPPET) + '…' : h.text;
 			return `[${i + 1}] Chat «${h.title}» (${date}), ${who}: ${snip}`;
 		});

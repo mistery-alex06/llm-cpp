@@ -1,4 +1,4 @@
-// Temi e dimensione del testo di Altea. I temi sono tavolozze (classi `palette-*` su <html>)
+// Temi e dimensione del testo di Banana. I temi sono tavolozze (classi `palette-*` su <html>)
 // che forzano anche la modalità chiaro/scuro tramite mode-watcher.
 import { setMode } from 'mode-watcher';
 

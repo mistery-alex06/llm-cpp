@@ -1,4 +1,4 @@
-// Azioni sul computer richieste da Altea. Il modello scrive un blocco ```azione {json}```;
+// Azioni sul computer richieste da Banana. Il modello scrive un blocco ```azione {json}```;
 // la UI lo mostra e lo esegue (tramite actions_server.py) SOLO dopo la conferma dell'utente.
 const KEY = 'Altea.actions';
 const URL = 'http://127.0.0.1:8093/action';
@@ -20,7 +20,7 @@ const PROMPT =
 	'Azioni disponibili: ' +
 	'elenca_file {"percorso" (facoltativo)}; leggi_file {"percorso"}; scrivi_file {"percorso", "contenuto"}; ' +
 	'apri_file {"percorso"}; apri_url {"url"}. ' +
-	'I file esistono solo nella cartella di lavoro di Altea (percorsi relativi, es. "appunti/lezione1.md"). ' +
+	'I file esistono solo nella cartella di lavoro di Banana (percorsi relativi, es. "appunti/lezione1.md"). ' +
 	"Non dire mai che l'azione è già stata eseguita: l'utente deve prima confermare.";
 
 function load(): boolean {
@@ -48,7 +48,7 @@ class AlteaActions {
 		return this.enabled ? PROMPT : '';
 	}
 
-	/** Estrae la prima richiesta valida da una risposta di Altea, o null. */
+	/** Estrae la prima richiesta valida da una risposta di Banana, o null. */
 	parse(text: string): ActionRequest | null {
 		const m = /```azione\s*([\s\S]*?)```/.exec(text || '');
 		if (!m) return null;

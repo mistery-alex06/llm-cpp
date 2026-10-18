@@ -1,4 +1,4 @@
-// Esportazione di una chat in Markdown: solo le domande dell'utente e le risposte di Altea,
+// Esportazione di una chat in Markdown: solo le domande dell'utente e le risposte di Banana,
 // senza metadati, ragionamento, allegati o altri elementi dell'interfaccia.
 interface Msg {
 	role: string;

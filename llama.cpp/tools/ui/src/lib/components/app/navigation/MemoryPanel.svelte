@@ -56,11 +56,11 @@
 		onclick={(e) => e.stopPropagation()}
 	>
 		<div class="flex items-center justify-between">
-			<h2 class="text-base font-semibold">Memoria di Altea ({items.length})</h2>
+			<h2 class="text-base font-semibold">Memoria di Banana ({items.length})</h2>
 			<button type="button" class="rounded px-2 py-1 text-sm hover:bg-foreground/10" onclick={onclose}>Chiudi</button>
 		</div>
 		<p class="text-xs text-muted-foreground">
-			Fatti che Altea ricorda in tutte le chat. Modificali o eliminali quando vuoi.
+			Fatti che Banana ricorda in tutte le chat. Modificali o eliminali quando vuoi.
 		</p>
 
 		<div class="min-h-0 flex-1 space-y-1 overflow-y-auto">

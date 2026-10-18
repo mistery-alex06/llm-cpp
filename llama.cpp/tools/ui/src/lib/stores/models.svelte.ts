@@ -577,7 +577,7 @@ class ModelsStore {
 			}
 		}
 
-		// Altea: modello predefinito all'apertura (Qwen3-1.7B, il più veloce)
+		// Banana: modello predefinito all'apertura (Qwen3-1.7B, il più veloce)
 		const defaultModel = availableModels.find((m) => /qwen3-1\.7b/i.test(m.model));
 		if (defaultModel) {
 			await this.selectModelById(defaultModel.id);

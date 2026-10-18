@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Altea su Discord: bot ufficiale che inoltra i messaggi al server locale di Altea.
+"""Banana su Discord: bot ufficiale che inoltra i messaggi al server locale di Banana.
 
 Risponde ai messaggi privati (DM) e, nei server, solo quando viene menzionato,
 e solo agli utenti ammessi (allowed_user_ids). Serve llama-server già avviato.
@@ -26,11 +26,11 @@ import urllib.request
 
 CONFIG_PATH = os.path.expanduser(os.environ.get("ALTEA_DISCORD_CONFIG", "~/Altea/discord.json"))
 MEMORY_PATH = os.path.expanduser(os.path.join(os.environ.get("ALTEA_DATA", "~/Altea/data"), "memory.json"))
-HISTORY_TURNS = 8  # messaggi (utente+Altea) ricordati per conversazione
+HISTORY_TURNS = 8  # messaggi (utente+Banana) ricordati per conversazione
 TIMEOUT = 600  # il modello può essere lento o doversi caricare
 
 PERSONA = (
-    "Sei Altea, un'assistente IA locale. Rispondi sempre e solo in italiano, a meno che l'utente "
+    "Sei Banana, un'assistente IA locale. Rispondi sempre e solo in italiano, a meno che l'utente "
     "non chieda esplicitamente un'altra lingua. Parla di te stessa sempre al femminile. "
     "Sei su Discord: sii concisa e diretta, risposte brevi salvo richiesta diversa."
 )
@@ -41,7 +41,7 @@ def load_config():
         with open(CONFIG_PATH, "r", encoding="utf-8") as f:
             cfg = json.load(f)
     except FileNotFoundError:
-        sys.exit(f"Manca {CONFIG_PATH}. Vedi la sezione 'Altea su Discord' del README.")
+        sys.exit(f"Manca {CONFIG_PATH}. Vedi la sezione 'Banana su Discord' del README.")
     cfg.setdefault("server_url", "http://127.0.0.1:8080")
     cfg.setdefault("model", "Qwen3-1.7B-Q4_K_M")
     cfg["allowed_user_ids"] = [int(x) for x in cfg.get("allowed_user_ids", [])]
@@ -49,7 +49,7 @@ def load_config():
 
 
 def memory_prompt():
-    """Fatti salvati nella memoria di Altea (se esiste l'archivio su file)."""
+    """Fatti salvati nella memoria di Banana (se esiste l'archivio su file)."""
     try:
         with open(MEMORY_PATH, "r", encoding="utf-8") as f:
             items = [x for x in json.load(f) if isinstance(x, str)]
@@ -114,7 +114,7 @@ def run_bot(cfg):
 
     @client.event
     async def on_ready():
-        print(f"Altea connessa a Discord come {client.user}")
+        print(f"Banana connessa a Discord come {client.user}")
 
     @client.event
     async def on_message(message):
@@ -143,7 +143,7 @@ def run_bot(cfg):
                     answer = await asyncio.to_thread(ask_model, cfg, hist)
                 except Exception as e:  # noqa: BLE001
                     hist.pop()
-                    await message.channel.send(f"Non riesco a rispondere ora ({type(e).__name__}). Altea è avviata?")
+                    await message.channel.send(f"Non riesco a rispondere ora ({type(e).__name__}). Banana è avviata?")
                     return
         hist.append({"role": "assistant", "content": answer})
         del hist[:-HISTORY_TURNS]

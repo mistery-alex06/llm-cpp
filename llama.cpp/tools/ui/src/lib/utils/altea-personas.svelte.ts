@@ -1,4 +1,4 @@
-// Ruoli di Altea: cambiano il modo di rispondere aggiungendo un'istruzione al prompt di sistema.
+// Ruoli di Banana: cambiano il modo di rispondere aggiungendo un'istruzione al prompt di sistema.
 const KEY = 'Altea.persona';
 
 export interface AlteaPersona {
@@ -8,7 +8,7 @@ export interface AlteaPersona {
 }
 
 export const PERSONAS: AlteaPersona[] = [
-	{ id: 'altea', name: 'Altea', prompt: '' },
+	{ id: 'altea', name: 'Banana', prompt: '' },
 	{
 		id: 'tutor',
 		name: 'Tutor Polimi',

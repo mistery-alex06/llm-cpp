@@ -311,7 +311,7 @@
 		/>
 	</SettingsGroup>
 
-	<SettingsGroup title="Memoria, documenti e progetti di Altea">
+	<SettingsGroup title="Memoria, documenti e progetti di Banana">
 		<SettingsChatImportExportSection
 			title="Esporta"
 			description="Salva memoria, documenti (Doc) e progetti in un unico file JSON di backup."
@@ -322,7 +322,7 @@
 
 		<SettingsChatImportExportSection
 			title="Importa"
-			description="Ripristina un backup di Altea. Memoria, documenti e progetti vengono uniti a quelli esistenti, senza duplicati."
+			description="Ripristina un backup di Banana. Memoria, documenti e progetti vengono uniti a quelli esistenti, senza duplicati."
 			IconComponent={Upload}
 			buttonText="Importa backup"
 			onclick={handleAlteaBackupImport}

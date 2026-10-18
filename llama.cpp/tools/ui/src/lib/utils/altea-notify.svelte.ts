@@ -51,7 +51,7 @@ class AlteaNotify {
 		this.beep();
 		try {
 			if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
-				new Notification('Altea', { body: 'Risposta pronta.', silent: true });
+				new Notification('Banana', { body: 'Risposta pronta.', silent: true });
 			}
 		} catch {
 			/* ignore */

@@ -69,7 +69,7 @@
 </script>
 
 <svelte:head>
-	<title>Cerca · Altea</title>
+	<title>Cerca · Banana</title>
 </svelte:head>
 
 <div class="fixed top-0 z-10 left-0 right-0 p-2">

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Archivio locale di Altea: salva memoria, progetti e documenti in ~/Altea/data/.
+"""Archivio locale di Banana: salva memoria, progetti e documenti in ~/Altea/data/.
 
 Servizio solo locale (127.0.0.1:8092), usato dalla UI per non perdere i dati
 se si cancellano i dati del browser.

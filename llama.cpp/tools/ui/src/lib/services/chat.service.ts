@@ -219,7 +219,7 @@ export class ChatService {
 			return true;
 		});
 
-		// Memoria persistente di Altea: iniettata nel system prompt
+		// Memoria persistente di Banana: iniettata nel system prompt
 		// Modelli senza ragionamento nativo (es. Omni): se l'utente lo attiva, lo si chiede via prompt
 		const forcedReasoning =
 			enableThinking === true && !modelsStore.checkModelSupportsThinking(options.model ?? '')

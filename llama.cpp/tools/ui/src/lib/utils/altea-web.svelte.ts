@@ -1,4 +1,4 @@
-// Ricerca web di Altea: se attiva, prima di ogni domanda cerca sul web (servizio locale
+// Ricerca web di Banana: se attiva, prima di ogni domanda cerca sul web (servizio locale
 // search_server.py, porta 8091) e passa al modello i risultati come contesto.
 const KEY = 'Altea.webSearch';
 const SEARCH_URL = 'http://127.0.0.1:8091';

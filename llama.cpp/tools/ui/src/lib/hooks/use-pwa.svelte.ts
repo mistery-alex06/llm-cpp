@@ -55,7 +55,7 @@ export function usePwa() {
 	});
 
 	// Aggiornamento automatico: quando c'è una nuova versione la applica e ricarica la pagina,
-	// ma solo quando Altea non sta generando una risposta. Chat, memoria e impostazioni restano.
+	// ma solo quando Banana non sta generando una risposta. Chat, memoria e impostazioni restano.
 	pwaNeedRefresh.subscribe((need: boolean) => {
 		if (!need) return;
 		const tick = () => {

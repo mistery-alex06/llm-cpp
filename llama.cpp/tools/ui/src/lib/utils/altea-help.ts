@@ -36,7 +36,7 @@ export const HELP: HelpSection[] = [
 		title: 'Azioni sul computer (con Azioni: on)',
 		items: [
 			{ name: 'elenca_file', desc: 'Elenca i file nella cartella di lavoro (~/Altea/workspace).' },
-			{ name: 'leggi_file', desc: 'Legge un file di testo della cartella di lavoro; il contenuto torna ad Altea.' },
+			{ name: 'leggi_file', desc: 'Legge un file di testo della cartella di lavoro; il contenuto torna ad Banana.' },
 			{ name: 'scrivi_file', desc: 'Crea o sovrascrive un file nella cartella di lavoro (la conferma mostra il contenuto).' },
 			{ name: 'apri_file', desc: 'Apre un documento, immagine o PDF della cartella con l\'app predefinita (mai script o eseguibili).' },
 			{ name: 'apri_url', desc: 'Apre un indirizzo http/https nel browser.' },
@@ -46,12 +46,12 @@ export const HELP: HelpSection[] = [
 	{
 		title: 'Barra superiore',
 		items: [
-			{ name: 'Ruolo', desc: 'Cambia il modo di rispondere di Altea (Altea, Tutor, Revisore di codice, Traduttore, Ultra-sintetico).' },
+			{ name: 'Ruolo', desc: 'Cambia il modo di rispondere di Banana (Banana, Tutor, Revisore di codice, Traduttore, Ultra-sintetico).' },
 			{ name: 'Comandi rapidi', desc: 'Riassumi, Traduci, Spiega, Correggi, Quiz: inseriscono un modello nella casella.' },
 			{ name: 'Esporta .md', desc: 'Scarica la chat in Markdown, solo domande e risposte.' },
-			{ name: 'Azioni: on/off', desc: 'Permette ad Altea di proporre azioni sul computer, sempre con conferma.' },
+			{ name: 'Azioni: on/off', desc: 'Permette ad Banana di proporre azioni sul computer, sempre con conferma.' },
 			{ name: 'Avviso: on/off', desc: 'Suono e notifica quando una risposta finisce e la finestra non è in primo piano.' },
-			{ name: 'Memoria', desc: 'Pannello dei fatti che Altea ricorda in tutte le chat.' },
+			{ name: 'Memoria', desc: 'Pannello dei fatti che Banana ricorda in tutte le chat.' },
 			{ name: 'Tema', desc: '9 temi (Chiaro, Scuro, Seppia, Lavanda, Menta, Mezzanotte, Foresta, Oceano, Grafite) e dimensione del testo.' },
 			{ name: 'Stato', desc: 'Modello caricato, velocità (tok/s), tempo stimato rimasto, RAM/swap, ricerca web e archivio.' }
 		]
@@ -70,7 +70,7 @@ export const HELP: HelpSection[] = [
 		title: 'Progetti e memoria',
 		items: [
 			{ name: 'Barra Progetti (destra)', desc: 'Raggruppa chat sullo stesso argomento, con istruzioni, memoria e documenti propri del progetto.' },
-			{ name: 'Memoria automatica', desc: 'Altea ricorda da sola fatti personali e di progetto; si gestiscono dal pannello Memoria e dalla barra Progetti.' },
+			{ name: 'Memoria automatica', desc: 'Banana ricorda da sola fatti personali e di progetto; si gestiscono dal pannello Memoria e dalla barra Progetti.' },
 			{ name: 'Backup', desc: 'Impostazioni → Importa/Esporta: salva e ripristina memoria, documenti e progetti (copia automatica anche in ~/Altea/data).' }
 		]
 	},

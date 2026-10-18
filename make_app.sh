@@ -1,6 +1,6 @@
 #!/bin/bash
-# make_app.sh — genera ~/Desktop/Altea.app (avvio con un clic).
-#   Doppio clic su Altea.app: avvia il server, apre Altea in una finestra
+# make_app.sh — genera ~/Desktop/Banana.app (avvio con un clic).
+#   Doppio clic su Banana.app: avvia il server, apre Banana in una finestra
 #   dedicata e, alla chiusura della finestra, spegne il server.
 # Uso: ./make_app.sh   (da rieseguire solo se sposti la cartella llm)
 # La prima volta macOS chiede i permessi per la cartella Desktop e per
@@ -8,7 +8,7 @@
 
 set -e
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-APP="$HOME/Desktop/Altea.app"
+APP="$HOME/Desktop/Banana.app"
 TMP="$(mktemp -d)"
 
 rm -rf "$APP"
@@ -46,7 +46,7 @@ fi
 
 open -na "Google Chrome" --args --app="$URL"
 
-# Finestre di Altea aperte in Chrome (-1 = non determinabile)
+# Finestre di Banana aperte in Chrome (-1 = non determinabile)
 count_windows() {
 	osascript -e 'tell application "Google Chrome"
 		set n to 0
@@ -85,7 +85,7 @@ sed -i '' "s|__DIR__|$DIR|" "$APP/Contents/Resources/launcher.sh"
 # --- Icona (ritaglio quadrato da sfondo_AI.jpg) ---
 if [ -f "$DIR/sfondo_AI.jpg" ]; then
 	sips -s format png -c 1440 1440 "$DIR/sfondo_AI.jpg" --out "$TMP/sq.png" >/dev/null
-	ICONSET="$TMP/Altea.iconset"; mkdir "$ICONSET"
+	ICONSET="$TMP/Banana.iconset"; mkdir "$ICONSET"
 	for s in 16 32 128 256 512; do
 		sips -z $s $s "$TMP/sq.png" --out "$ICONSET/icon_${s}x${s}.png" >/dev/null
 		d=$((s*2))
@@ -95,7 +95,7 @@ if [ -f "$DIR/sfondo_AI.jpg" ]; then
 fi
 rm -rf "$TMP"
 
-/usr/libexec/PlistBuddy -c "Set :CFBundleName Altea" "$APP/Contents/Info.plist" 2>/dev/null || true
-/usr/libexec/PlistBuddy -c "Add :NSAppleEventsUsageDescription string 'Altea controlla quando chiudi la sua finestra per spegnere il server.'" "$APP/Contents/Info.plist" 2>/dev/null || true
+/usr/libexec/PlistBuddy -c "Set :CFBundleName Banana" "$APP/Contents/Info.plist" 2>/dev/null || true
+/usr/libexec/PlistBuddy -c "Add :NSAppleEventsUsageDescription string 'Banana controlla quando chiudi la sua finestra per spegnere il server.'" "$APP/Contents/Info.plist" 2>/dev/null || true
 touch "$APP"
 echo "Creata: $APP"

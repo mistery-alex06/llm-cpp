@@ -1,4 +1,4 @@
-// Analisi video di Altea: llama.cpp non legge i video, quindi un video allegato viene
+// Analisi video di Banana: llama.cpp non legge i video, quindi un video allegato viene
 // trasformato nel browser in pochi fotogrammi (immagini JPEG, in ordine) più l'audio (WAV),
 // che il modello multimodale (Qwen2.5-Omni) può leggere come qualsiasi immagine o audio.
 import { toast } from 'svelte-sonner';

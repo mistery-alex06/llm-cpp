@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Azioni di Altea sul computer: elenco chiuso di operazioni, tutte eseguite SOLO dopo
+"""Azioni di Banana sul computer: elenco chiuso di operazioni, tutte eseguite SOLO dopo
 la conferma dell'utente nella UI. Servizio locale (127.0.0.1:8093).
 
 Nessuna shell, nessun comando libero. File: solo dentro la cartella di lavoro
@@ -124,7 +124,7 @@ class Handler(BaseHTTPRequestHandler):
         self._send(404)
 
     def do_POST(self):
-        # Solo dalla UI di Altea: l'Origin deve essere presente e ammesso
+        # Solo dalla UI di Banana: l'Origin deve essere presente e ammesso
         if self.headers.get("Origin") not in ALLOWED_ORIGINS or self.path.split("?")[0] != "/action":
             return self._send(403, {"ok": False, "errore": "origine non ammessa"})
         length = int(self.headers.get("Content-Length") or 0)
