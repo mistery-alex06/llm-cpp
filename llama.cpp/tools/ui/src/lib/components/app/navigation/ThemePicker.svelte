@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { alteaTheme, THEMES, FONT_SIZES } from '$lib/utils/altea-theme.svelte';
+	import { bananaTheme, THEMES, FONT_SIZES } from '$lib/utils/banana-theme.svelte';
 
 	let open = $state(false);
 	let root: HTMLDivElement | undefined = $state();
 
 	onMount(() => {
-		alteaTheme.init();
+		bananaTheme.init();
 		const onDown = (e: MouseEvent) => {
 			if (open && root && !root.contains(e.target as Node)) open = false;
 		};
@@ -31,10 +31,10 @@
 				{#each THEMES as t (t.id)}
 					<button
 						type="button"
-						class="flex items-center gap-2 rounded-lg border px-2 py-1.5 text-left hover:bg-foreground/10 {alteaTheme.themeId === t.id
+						class="flex items-center gap-2 rounded-lg border px-2 py-1.5 text-left hover:bg-foreground/10 {bananaTheme.themeId === t.id
 							? 'border-foreground/60'
 							: 'border-border'}"
-						onclick={() => alteaTheme.setTheme(t.id)}
+						onclick={() => bananaTheme.setTheme(t.id)}
 					>
 						<span
 							class="inline-block h-4 w-4 shrink-0 rounded-full border border-border"
@@ -49,10 +49,10 @@
 				{#each FONT_SIZES as s (s.id)}
 					<button
 						type="button"
-						class="flex-1 rounded-lg border px-2 py-1 hover:bg-foreground/10 {alteaTheme.sizeId === s.id
+						class="flex-1 rounded-lg border px-2 py-1 hover:bg-foreground/10 {bananaTheme.sizeId === s.id
 							? 'border-foreground/60'
 							: 'border-border'}"
-						onclick={() => alteaTheme.setSize(s.id)}>{s.name}</button
+						onclick={() => bananaTheme.setSize(s.id)}>{s.name}</button
 					>
 				{/each}
 			</div>

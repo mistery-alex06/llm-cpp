@@ -2,10 +2,10 @@
 // che forzano anche la modalità chiaro/scuro tramite mode-watcher.
 import { setMode } from 'mode-watcher';
 
-const KEY_THEME = 'Altea.theme';
-const KEY_SIZE = 'Altea.fontSize';
+const KEY_THEME = 'Banana.theme';
+const KEY_SIZE = 'Banana.fontSize';
 
-export interface AlteaTheme {
+export interface BananaTheme {
 	id: string;
 	name: string;
 	mode: 'light' | 'dark';
@@ -15,7 +15,7 @@ export interface AlteaTheme {
 	swatch: [string, string];
 }
 
-export const THEMES: AlteaTheme[] = [
+export const THEMES: BananaTheme[] = [
 	{ id: 'chiaro', name: 'Chiaro', mode: 'light', palette: '', swatch: ['#ffffff', '#262626'] },
 	{ id: 'scuro', name: 'Scuro', mode: 'dark', palette: '', swatch: ['#0b1220', '#e6c36a'] },
 	{ id: 'seppia', name: 'Seppia', mode: 'light', palette: 'palette-seppia', swatch: ['#e8d9b8', '#7a4a1e'] },
@@ -49,7 +49,7 @@ function write(key: string, value: string) {
 	}
 }
 
-class AlteaThemeStore {
+class BananaThemeStore {
 	themeId = $state(typeof localStorage !== 'undefined' ? read(KEY_THEME, '') : '');
 	sizeId = $state(typeof localStorage !== 'undefined' ? read(KEY_SIZE, 'normal') : 'normal');
 
@@ -88,4 +88,4 @@ class AlteaThemeStore {
 	}
 }
 
-export const alteaTheme = new AlteaThemeStore();
+export const bananaTheme = new BananaThemeStore();

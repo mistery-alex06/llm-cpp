@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { alteaPersonas, PERSONAS } from '$lib/utils/altea-personas.svelte';
+	import { bananaPersonas, PERSONAS } from '$lib/utils/banana-personas.svelte';
 	import { modelsStore } from '$lib/stores/models.svelte';
 	import { conversationsStore } from '$lib/stores/conversations.svelte';
-	import { exportChatMarkdown } from '$lib/utils/altea-export';
-	import { alteaNotify } from '$lib/utils/altea-notify.svelte';
-	import { COMMANDS } from '$lib/utils/altea-commands';
+	import { exportChatMarkdown } from '$lib/utils/banana-export';
+	import { bananaNotify } from '$lib/utils/banana-notify.svelte';
+	import { COMMANDS } from '$lib/utils/banana-commands';
 	import SlashMenu from './SlashMenu.svelte';
 	import { chatStore } from '$lib/stores/chat.svelte';
 	import ThemePicker from './ThemePicker.svelte';
 	import ActionPrompt from './ActionPrompt.svelte';
-	import { alteaActions } from '$lib/utils/altea-actions.svelte';
+	import { bananaActions } from '$lib/utils/banana-actions.svelte';
 	import HelpPanel from './HelpPanel.svelte';
 	import MemoryPanel from './MemoryPanel.svelte';
 	import { toast } from 'svelte-sonner';
@@ -132,8 +132,8 @@
 		class="rounded-md border border-border bg-background px-1.5 py-1 text-xs"
 		title="Ruolo di Banana"
 		aria-label="Ruolo di Banana"
-		value={alteaPersonas.id}
-		onchange={(e) => alteaPersonas.set(e.currentTarget.value)}
+		value={bananaPersonas.id}
+		onchange={(e) => bananaPersonas.set(e.currentTarget.value)}
 	>
 		{#each PERSONAS as p (p.id)}
 			<option value={p.id}>{p.name}</option>
@@ -168,15 +168,15 @@
 	>
 	<button
 		type="button"
-		class="rounded-full px-2 py-1 hover:bg-foreground/10 {alteaActions.enabled ? '' : 'opacity-50'}"
+		class="rounded-full px-2 py-1 hover:bg-foreground/10 {bananaActions.enabled ? '' : 'opacity-50'}"
 		title="Permette ad Banana di proporre azioni sul computer (file nella sua cartella di lavoro, aprire indirizzi), sempre con la tua conferma"
-		onclick={() => alteaActions.toggle()}>Azioni: {alteaActions.enabled ? 'on' : 'off'}</button
+		onclick={() => bananaActions.toggle()}>Azioni: {bananaActions.enabled ? 'on' : 'off'}</button
 	>
 	<button
 		type="button"
-		class="rounded-full px-2 py-1 hover:bg-foreground/10 {alteaNotify.enabled ? '' : 'opacity-50'}"
+		class="rounded-full px-2 py-1 hover:bg-foreground/10 {bananaNotify.enabled ? '' : 'opacity-50'}"
 		title="Suono e notifica a fine risposta (solo se la finestra non è in primo piano)"
-		onclick={() => alteaNotify.toggle()}>Avviso: {alteaNotify.enabled ? 'on' : 'off'}</button
+		onclick={() => bananaNotify.toggle()}>Avviso: {bananaNotify.enabled ? 'on' : 'off'}</button
 	>
 	<div class="ml-auto flex min-w-0 items-center gap-3 text-muted-foreground [&>*]:shrink-0">
 		<ThemePicker />
@@ -197,7 +197,7 @@
 		<span class="flex items-center gap-1" title="Servizio di ricerca web">
 			<span class="h-2 w-2 rounded-full {searchUp ? 'bg-green-500' : 'bg-red-500/70'}"></span>Web
 		</span>
-		<span class="flex items-center gap-1" title="Archivio su file (~/Altea/data)">
+		<span class="flex items-center gap-1" title="Archivio su file (~/Banana/data)">
 			<span class="h-2 w-2 rounded-full {storeUp ? 'bg-green-500' : 'bg-red-500/70'}"></span>Archivio
 		</span>
 	</div>

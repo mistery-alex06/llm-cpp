@@ -1,5 +1,5 @@
 // Avviso a fine risposta: suono breve + notifica di sistema quando la scheda/finestra non è in primo piano.
-const KEY = 'Altea.notify';
+const KEY = 'Banana.notify';
 
 function load(): boolean {
 	try {
@@ -9,7 +9,7 @@ function load(): boolean {
 	}
 }
 
-class AlteaNotify {
+class BananaNotify {
 	enabled = $state(load());
 
 	toggle() {
@@ -59,4 +59,4 @@ class AlteaNotify {
 	}
 }
 
-export const alteaNotify = new AlteaNotify();
+export const bananaNotify = new BananaNotify();

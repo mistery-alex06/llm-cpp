@@ -4,7 +4,7 @@
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { Button } from '$lib/components/ui/button';
 	import { Switch } from '$lib/components/ui/switch';
-	import { alteaDocs } from '$lib/utils/altea-docs.svelte';
+	import { bananaDocs } from '$lib/utils/banana-docs.svelte';
 
 	interface Props {
 		open: boolean;
@@ -40,16 +40,16 @@
 	}
 
 	function preview(docId: string) {
-		const doc = alteaDocs.docs.find((d) => d.id === docId);
-		return doc ? alteaDocs.studyText(doc, fromPage) : null;
+		const doc = bananaDocs.docs.find((d) => d.id === docId);
+		return doc ? bananaDocs.studyText(doc, fromPage) : null;
 	}
 
 	async function study(docId: string, mode: keyof typeof MODES) {
-		const doc = alteaDocs.docs.find((d) => d.id === docId);
+		const doc = bananaDocs.docs.find((d) => d.id === docId);
 		if (!doc) return;
-		const r = alteaDocs.studyText(doc, fromPage);
+		const r = bananaDocs.studyText(doc, fromPage);
 		if (!r.text) return;
-		alteaDocs.skipNext = true;
+		bananaDocs.skipNext = true;
 		open = false;
 		await chatStore.sendMessage(MODES[mode].prompt(doc.name, r.from, r.to, r.text));
 	}
@@ -57,7 +57,7 @@
 	async function handleFiles(e: Event) {
 		const input = e.currentTarget as HTMLInputElement;
 		const files = Array.from(input.files ?? []);
-		for (const f of files) await alteaDocs.addFile(f);
+		for (const f of files) await bananaDocs.addFile(f);
 		input.value = '';
 	}
 </script>
@@ -77,15 +77,15 @@
 
 		<div class="flex items-center justify-between gap-3 py-1">
 			<span class="text-sm">Usa i documenti nelle risposte</span>
-			<Switch checked={alteaDocs.enabled} onCheckedChange={() => alteaDocs.toggle()} />
+			<Switch checked={bananaDocs.enabled} onCheckedChange={() => bananaDocs.toggle()} />
 		</div>
 
 		<div class="max-h-64 overflow-y-auto rounded-md border">
-			{#if alteaDocs.globalDocs.length === 0}
+			{#if bananaDocs.globalDocs.length === 0}
 				<p class="p-4 text-center text-sm text-muted-foreground">Nessun documento caricato.</p>
 			{:else}
 				<ul class="divide-y">
-					{#each alteaDocs.globalDocs as doc (doc.id)}
+					{#each bananaDocs.globalDocs as doc (doc.id)}
 						<li class="flex items-center gap-2 px-3 py-2 text-sm">
 							<FileText class="h-4 w-4 shrink-0 text-muted-foreground" />
 							<span class="min-w-0 flex-1 truncate" title={doc.name}>{doc.name}</span>
@@ -104,7 +104,7 @@
 								size="icon"
 								class="h-7 w-7 shrink-0"
 								title="Rimuovi"
-								onclick={() => alteaDocs.remove(doc.id)}
+								onclick={() => bananaDocs.remove(doc.id)}
 							>
 								<Trash2 class="h-4 w-4" />
 							</Button>
@@ -118,12 +118,12 @@
 										id="sp-{doc.id}"
 										type="number"
 										min="1"
-										max={alteaDocs.maxPage(doc)}
+										max={bananaDocs.maxPage(doc)}
 										bind:value={fromPage}
 										class="w-16 rounded-md border bg-background px-2 py-1 text-xs"
 									/>
 									<span class="text-xs text-muted-foreground">
-										di {alteaDocs.maxPage(doc)}{pv && pv.text ? ` · userà le pagine ${pv.from}-${pv.to}` : ''}
+										di {bananaDocs.maxPage(doc)}{pv && pv.text ? ` · userà le pagine ${pv.from}-${pv.to}` : ''}
 									</span>
 								</div>
 								<div class="flex gap-2">
@@ -145,8 +145,8 @@
 			{/if}
 		</div>
 
-		{#if alteaDocs.error}
-			<p class="text-sm text-destructive">{alteaDocs.error}</p>
+		{#if bananaDocs.error}
+			<p class="text-sm text-destructive">{bananaDocs.error}</p>
 		{/if}
 
 		<input
@@ -159,9 +159,9 @@
 		/>
 
 		<Dialog.Footer>
-			<Button onclick={() => fileInput?.click()} disabled={alteaDocs.busy} class="gap-2">
+			<Button onclick={() => fileInput?.click()} disabled={bananaDocs.busy} class="gap-2">
 				<FilePlus class="h-4 w-4" />
-				{alteaDocs.busy ? 'Lettura in corso...' : 'Aggiungi documento'}
+				{bananaDocs.busy ? 'Lettura in corso...' : 'Aggiungi documento'}
 			</Button>
 		</Dialog.Footer>
 	</Dialog.Content>

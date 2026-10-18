@@ -2,12 +2,12 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { ROUTES } from '$lib/constants';
-	import { COMMANDS } from '$lib/utils/altea-commands';
-	import { alteaPersonas, PERSONAS } from '$lib/utils/altea-personas.svelte';
-	import { alteaWeb } from '$lib/utils/altea-web.svelte';
-	import { alteaAuto } from '$lib/utils/altea-auto.svelte';
-	import { alteaActions } from '$lib/utils/altea-actions.svelte';
-	import { alteaNotify } from '$lib/utils/altea-notify.svelte';
+	import { COMMANDS } from '$lib/utils/banana-commands';
+	import { bananaPersonas, PERSONAS } from '$lib/utils/banana-personas.svelte';
+	import { bananaWeb } from '$lib/utils/banana-web.svelte';
+	import { bananaAuto } from '$lib/utils/banana-auto.svelte';
+	import { bananaActions } from '$lib/utils/banana-actions.svelte';
+	import { bananaNotify } from '$lib/utils/banana-notify.svelte';
 
 	let { onMemory, onExport, onHelp }: { onMemory: () => void; onExport: () => void; onHelp: () => void } = $props();
 
@@ -26,14 +26,14 @@
 		{ key: 'nuova', desc: 'Inizia una nuova chat', run: () => goto(ROUTES.NEW_CHAT) },
 		{ key: 'memoria', desc: 'Apri il pannello Memoria', run: () => onMemory() },
 		{ key: 'esporta', desc: 'Scarica la chat in Markdown', run: () => onExport() },
-		{ key: 'web', desc: 'Attiva/disattiva la ricerca web', run: () => alteaWeb.toggle() },
-		{ key: 'auto', desc: 'Attiva/disattiva la scelta automatica del modello', run: () => alteaAuto.toggle() },
-		{ key: 'azioni', desc: 'Attiva/disattiva le azioni sul computer', run: () => alteaActions.toggle() },
-		{ key: 'avviso', desc: 'Attiva/disattiva l\'avviso a fine risposta', run: () => alteaNotify.toggle() },
+		{ key: 'web', desc: 'Attiva/disattiva la ricerca web', run: () => bananaWeb.toggle() },
+		{ key: 'auto', desc: 'Attiva/disattiva la scelta automatica del modello', run: () => bananaAuto.toggle() },
+		{ key: 'azioni', desc: 'Attiva/disattiva le azioni sul computer', run: () => bananaActions.toggle() },
+		{ key: 'avviso', desc: 'Attiva/disattiva l\'avviso a fine risposta', run: () => bananaNotify.toggle() },
 		...PERSONAS.map((p) => ({
 			key: 'ruolo-' + p.id,
 			desc: 'Ruolo: ' + p.name,
-			run: () => alteaPersonas.set(p.id)
+			run: () => bananaPersonas.set(p.id)
 		}))
 	];
 

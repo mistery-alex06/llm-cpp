@@ -21,7 +21,7 @@
 		conversations
 	} from '$lib/stores/conversations.svelte';
 	import { chatStore } from '$lib/stores/chat.svelte';
-	import { alteaProjects } from '$lib/utils/altea-projects.svelte';
+	import { bananaProjects } from '$lib/utils/banana-projects.svelte';
 	import { config } from '$lib/stores/settings.svelte';
 	import { RouterService } from '$lib/services/router.service';
 	import { isMobile } from '$lib/stores/viewport.svelte';
@@ -91,7 +91,7 @@
 			return [];
 		}
 
-		return conversations().filter((c: { id: string }) => !alteaProjects.projectOf(c.id));
+		return conversations().filter((c: { id: string }) => !bananaProjects.projectOf(c.id));
 	});
 
 	let isSelectionMode = $state(false);

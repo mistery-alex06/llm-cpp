@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { HELP } from '$lib/utils/altea-help';
+	import { HELP } from '$lib/utils/banana-help';
 
 	let { onclose }: { onclose: () => void } = $props();
 </script>

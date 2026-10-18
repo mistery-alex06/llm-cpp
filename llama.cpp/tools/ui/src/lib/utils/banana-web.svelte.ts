@@ -1,6 +1,6 @@
 // Ricerca web di Banana: se attiva, prima di ogni domanda cerca sul web (servizio locale
 // search_server.py, porta 8091) e passa al modello i risultati come contesto.
-const KEY = 'Altea.webSearch';
+const KEY = 'Banana.webSearch';
 const SEARCH_URL = 'http://127.0.0.1:8091';
 
 function loadEnabled(): boolean {
@@ -11,7 +11,7 @@ function loadEnabled(): boolean {
 	}
 }
 
-class AlteaWeb {
+class BananaWeb {
 	enabled = $state(loadEnabled());
 	/** Contesto da iniettare nella prossima richiesta (consumato una sola volta). */
 	private pending = '';
@@ -68,4 +68,4 @@ class AlteaWeb {
 	}
 }
 
-export const alteaWeb = new AlteaWeb();
+export const bananaWeb = new BananaWeb();

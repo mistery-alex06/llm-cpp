@@ -1,8 +1,8 @@
-# altea_launcher.ps1 - avvia il server, apre Banana in una finestra dedicata (Edge o Chrome)
+# banana_launcher.ps1 - avvia il server, apre Banana in una finestra dedicata (Edge o Chrome)
 # e, alla chiusura della finestra, spegne il server. Equivalente di Banana.app per Windows.
 $Dir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Url = 'http://127.0.0.1:8080'
-$Log = Join-Path $env:TEMP 'altea.log'
+$Log = Join-Path $env:TEMP 'banana.log'
 $Started = $false
 
 function Test-Server { try { Invoke-WebRequest "$Url/health" -UseBasicParsing -TimeoutSec 2 | Out-Null; $true } catch { $false } }

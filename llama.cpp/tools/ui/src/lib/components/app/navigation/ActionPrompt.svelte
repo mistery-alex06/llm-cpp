@@ -2,7 +2,7 @@
 	import { toast } from 'svelte-sonner';
 	import { chatStore } from '$lib/stores/chat.svelte';
 	import { conversationsStore } from '$lib/stores/conversations.svelte';
-	import { alteaActions, type ActionRequest } from '$lib/utils/altea-actions.svelte';
+	import { bananaActions, type ActionRequest } from '$lib/utils/banana-actions.svelte';
 
 	let pending = $state<{ id: string; req: ActionRequest } | null>(null);
 	let busy = $state(false);
@@ -16,11 +16,11 @@
 	});
 
 	function check() {
-		if (!alteaActions.enabled) return;
+		if (!bananaActions.enabled) return;
 		const msgs = conversationsStore.activeMessages as { id: string; role: string; content?: string }[];
 		const last = msgs[msgs.length - 1];
 		if (!last || last.role !== 'assistant' || handled.has(last.id)) return;
-		const req = alteaActions.parse(last.content ?? '');
+		const req = bananaActions.parse(last.content ?? '');
 		if (!req) return;
 		handled.add(last.id);
 		pending = { id: last.id, req };
@@ -30,7 +30,7 @@
 		if (!pending) return;
 		const req = pending.req;
 		busy = true;
-		const r = await alteaActions.execute(req);
+		const r = await bananaActions.execute(req);
 		busy = false;
 		pending = null;
 		if (!r.ok) {
@@ -52,7 +52,7 @@
 		role="alertdialog"
 	>
 		<div class="mb-1 font-semibold">Banana chiede di eseguire un'azione</div>
-		<p class="mb-2">{alteaActions.describe(pending.req)}</p>
+		<p class="mb-2">{bananaActions.describe(pending.req)}</p>
 		{#if pending.req.azione === 'scrivi_file'}
 			<pre
 				class="mb-2 max-h-40 overflow-auto rounded-lg bg-muted p-2 text-xs whitespace-pre-wrap">{(pending.req.contenuto ?? '').slice(0, 800)}{(pending.req.contenuto ?? '').length > 800 ? '\n…' : ''}</pre>

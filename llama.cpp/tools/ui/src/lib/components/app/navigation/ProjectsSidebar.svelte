@@ -11,8 +11,8 @@
 		X,
 		PanelRightClose
 	} from '@lucide/svelte';
-	import { alteaProjects } from '$lib/utils/altea-projects.svelte';
-	import { alteaDocs } from '$lib/utils/altea-docs.svelte';
+	import { bananaProjects } from '$lib/utils/banana-projects.svelte';
+	import { bananaDocs } from '$lib/utils/banana-docs.svelte';
 	import { conversations } from '$lib/stores/conversations.svelte';
 	import { RouterService } from '$lib/services/router.service';
 	import { ROUTES } from '$lib/constants';
@@ -29,14 +29,14 @@
 
 	// Se si apre una chat esistente, la "nuova chat nel progetto" in attesa decade.
 	$effect(() => {
-		if (currentChatId) alteaProjects.pendingProjectId = null;
+		if (currentChatId) bananaProjects.pendingProjectId = null;
 	});
 
 	function chatName(id: string): string | undefined {
 		return conversations().find((c: { id: string; name: string }) => c.id === id)?.name;
 	}
 
-	alteaProjects.chatNameOf = chatName;
+	bananaProjects.chatNameOf = chatName;
 
 	function isOpen(id: string) {
 		return openIds.includes(id);
@@ -47,14 +47,14 @@
 	}
 
 	function createProject() {
-		const p = alteaProjects.create(newName);
+		const p = bananaProjects.create(newName);
 		newName = '';
 		creating = false;
 		if (p) openIds = [...openIds, p.id];
 	}
 
 	async function newChatIn(projectId: string) {
-		alteaProjects.pendingProjectId = projectId;
+		bananaProjects.pendingProjectId = projectId;
 		if (!isOpen(projectId)) openIds = [...openIds, projectId];
 		await goto(ROUTES.NEW_CHAT);
 	}
@@ -65,11 +65,11 @@
 	}
 
 	function addExisting(projectId: string, chatId: string) {
-		alteaProjects.assign(projectId, chatId);
+		bananaProjects.assign(projectId, chatId);
 	}
 
 	const freeChats = $derived(
-		conversations().filter((c: { id: string }) => !alteaProjects.projectOf(c.id))
+		conversations().filter((c: { id: string }) => !bananaProjects.projectOf(c.id))
 	);
 
 	function deleteProject(id: string, name: string) {
@@ -79,13 +79,13 @@
 			)
 		)
 			return;
-		for (const d of alteaDocs.docs.filter((x) => x.projectId === id)) void alteaDocs.remove(d.id);
-		alteaProjects.remove(id);
+		for (const d of bananaDocs.docs.filter((x) => x.projectId === id)) void bananaDocs.remove(d.id);
+		bananaProjects.remove(id);
 	}
 
 	function startEdit(id: string) {
 		editId = editId === id ? null : id;
-		const p = alteaProjects.projects.find((x) => x.id === id);
+		const p = bananaProjects.projects.find((x) => x.id === id);
 		renameDraft = p?.name ?? '';
 		factDraft = '';
 		if (editId && !isOpen(id)) openIds = [...openIds, id];
@@ -93,11 +93,11 @@
 
 	async function addDocs(id: string, files: FileList | null) {
 		if (!files) return;
-		for (const f of Array.from(files)) await alteaDocs.addFile(f, id);
+		for (const f of Array.from(files)) await bananaDocs.addFile(f, id);
 	}
 
 	function addFact(id: string) {
-		alteaProjects.addMemory(id, factDraft);
+		bananaProjects.addMemory(id, factDraft);
 		factDraft = '';
 	}
 </script>
@@ -111,23 +111,23 @@
 			'h-[calc(100dvh-1.125rem)] rounded-2xl',
 			'flex flex-col',
 			'transition-[width,padding] duration-200 ease-out',
-			alteaProjects.sidebarOpen
+			bananaProjects.sidebarOpen
 				? 'w-72 border-border bg-muted/60 shadow-md backdrop-blur-xl'
 				: 'w-12'
 		]}
 	>
 		<div class="flex items-center justify-between px-2">
-			{#if alteaProjects.sidebarOpen}
+			{#if bananaProjects.sidebarOpen}
 				<span class="pl-2 text-sm font-medium">Progetti</span>
 			{/if}
 			<button
 				type="button"
 				class="flex h-9 w-9 items-center justify-center rounded-full hover:bg-foreground/10"
-				title={alteaProjects.sidebarOpen ? 'Chiudi progetti' : 'Apri progetti'}
-				aria-label={alteaProjects.sidebarOpen ? 'Chiudi progetti' : 'Apri progetti'}
-				onclick={() => alteaProjects.toggleSidebar()}
+				title={bananaProjects.sidebarOpen ? 'Chiudi progetti' : 'Apri progetti'}
+				aria-label={bananaProjects.sidebarOpen ? 'Chiudi progetti' : 'Apri progetti'}
+				onclick={() => bananaProjects.toggleSidebar()}
 			>
-				{#if alteaProjects.sidebarOpen}
+				{#if bananaProjects.sidebarOpen}
 					<PanelRightClose class="h-4 w-4" />
 				{:else}
 					<FolderKanban class="h-4 w-4" />
@@ -135,7 +135,7 @@
 			</button>
 		</div>
 
-		{#if alteaProjects.sidebarOpen}
+		{#if bananaProjects.sidebarOpen}
 			<div class="mt-2 flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto px-2 pb-2">
 				{#if creating}
 					<form
@@ -172,14 +172,14 @@
 					</button>
 				{/if}
 
-				{#if alteaProjects.projects.length === 0 && !creating}
+				{#if bananaProjects.projects.length === 0 && !creating}
 					<p class="px-2 py-3 text-xs text-muted-foreground">
 						Nessun progetto. Crea un progetto per raggruppare più chat sullo stesso argomento, con
 						istruzioni e memoria condivise.
 					</p>
 				{/if}
 
-				{#each alteaProjects.projects as p (p.id)}
+				{#each bananaProjects.projects as p (p.id)}
 					{@const chats = p.chatIds.filter((c) => chatName(c) !== undefined)}
 					<div class="rounded-lg">
 						<div class="group flex items-center gap-1 rounded-lg px-1 py-1 hover:bg-foreground/5">
@@ -194,7 +194,7 @@
 									<ChevronRight class="h-3.5 w-3.5 shrink-0" />
 								{/if}
 								<span
-									class="truncate {alteaProjects.pendingProjectId === p.id
+									class="truncate {bananaProjects.pendingProjectId === p.id
 										? 'text-primary'
 										: ''}">{p.name}</span
 								>
@@ -232,7 +232,7 @@
 											id="pn-{p.id}"
 											class="rounded-md border border-border bg-background px-2 py-1 text-sm"
 											bind:value={renameDraft}
-											onblur={() => alteaProjects.rename(p.id, renameDraft)}
+											onblur={() => bananaProjects.rename(p.id, renameDraft)}
 										/>
 										<label class="text-xs text-muted-foreground" for="pi-{p.id}"
 											>Istruzioni del progetto</label
@@ -243,7 +243,7 @@
 											class="rounded-md border border-border bg-background px-2 py-1 text-sm"
 											placeholder="Es. Aiutami con l'esame di Controlli Automatici, rispondi con esempi."
 											value={p.instructions}
-											oninput={(e) => alteaProjects.setInstructions(p.id, e.currentTarget.value)}
+											oninput={(e) => bananaProjects.setInstructions(p.id, e.currentTarget.value)}
 										></textarea>
 										<span class="text-xs text-muted-foreground">Memoria del progetto</span>
 										{#each p.memory as m, i (i + m)}
@@ -253,25 +253,25 @@
 													type="button"
 													class="opacity-60 hover:opacity-100"
 													aria-label="Rimuovi"
-													onclick={() => alteaProjects.removeMemory(p.id, i)}
+													onclick={() => bananaProjects.removeMemory(p.id, i)}
 													><X class="h-3 w-3" /></button
 												>
 											</div>
 										{/each}
 										<span class="text-xs text-muted-foreground">Documenti del progetto (solo per le sue chat)</span>
-										{#each alteaDocs.docs.filter((d) => d.projectId === p.id) as d (d.id)}
+										{#each bananaDocs.docs.filter((d) => d.projectId === p.id) as d (d.id)}
 											<div class="flex items-start gap-1 text-xs">
 												<span class="flex-1 truncate">📄 {d.name}</span>
 												<button
 													type="button"
 													class="opacity-60 hover:opacity-100"
 													aria-label="Rimuovi documento"
-													onclick={() => alteaDocs.remove(d.id)}><X class="h-3 w-3" /></button
+													onclick={() => bananaDocs.remove(d.id)}><X class="h-3 w-3" /></button
 												>
 											</div>
 										{/each}
 										<label class="cursor-pointer rounded-md border border-dashed border-border px-2 py-1 text-center text-xs hover:bg-foreground/5">
-											{alteaDocs.busy ? 'Caricamento...' : '+ Aggiungi documento (PDF o testo)'}
+											{bananaDocs.busy ? 'Caricamento...' : '+ Aggiungi documento (PDF o testo)'}
 											<input
 												type="file"
 												multiple
@@ -283,8 +283,8 @@
 												}}
 											/>
 										</label>
-										{#if alteaDocs.error}
-											<span class="text-xs text-destructive">{alteaDocs.error}</span>
+										{#if bananaDocs.error}
+											<span class="text-xs text-destructive">{bananaDocs.error}</span>
 										{/if}
 										<form
 											class="flex gap-1"
@@ -349,7 +349,7 @@
 											class="rounded p-0.5 opacity-0 hover:bg-foreground/10 group-hover:opacity-70"
 											title="Togli dal progetto"
 											aria-label="Togli dal progetto"
-											onclick={() => alteaProjects.unassign(cid)}><X class="h-3 w-3" /></button
+											onclick={() => bananaProjects.unassign(cid)}><X class="h-3 w-3" /></button
 										>
 									</div>
 								{/each}
@@ -358,19 +358,19 @@
 									<p class="px-1 py-1 text-xs text-muted-foreground">Nessuna chat.</p>
 								{/if}
 
-								{#if currentChatId && !alteaProjects.projectOf(currentChatId)}
+								{#if currentChatId && !bananaProjects.projectOf(currentChatId)}
 									<button
 										type="button"
 										class="mt-1 rounded-md px-1 py-1 text-left text-xs text-primary hover:bg-foreground/5"
-										onclick={() => currentChatId && alteaProjects.assign(p.id, currentChatId)}
+										onclick={() => currentChatId && bananaProjects.assign(p.id, currentChatId)}
 									>
 										+ Aggiungi la chat corrente
 									</button>
-								{:else if currentChatId && alteaProjects.projectOf(currentChatId)?.id !== p.id}
+								{:else if currentChatId && bananaProjects.projectOf(currentChatId)?.id !== p.id}
 									<button
 										type="button"
 										class="mt-1 rounded-md px-1 py-1 text-left text-xs text-primary hover:bg-foreground/5"
-										onclick={() => currentChatId && alteaProjects.assign(p.id, currentChatId)}
+										onclick={() => currentChatId && bananaProjects.assign(p.id, currentChatId)}
 									>
 										+ Sposta qui la chat corrente
 									</button>

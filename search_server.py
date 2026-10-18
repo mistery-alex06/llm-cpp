@@ -15,7 +15,7 @@ import subprocess
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-PORT = int(os.environ.get("ALTEA_SEARCH_PORT", "8091"))
+PORT = int(os.environ.get("BANANA_SEARCH_PORT", "8091"))
 UA = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 "
     "(KHTML, like Gecko) Version/17.0 Safari/605.1.15"

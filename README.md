@@ -49,7 +49,7 @@ flowchart TB
       M2[Qwen3-4B]
       M3[Qwen2.5-Omni-3B]
     end
-    WS[(Workspace ~/Altea/workspace)]
+    WS[(Workspace ~/Banana/workspace)]
   end
   UI -->|API OpenAI| SRV
   BOT -->|API OpenAI| SRV

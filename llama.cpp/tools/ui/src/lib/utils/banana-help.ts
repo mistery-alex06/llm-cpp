@@ -25,7 +25,7 @@ export const HELP: HelpSection[] = [
 			{ name: '/auto', desc: 'Attiva/disattiva la scelta automatica del modello.' },
 			{ name: '/avviso', desc: 'Attiva/disattiva suono e notifica a fine risposta.' },
 			{ name: '/azioni', desc: 'Attiva/disattiva le azioni sul computer.' },
-			{ name: '/ruolo-altea', desc: 'Ruolo predefinito: assistente generale.' },
+			{ name: '/ruolo-banana', desc: 'Ruolo predefinito: assistente generale.' },
 			{ name: '/ruolo-tutor', desc: 'Tutor Polimi: spiega passo passo con formule ed esempi e verifica la comprensione.' },
 			{ name: '/ruolo-codice', desc: 'Revisore di codice: cerca bug e problemi e propone correzioni.' },
 			{ name: '/ruolo-traduttore', desc: 'Traduttore: italiano ↔ inglese, senza commenti.' },
@@ -35,7 +35,7 @@ export const HELP: HelpSection[] = [
 	{
 		title: 'Azioni sul computer (con Azioni: on)',
 		items: [
-			{ name: 'elenca_file', desc: 'Elenca i file nella cartella di lavoro (~/Altea/workspace).' },
+			{ name: 'elenca_file', desc: 'Elenca i file nella cartella di lavoro (~/Banana/workspace).' },
 			{ name: 'leggi_file', desc: 'Legge un file di testo della cartella di lavoro; il contenuto torna ad Banana.' },
 			{ name: 'scrivi_file', desc: 'Crea o sovrascrive un file nella cartella di lavoro (la conferma mostra il contenuto).' },
 			{ name: 'apri_file', desc: 'Apre un documento, immagine o PDF della cartella con l\'app predefinita (mai script o eseguibili).' },
@@ -71,7 +71,7 @@ export const HELP: HelpSection[] = [
 		items: [
 			{ name: 'Barra Progetti (destra)', desc: 'Raggruppa chat sullo stesso argomento, con istruzioni, memoria e documenti propri del progetto.' },
 			{ name: 'Memoria automatica', desc: 'Banana ricorda da sola fatti personali e di progetto; si gestiscono dal pannello Memoria e dalla barra Progetti.' },
-			{ name: 'Backup', desc: 'Impostazioni → Importa/Esporta: salva e ripristina memoria, documenti e progetti (copia automatica anche in ~/Altea/data).' }
+			{ name: 'Backup', desc: 'Impostazioni → Importa/Esporta: salva e ripristina memoria, documenti e progetti (copia automatica anche in ~/Banana/data).' }
 		]
 	},
 	{

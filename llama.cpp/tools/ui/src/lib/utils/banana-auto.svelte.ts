@@ -2,7 +2,7 @@
 // domande complesse -> Qwen3-4B, immagini/audio/video -> Qwen2.5-Omni.
 import { modelsStore } from '$lib/stores/models.svelte';
 
-const KEY = 'Altea.autoModel';
+const KEY = 'Banana.autoModel';
 
 function loadEnabled(): boolean {
 	try {
@@ -17,7 +17,7 @@ const HARD =
 
 export type AutoTarget = 'fast' | 'smart' | 'omni';
 
-class AlteaAuto {
+class BananaAuto {
 	enabled = $state(loadEnabled());
 
 	toggle(): void {
@@ -53,4 +53,4 @@ class AlteaAuto {
 	}
 }
 
-export const alteaAuto = new AlteaAuto();
+export const bananaAuto = new BananaAuto();

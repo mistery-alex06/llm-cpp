@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { loadMemory, saveMemory } from '$lib/utils/altea-memory';
+	import { loadMemory, saveMemory } from '$lib/utils/banana-memory';
 
 	let { onclose }: { onclose: () => void } = $props();
 

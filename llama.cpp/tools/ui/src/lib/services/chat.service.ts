@@ -1,10 +1,10 @@
-import { alteaActions } from '$lib/utils/altea-actions.svelte';
-import { memorySystemPrompt } from '$lib/utils/altea-memory';
-import { alteaProjects } from '$lib/utils/altea-projects.svelte';
-import { alteaPersonas } from '$lib/utils/altea-personas.svelte';
-import { alteaHistory } from '$lib/utils/altea-history.svelte';
-import { alteaWeb } from '$lib/utils/altea-web.svelte';
-import { alteaDocs } from '$lib/utils/altea-docs.svelte';
+import { bananaActions } from '$lib/utils/banana-actions.svelte';
+import { memorySystemPrompt } from '$lib/utils/banana-memory';
+import { bananaProjects } from '$lib/utils/banana-projects.svelte';
+import { bananaPersonas } from '$lib/utils/banana-personas.svelte';
+import { bananaHistory } from '$lib/utils/banana-history.svelte';
+import { bananaWeb } from '$lib/utils/banana-web.svelte';
+import { bananaDocs } from '$lib/utils/banana-docs.svelte';
 import { getAuthHeaders, getJsonHeaders } from '$lib/utils/api-headers';
 import { formatAttachmentText } from '$lib/utils/formatters';
 import { isAbortError } from '$lib/utils/abort';
@@ -227,13 +227,13 @@ export class ChatService {
 				: '';
 		const memoryPrompt =
 			memorySystemPrompt() +
-			alteaPersonas.prompt() +
-			alteaProjects.promptFor(conversationId) +
+			bananaPersonas.prompt() +
+			bananaProjects.promptFor(conversationId) +
 			forcedReasoning +
-			alteaDocs.consume() +
-			alteaHistory.consume() +
-			alteaWeb.consume() +
-			alteaActions.prompt();
+			bananaDocs.consume() +
+			bananaHistory.consume() +
+			bananaWeb.consume() +
+			bananaActions.prompt();
 		if (memoryPrompt) {
 			const first = normalizedMessages[0];
 			if (first && first.role === MessageRole.SYSTEM && typeof first.content === 'string') {

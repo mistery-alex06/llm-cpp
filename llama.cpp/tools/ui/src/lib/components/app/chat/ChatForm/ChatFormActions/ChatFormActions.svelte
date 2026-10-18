@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { ICON_CLASS_DEFAULT } from '$lib/constants/css-classes';
 	import { Square, SkipForward, Globe, FileText } from '@lucide/svelte';
-	import { alteaWeb } from '$lib/utils/altea-web.svelte';
-	import { alteaDocs } from '$lib/utils/altea-docs.svelte';
-	import { alteaAuto } from '$lib/utils/altea-auto.svelte';
-	import { alteaHistory } from '$lib/utils/altea-history.svelte';
-	import AlteaDocsDialog from './AlteaDocsDialog.svelte';
+	import { bananaWeb } from '$lib/utils/banana-web.svelte';
+	import { bananaDocs } from '$lib/utils/banana-docs.svelte';
+	import { bananaAuto } from '$lib/utils/banana-auto.svelte';
+	import { bananaHistory } from '$lib/utils/banana-history.svelte';
+	import BananaDocsDialog from './BananaDocsDialog.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { ChatService } from '$lib/services';
 	import {
@@ -160,13 +160,13 @@
 			/>
 			<Button
 				type="button"
-				variant={alteaWeb.enabled ? 'secondary' : 'ghost'}
+				variant={bananaWeb.enabled ? 'secondary' : 'ghost'}
 				size="sm"
-				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {alteaWeb.enabled
+				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {bananaWeb.enabled
 					? 'text-primary'
 					: 'text-muted-foreground'}"
-				title={alteaWeb.enabled ? 'Ricerca web attiva: clicca per disattivarla' : 'Attiva la ricerca web'}
-				onclick={() => alteaWeb.toggle()}
+				title={bananaWeb.enabled ? 'Ricerca web attiva: clicca per disattivarla' : 'Attiva la ricerca web'}
+				onclick={() => bananaWeb.toggle()}
 				{disabled}
 			>
 				<Globe class="h-3.5 w-3.5" />
@@ -174,9 +174,9 @@
 			</Button>
 			<Button
 				type="button"
-				variant={alteaDocs.enabled && alteaDocs.globalDocs.length > 0 ? 'secondary' : 'ghost'}
+				variant={bananaDocs.enabled && bananaDocs.globalDocs.length > 0 ? 'secondary' : 'ghost'}
 				size="sm"
-				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {alteaDocs.enabled && alteaDocs.globalDocs.length > 0
+				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {bananaDocs.enabled && bananaDocs.globalDocs.length > 0
 					? 'text-primary'
 					: 'text-muted-foreground'}"
 				title="Documenti di Banana"
@@ -184,34 +184,34 @@
 				{disabled}
 			>
 				<FileText class="h-3.5 w-3.5" />
-				Doc{alteaDocs.globalDocs.length > 0 ? ` (${alteaDocs.globalDocs.length})` : ''}
+				Doc{bananaDocs.globalDocs.length > 0 ? ` (${bananaDocs.globalDocs.length})` : ''}
 			</Button>
 			<Button
 				type="button"
-				variant={alteaAuto.enabled ? 'secondary' : 'ghost'}
+				variant={bananaAuto.enabled ? 'secondary' : 'ghost'}
 				size="sm"
-				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {alteaAuto.enabled
+				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {bananaAuto.enabled
 					? 'text-primary'
 					: 'text-muted-foreground'}"
-				title={alteaAuto.enabled
+				title={bananaAuto.enabled
 					? 'Scelta automatica del modello attiva: clicca per disattivarla'
 					: 'Scegli automaticamente il modello (1.7B veloce, 4B per domande complesse, Omni per media)'}
-				onclick={() => alteaAuto.toggle()}
+				onclick={() => bananaAuto.toggle()}
 				{disabled}
 			>
 				Auto
 			</Button>
 			<Button
 				type="button"
-				variant={alteaHistory.enabled ? 'secondary' : 'ghost'}
+				variant={bananaHistory.enabled ? 'secondary' : 'ghost'}
 				size="sm"
-				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {alteaHistory.enabled
+				class="h-8 gap-1.5 rounded-full px-2.5 text-xs {bananaHistory.enabled
 					? 'text-primary'
 					: 'text-muted-foreground'}"
-				title={alteaHistory.enabled
+				title={bananaHistory.enabled
 					? 'Ricerca nelle chat passate attiva: clicca per disattivarla'
 					: 'Cerca anche nelle chat passate'}
-				onclick={() => alteaHistory.toggle()}
+				onclick={() => bananaHistory.toggle()}
 				{disabled}
 			>
 				Storico
@@ -282,4 +282,4 @@
 	{/if}
 </div>
 
-<AlteaDocsDialog bind:open={docsOpen} />
+<BananaDocsDialog bind:open={docsOpen} />

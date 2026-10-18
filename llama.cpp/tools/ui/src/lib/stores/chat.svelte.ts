@@ -11,15 +11,15 @@
  * @see ChatService in services/chat.service.ts for API operations
  */
 
-import { alteaNotify } from '$lib/utils/altea-notify.svelte';
+import { bananaNotify } from '$lib/utils/banana-notify.svelte';
 import { SvelteMap, SvelteSet } from 'svelte/reactivity';
 import { DatabaseService } from '$lib/services/database.service';
 import { ChatService } from '$lib/services/chat.service';
-import { alteaWeb } from '$lib/utils/altea-web.svelte';
-import { alteaDocs } from '$lib/utils/altea-docs.svelte';
-import { alteaAuto } from '$lib/utils/altea-auto.svelte';
-import { alteaHistory } from '$lib/utils/altea-history.svelte';
-import { alteaProjects } from '$lib/utils/altea-projects.svelte';
+import { bananaWeb } from '$lib/utils/banana-web.svelte';
+import { bananaDocs } from '$lib/utils/banana-docs.svelte';
+import { bananaAuto } from '$lib/utils/banana-auto.svelte';
+import { bananaHistory } from '$lib/utils/banana-history.svelte';
+import { bananaProjects } from '$lib/utils/banana-projects.svelte';
 import {
 	handleMemoryCommand,
 	looksPersonal,
@@ -27,7 +27,7 @@ import {
 	PROJECT_EXTRACT_PROMPT,
 	EXTRACT_PROMPT,
 	addExtractedFacts
-} from '$lib/utils/altea-memory';
+} from '$lib/utils/banana-memory';
 import { STREAM_RESUME_RETRY_MS } from '$lib/constants/api-endpoints';
 import { streamIdentity } from '$lib/utils/stream-identity';
 import { getAuthHeaders } from '$lib/utils/api-headers';
@@ -1032,22 +1032,22 @@ class ChatStore {
 
 	async sendMessage(content: string, extras?: DatabaseMessageExtra[]): Promise<void> {
 		content = handleMemoryCommand(content) ?? content;
-		const skipCtx = alteaDocs.skipNext;
-		if (alteaWeb.enabled && content.trim() && !skipCtx) await alteaWeb.prepare(content);
+		const skipCtx = bananaDocs.skipNext;
+		if (bananaWeb.enabled && content.trim() && !skipCtx) await bananaWeb.prepare(content);
 		const docScope =
-			alteaProjects.projectOf(conversationsStore.activeConversation?.id)?.id ??
-			alteaProjects.pendingProjectId ??
+			bananaProjects.projectOf(conversationsStore.activeConversation?.id)?.id ??
+			bananaProjects.pendingProjectId ??
 			undefined;
-		alteaDocs.prepare(content, docScope);
-		if (!skipCtx) await alteaHistory.prepare(content, conversationsStore.activeConversation?.id);
+		bananaDocs.prepare(content, docScope);
+		if (!skipCtx) await bananaHistory.prepare(content, conversationsStore.activeConversation?.id);
 		if (!content.trim() && (!extras || extras.length === 0)) return;
-		if (alteaAuto.enabled) {
-			const target = alteaAuto.classify(
+		if (bananaAuto.enabled) {
+			const target = bananaAuto.classify(
 				content,
 				extras as { type?: string }[] | undefined,
-				alteaWeb.enabled || alteaDocs.visibleDocs(docScope).length > 0
+				bananaWeb.enabled || bananaDocs.visibleDocs(docScope).length > 0
 			);
-			const re = alteaAuto.pattern(target);
+			const re = bananaAuto.pattern(target);
 			const opt = modelsStore.models.find((m) => re.test(m.model));
 			if (opt && modelsStore.selectedModelId !== opt.id) await modelsStore.selectModelById(opt.id);
 		}
@@ -1403,7 +1403,7 @@ class ChatStore {
 					}).catch(console.error);
 				}
 
-				cleanupStreamingState(); alteaNotify.done();
+				cleanupStreamingState(); bananaNotify.done();
 
 				if (onComplete) onComplete(streamedContent);
 				if (isRouterMode()) modelsStore.fetchRouterModels().catch(console.error);
@@ -1517,7 +1517,7 @@ class ChatStore {
 					if (resolvedModel) uiUpdate.model = resolvedModel;
 					conversationsStore.updateMessageAtIndex(idx, uiUpdate);
 					await conversationsStore.updateCurrentNode(currentMessageId);
-					cleanupStreamingState(); alteaNotify.done();
+					cleanupStreamingState(); bananaNotify.done();
 					if (onComplete) await onComplete(content);
 					if (isRouterMode()) modelsStore.fetchRouterModels().catch(console.error);
 
@@ -1570,10 +1570,10 @@ class ChatStore {
 	}
 
 	private async autoRemember(userContent: string, convId?: string): Promise<void> {
-		const project = alteaProjects.projectOf(convId);
+		const project = bananaProjects.projectOf(convId);
 		if (project && looksProjectRelevant(userContent)) {
 			await this.extractFacts(PROJECT_EXTRACT_PROMPT(project.name, userContent.slice(0, 800)), (out) =>
-				alteaProjects.addExtractedFacts(project.id, out)
+				bananaProjects.addExtractedFacts(project.id, out)
 			);
 		}
 		if (!looksPersonal(userContent)) return;

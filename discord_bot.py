@@ -4,7 +4,7 @@
 Risponde ai messaggi privati (DM) e, nei server, solo quando viene menzionato,
 e solo agli utenti ammessi (allowed_user_ids). Serve llama-server già avviato.
 
-Configurazione: ~/Altea/discord.json (fuori dalla repo, non versionato)
+Configurazione: ~/Banana/discord.json (fuori dalla repo, non versionato)
   {
     "token": "TOKEN_DEL_BOT",
     "allowed_user_ids": [123456789012345678],
@@ -24,8 +24,8 @@ import re
 import sys
 import urllib.request
 
-CONFIG_PATH = os.path.expanduser(os.environ.get("ALTEA_DISCORD_CONFIG", "~/Altea/discord.json"))
-MEMORY_PATH = os.path.expanduser(os.path.join(os.environ.get("ALTEA_DATA", "~/Altea/data"), "memory.json"))
+CONFIG_PATH = os.path.expanduser(os.environ.get("BANANA_DISCORD_CONFIG", "~/Banana/discord.json"))
+MEMORY_PATH = os.path.expanduser(os.path.join(os.environ.get("BANANA_DATA", "~/Banana/data"), "memory.json"))
 HISTORY_TURNS = 8  # messaggi (utente+Banana) ricordati per conversazione
 TIMEOUT = 600  # il modello può essere lento o doversi caricare
 
@@ -155,8 +155,8 @@ def run_bot(cfg):
 
 if __name__ == "__main__":
     config = load_config() if "--test" not in sys.argv else {
-        "server_url": os.environ.get("ALTEA_URL", "http://127.0.0.1:8080"),
-        "model": os.environ.get("ALTEA_MODEL", "Qwen3-1.7B-Q4_K_M"),
+        "server_url": os.environ.get("BANANA_URL", "http://127.0.0.1:8080"),
+        "model": os.environ.get("BANANA_MODEL", "Qwen3-1.7B-Q4_K_M"),
     }
     if "--test" in sys.argv:
         q = sys.argv[sys.argv.index("--test") + 1] if len(sys.argv) > sys.argv.index("--test") + 1 else "Ciao, chi sei?"

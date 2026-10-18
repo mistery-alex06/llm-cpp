@@ -2,9 +2,9 @@
 // Banana cerca (BM25 per parole chiave, tutto in locale) nelle altre conversazioni salvate
 // e passa al modello i messaggi più pertinenti, citando il titolo della chat.
 import { DatabaseService } from '$lib/services/database.service';
-import { tokenize } from '$lib/utils/altea-docs.svelte';
+import { tokenize } from '$lib/utils/banana-docs.svelte';
 
-const KEY = 'Altea.history';
+const KEY = 'Banana.history';
 const REBUILD_MS = 45_000;
 const CHUNK = 600;
 const MAX_CHARS_PER_MESSAGE = 2400;
@@ -29,7 +29,7 @@ function loadEnabled(): boolean {
 	}
 }
 
-class AlteaHistory {
+class BananaHistory {
 	enabled = $state(loadEnabled());
 	private index: Entry[] = [];
 	private df = new Map<string, number>();
@@ -163,4 +163,4 @@ class AlteaHistory {
 	}
 }
 
-export const alteaHistory = new AlteaHistory();
+export const bananaHistory = new BananaHistory();

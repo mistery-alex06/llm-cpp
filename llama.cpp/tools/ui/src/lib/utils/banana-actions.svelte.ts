@@ -1,6 +1,6 @@
 // Azioni sul computer richieste da Banana. Il modello scrive un blocco ```azione {json}```;
 // la UI lo mostra e lo esegue (tramite actions_server.py) SOLO dopo la conferma dell'utente.
-const KEY = 'Altea.actions';
+const KEY = 'Banana.actions';
 const URL = 'http://127.0.0.1:8093/action';
 
 export const ACTIONS = ['elenca_file', 'leggi_file', 'scrivi_file', 'apri_file', 'apri_url'] as const;
@@ -31,7 +31,7 @@ function load(): boolean {
 	}
 }
 
-class AlteaActions {
+class BananaActions {
 	enabled = $state(load());
 
 	toggle() {
@@ -92,4 +92,4 @@ class AlteaActions {
 	}
 }
 
-export const alteaActions = new AlteaActions();
+export const bananaActions = new BananaActions();

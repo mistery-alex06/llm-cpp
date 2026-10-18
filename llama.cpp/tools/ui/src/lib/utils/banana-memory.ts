@@ -1,8 +1,8 @@
 // Memoria persistente di Banana: elenco di fatti salvati nel browser (localStorage)
 // e iniettati come system prompt in ogni conversazione.
-import { pushSync } from '$lib/utils/altea-sync';
+import { pushSync } from '$lib/utils/banana-sync';
 
-const KEY = 'Altea.memory';
+const KEY = 'Banana.memory';
 const MAX_ITEMS = 50;
 
 export function loadMemory(): string[] {

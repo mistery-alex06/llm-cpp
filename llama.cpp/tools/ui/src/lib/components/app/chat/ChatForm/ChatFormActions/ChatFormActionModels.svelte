@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { alteaAuto } from '$lib/utils/altea-auto.svelte';
+	import { bananaAuto } from '$lib/utils/banana-auto.svelte';
 	import { chatStore } from '$lib/stores/chat.svelte';
 	import {
 		modelsStore,
@@ -124,7 +124,7 @@
 
 		hasAudioModality =
 			(activeModelId ? modelsStore.modelSupportsAudio(activeModelId) : false) ||
-			alteaAuto.multimodalOverride();
+			bananaAuto.multimodalOverride();
 	});
 
 	$effect(() => {
@@ -132,7 +132,7 @@
 
 		hasVideoModality =
 			(activeModelId ? modelsStore.modelSupportsVideo(activeModelId) || modelsStore.modelSupportsVision(activeModelId) : false) ||
-			alteaAuto.multimodalOverride();
+			bananaAuto.multimodalOverride();
 	});
 
 	$effect(() => {
@@ -140,7 +140,7 @@
 
 		hasVisionModality =
 			(activeModelId ? modelsStore.modelSupportsVision(activeModelId) : false) ||
-			alteaAuto.multimodalOverride();
+			bananaAuto.multimodalOverride();
 	});
 
 	$effect(() => {

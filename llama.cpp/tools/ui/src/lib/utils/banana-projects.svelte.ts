@@ -1,13 +1,13 @@
 // Progetti di Banana: raggruppano più chat sullo stesso argomento.
 // Ogni progetto ha istruzioni e una memoria propria, iniettate nel prompt di tutte le sue chat,
 // insieme all'elenco delle altre chat del progetto (così le conversazioni restano collegate).
-import { pushSync } from '$lib/utils/altea-sync';
+import { pushSync } from '$lib/utils/banana-sync';
 
-const KEY = 'Altea.projects';
-const KEY_OPEN = 'Altea.projectsSidebar';
+const KEY = 'Banana.projects';
+const KEY_OPEN = 'Banana.projectsSidebar';
 const MAX_MEMORY = 50;
 
-export interface AlteaProject {
+export interface BananaProject {
 	id: string;
 	name: string;
 	instructions: string;
@@ -16,7 +16,7 @@ export interface AlteaProject {
 	createdAt: number;
 }
 
-function load(): AlteaProject[] {
+function load(): BananaProject[] {
 	try {
 		const v = JSON.parse(localStorage.getItem(KEY) || '[]');
 		if (!Array.isArray(v)) return [];
@@ -35,8 +35,8 @@ function load(): AlteaProject[] {
 	}
 }
 
-class AlteaProjects {
-	projects = $state<AlteaProject[]>(typeof localStorage !== 'undefined' ? load() : []);
+class BananaProjects {
+	projects = $state<BananaProject[]>(typeof localStorage !== 'undefined' ? load() : []);
 	sidebarOpen = $state(false);
 	/** Progetto in cui verrà creata la prossima nuova chat. */
 	pendingProjectId = $state<string | null>(null);
@@ -61,7 +61,7 @@ class AlteaProjects {
 	}
 
 	/** Sostituisce i progetti con quelli ricaricati dal file (senza riscriverlo). */
-	replaceAll(items: AlteaProject[]): void {
+	replaceAll(items: BananaProject[]): void {
 		this.projects = items;
 		try {
 			localStorage.setItem(KEY, JSON.stringify(items));
@@ -79,10 +79,10 @@ class AlteaProjects {
 		}
 	}
 
-	create(name: string): AlteaProject | null {
+	create(name: string): BananaProject | null {
 		const n = name.trim();
 		if (!n) return null;
-		const p: AlteaProject = {
+		const p: BananaProject = {
 			id: crypto.randomUUID(),
 			name: n,
 			instructions: '',
@@ -130,7 +130,7 @@ class AlteaProjects {
 		this.save();
 	}
 
-	projectOf(chatId: string | undefined | null): AlteaProject | undefined {
+	projectOf(chatId: string | undefined | null): BananaProject | undefined {
 		if (!chatId) return undefined;
 		return this.projects.find((p) => p.chatIds.includes(chatId));
 	}
@@ -160,11 +160,11 @@ class AlteaProjects {
 		this.unassign(chatId);
 	}
 
-	exportAll(): AlteaProject[] {
-		return $state.snapshot(this.projects) as AlteaProject[];
+	exportAll(): BananaProject[] {
+		return $state.snapshot(this.projects) as BananaProject[];
 	}
 
-	importAll(items: AlteaProject[]): number {
+	importAll(items: BananaProject[]): number {
 		let added = 0;
 		for (const p of items) {
 			if (!p || typeof p.name !== 'string' || this.projects.some((x) => x.id === p.id)) continue;
@@ -225,4 +225,4 @@ class AlteaProjects {
 	}
 }
 
-export const alteaProjects = new AlteaProjects();
+export const bananaProjects = new BananaProjects();

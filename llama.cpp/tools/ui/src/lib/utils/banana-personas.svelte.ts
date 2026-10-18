@@ -1,14 +1,14 @@
 // Ruoli di Banana: cambiano il modo di rispondere aggiungendo un'istruzione al prompt di sistema.
-const KEY = 'Altea.persona';
+const KEY = 'Banana.persona';
 
-export interface AlteaPersona {
+export interface BananaPersona {
 	id: string;
 	name: string;
 	prompt: string;
 }
 
-export const PERSONAS: AlteaPersona[] = [
-	{ id: 'altea', name: 'Banana', prompt: '' },
+export const PERSONAS: BananaPersona[] = [
+	{ id: 'banana', name: 'Banana', prompt: '' },
 	{
 		id: 'tutor',
 		name: 'Tutor Polimi',
@@ -36,15 +36,15 @@ export const PERSONAS: AlteaPersona[] = [
 
 function load(): string {
 	try {
-		const v = localStorage.getItem(KEY) || 'altea';
-		return PERSONAS.some((p) => p.id === v) ? v : 'altea';
+		const v = localStorage.getItem(KEY) || 'banana';
+		return PERSONAS.some((p) => p.id === v) ? v : 'banana';
 	} catch {
-		return 'altea';
+		return 'banana';
 	}
 }
 
-class AlteaPersonas {
-	id = $state(typeof localStorage !== 'undefined' ? load() : 'altea');
+class BananaPersonas {
+	id = $state(typeof localStorage !== 'undefined' ? load() : 'banana');
 
 	set(id: string): void {
 		if (!PERSONAS.some((p) => p.id === id)) return;
@@ -63,4 +63,4 @@ class AlteaPersonas {
 	}
 }
 
-export const alteaPersonas = new AlteaPersonas();
+export const bananaPersonas = new BananaPersonas();

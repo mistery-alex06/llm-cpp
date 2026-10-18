@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { alteaAuto } from '$lib/utils/altea-auto.svelte';
+	import { bananaAuto } from '$lib/utils/banana-auto.svelte';
 	import { page } from '$app/state';
 	import {
 		ChatScreenForm,
@@ -67,9 +67,9 @@
 	const activeModel = useChatScreenActiveModel();
 	const fileUpload = useChatScreenFileUpload({
 		capabilities: () => ({
-			hasVision: activeModel.hasVisionModality || alteaAuto.multimodalOverride(),
-			hasAudio: activeModel.hasAudioModality || alteaAuto.multimodalOverride(),
-			hasVideo: activeModel.hasVideoModality || alteaAuto.multimodalOverride()
+			hasVision: activeModel.hasVisionModality || bananaAuto.multimodalOverride(),
+			hasAudio: activeModel.hasAudioModality || bananaAuto.multimodalOverride(),
+			hasVideo: activeModel.hasVideoModality || bananaAuto.multimodalOverride()
 		}),
 		activeModelId: () => activeModel.activeModelId
 	});

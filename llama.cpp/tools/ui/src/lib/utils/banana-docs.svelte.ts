@@ -4,11 +4,11 @@
 import { convertPDFToPages } from '$lib/utils/pdf-processing';
 import { readFileAsText } from '$lib/utils/text-files';
 
-import { pushSync } from '$lib/utils/altea-sync';
+import { pushSync } from '$lib/utils/banana-sync';
 
-const DB_NAME = 'AlteaDocs';
+const DB_NAME = 'BananaDocs';
 const STORE = 'docs';
-const KEY_ENABLED = 'Altea.docs';
+const KEY_ENABLED = 'Banana.docs';
 
 const CHUNK_SIZE = 700;
 const CHUNK_OVERLAP = 100;
@@ -20,7 +20,7 @@ interface Chunk {
 	text: string;
 }
 
-export interface AlteaDoc {
+export interface BananaDoc {
 	id: string;
 	name: string;
 	addedAt: number;
@@ -30,7 +30,7 @@ export interface AlteaDoc {
 }
 
 interface IndexedChunk {
-	doc: AlteaDoc;
+	doc: BananaDoc;
 	chunk: Chunk;
 	tf: Map<string, number>;
 	len: number;
@@ -83,16 +83,16 @@ function openDb(): Promise<IDBDatabase> {
 	});
 }
 
-async function dbAll(): Promise<AlteaDoc[]> {
+async function dbAll(): Promise<BananaDoc[]> {
 	const db = await openDb();
 	return new Promise((resolve, reject) => {
 		const req = db.transaction(STORE).objectStore(STORE).getAll();
-		req.onsuccess = () => resolve(req.result as AlteaDoc[]);
+		req.onsuccess = () => resolve(req.result as BananaDoc[]);
 		req.onerror = () => reject(req.error);
 	});
 }
 
-async function dbPut(doc: AlteaDoc): Promise<void> {
+async function dbPut(doc: BananaDoc): Promise<void> {
 	const db = await openDb();
 	return new Promise((resolve, reject) => {
 		const tx = db.transaction(STORE, 'readwrite');
@@ -112,8 +112,8 @@ async function dbDelete(id: string): Promise<void> {
 	});
 }
 
-class AlteaDocs {
-	docs = $state<AlteaDoc[]>([]);
+class BananaDocs {
+	docs = $state<BananaDoc[]>([]);
 	enabled = $state(true);
 	busy = $state(false);
 	error = $state('');
@@ -147,12 +147,12 @@ class AlteaDocs {
 	skipNext = false;
 
 	/** Numero di pagine (o sezioni) del documento. */
-	maxPage(doc: AlteaDoc): number {
+	maxPage(doc: BananaDoc): number {
 		return doc.chunks.reduce((m, c) => Math.max(m, c.page), 1);
 	}
 
 	/** Testo di una pagina, ricostruito dagli estratti togliendo le sovrapposizioni. */
-	private pageText(doc: AlteaDoc, page: number): string {
+	private pageText(doc: BananaDoc, page: number): string {
 		let out = '';
 		for (const c of doc.chunks.filter((x) => x.page === page)) {
 			if (!out) {
@@ -168,7 +168,7 @@ class AlteaDocs {
 
 	/** Testo da pagina `from` in poi, fino a `maxChars` caratteri (almeno una pagina). */
 	studyText(
-		doc: AlteaDoc,
+		doc: BananaDoc,
 		from: number,
 		maxChars = 3000
 	): { text: string; from: number; to: number } {
@@ -190,12 +190,12 @@ class AlteaDocs {
 	}
 
 	/** Documenti globali (non legati a un progetto). */
-	get globalDocs(): AlteaDoc[] {
+	get globalDocs(): BananaDoc[] {
 		return this.docs.filter((d) => !d.projectId);
 	}
 
 	/** Documenti usabili da una chat: globali + quelli del suo progetto. */
-	visibleDocs(projectId?: string): AlteaDoc[] {
+	visibleDocs(projectId?: string): BananaDoc[] {
 		return this.docs.filter((d) => !d.projectId || d.projectId === projectId);
 	}
 
@@ -241,7 +241,7 @@ class AlteaDocs {
 				this.error = `Nessun testo trovato in "${file.name}" (forse è una scansione).`;
 				return;
 			}
-			const doc: AlteaDoc = {
+			const doc: BananaDoc = {
 				id: crypto.randomUUID(),
 				name: file.name,
 				addedAt: Date.now(),
@@ -259,17 +259,17 @@ class AlteaDocs {
 		}
 	}
 
-	exportAll(): AlteaDoc[] {
-		return $state.snapshot(this.docs) as AlteaDoc[];
+	exportAll(): BananaDoc[] {
+		return $state.snapshot(this.docs) as BananaDoc[];
 	}
 
 	/** Aggiunge i documenti di un backup (salta quelli già presenti per id o nome). */
-	async importAll(docs: AlteaDoc[]): Promise<number> {
+	async importAll(docs: BananaDoc[]): Promise<number> {
 		let added = 0;
 		for (const d of docs) {
 			if (!d || typeof d.name !== 'string' || !Array.isArray(d.chunks)) continue;
 			if (this.docs.some((x) => x.id === d.id || x.name === d.name)) continue;
-			const doc: AlteaDoc = {
+			const doc: BananaDoc = {
 				id: d.id || crypto.randomUUID(),
 				name: d.name,
 				addedAt: d.addedAt || Date.now(),
@@ -295,7 +295,7 @@ class AlteaDocs {
 	}
 
 	/** Sostituisce tutti i documenti con quelli ricaricati dal file (senza riscriverlo). */
-	async replaceAll(docs: AlteaDoc[]): Promise<void> {
+	async replaceAll(docs: BananaDoc[]): Promise<void> {
 		for (const d of this.docs) await dbDelete(d.id);
 		for (const d of docs) await dbPut(d);
 		this.docs = [...docs].sort((a, b) => a.addedAt - b.addedAt);
@@ -371,4 +371,4 @@ class AlteaDocs {
 	}
 }
 
-export const alteaDocs = new AlteaDocs();
+export const bananaDocs = new BananaDocs();

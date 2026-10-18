@@ -32,21 +32,21 @@ echo "Avvio server su http://127.0.0.1:8080 (Ctrl+C per fermare)"
 
 # Ricerca web locale (pulsante "Web" nella UI), nessuna chiave API
 if [ -f "$DIR/search_server.py" ]; then
-    python3 "$DIR/search_server.py" >/tmp/altea-search.log 2>&1 &
+    python3 "$DIR/search_server.py" >/tmp/banana-search.log 2>&1 &
     SEARCH_PID=$!
     trap 'kill $SEARCH_PID 2>/dev/null' EXIT
 fi
 
-# Archivio locale (memoria, progetti, documenti in ~/Altea/data), copia di sicurezza fuori dal browser
+# Archivio locale (memoria, progetti, documenti in ~/Banana/data), copia di sicurezza fuori dal browser
 if [ -f "$DIR/store_server.py" ]; then
-    python3 "$DIR/store_server.py" >/tmp/altea-store.log 2>&1 &
+    python3 "$DIR/store_server.py" >/tmp/banana-store.log 2>&1 &
     STORE_PID=$!
     trap 'kill $SEARCH_PID $STORE_PID 2>/dev/null' EXIT
 fi
 
-# Azioni sul computer (solo con conferma nella UI, solo cartella ~/Altea/workspace)
+# Azioni sul computer (solo con conferma nella UI, solo cartella ~/Banana/workspace)
 if [ -f "$DIR/actions_server.py" ]; then
-    python3 "$DIR/actions_server.py" >/tmp/altea-actions.log 2>&1 &
+    python3 "$DIR/actions_server.py" >/tmp/banana-actions.log 2>&1 &
     ACTIONS_PID=$!
     trap 'kill $SEARCH_PID $STORE_PID $ACTIONS_PID 2>/dev/null' EXIT
 fi

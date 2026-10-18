@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Archivio locale di Banana: salva memoria, progetti e documenti in ~/Altea/data/.
+"""Archivio locale di Banana: salva memoria, progetti e documenti in ~/Banana/data/.
 
 Servizio solo locale (127.0.0.1:8092), usato dalla UI per non perdere i dati
 se si cancellano i dati del browser.
   GET /store/<nome>   -> contenuto salvato (404 se assente)
   PUT /store/<nome>   -> salva il JSON ricevuto
   GET /health
-Nomi ammessi: memory, projects, docs. Percorso modificabile con ALTEA_DATA.
+Nomi ammessi: memory, projects, docs. Percorso modificabile con BANANA_DATA.
 """
 import json
 import os
@@ -15,7 +15,7 @@ import tempfile
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 PORT = 8092
-DATA_DIR = os.path.expanduser(os.environ.get("ALTEA_DATA", "~/Altea/data"))
+DATA_DIR = os.path.expanduser(os.environ.get("BANANA_DATA", "~/Banana/data"))
 NAMES = {"memory", "projects", "docs"}
 MAX_BODY = 100 * 1024 * 1024
 ALLOWED_ORIGINS = {

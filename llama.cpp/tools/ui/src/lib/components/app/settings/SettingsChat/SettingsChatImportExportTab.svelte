@@ -9,7 +9,7 @@
 	import { settingsStore } from '$lib/stores/settings.svelte';
 	import { conversationsStore, conversations } from '$lib/stores/conversations.svelte';
 	import { toast } from 'svelte-sonner';
-	import { exportAlteaBackup, importAlteaBackup } from '$lib/utils/altea-backup';
+	import { exportBananaBackup, importBananaBackup } from '$lib/utils/banana-backup';
 	import { fade } from 'svelte/transition';
 	import { ConversationSelectionMode, HtmlInputType, FileExtensionText } from '$lib/enums';
 	import SettingsChatImportExportSection from './SettingsChatImportExportSection.svelte';
@@ -37,16 +37,16 @@
 	let showSettingsExportDialog = $state(false);
 	let includeSensitiveData = $state(false);
 
-	function handleAlteaBackupExport() {
+	function handleBananaBackupExport() {
 		try {
-			const r = exportAlteaBackup();
+			const r = exportBananaBackup();
 			toast.success(`Backup salvato: ${r.memory} voci di memoria, ${r.docs} documenti, ${r.projects} progetti`);
 		} catch {
 			toast.error('Esportazione del backup non riuscita');
 		}
 	}
 
-	function handleAlteaBackupImport() {
+	function handleBananaBackupImport() {
 		const input = document.createElement('input');
 		input.type = 'file';
 		input.accept = '.json,application/json';
@@ -54,7 +54,7 @@
 			const file = input.files?.[0];
 			if (!file) return;
 			try {
-				const r = await importAlteaBackup(file);
+				const r = await importBananaBackup(file);
 				toast.success(`Importati ${r.memory} voci di memoria, ${r.docs} documenti e ${r.projects} progetti`);
 			} catch (e) {
 				toast.error(e instanceof Error ? e.message : 'Importazione non riuscita');
@@ -317,7 +317,7 @@
 			description="Salva memoria, documenti (Doc) e progetti in un unico file JSON di backup."
 			IconComponent={Download}
 			buttonText="Esporta backup"
-			onclick={handleAlteaBackupExport}
+			onclick={handleBananaBackupExport}
 		/>
 
 		<SettingsChatImportExportSection
@@ -325,7 +325,7 @@
 			description="Ripristina un backup di Banana. Memoria, documenti e progetti vengono uniti a quelli esistenti, senza duplicati."
 			IconComponent={Upload}
 			buttonText="Importa backup"
-			onclick={handleAlteaBackupImport}
+			onclick={handleBananaBackupImport}
 		/>
 	</SettingsGroup>
 

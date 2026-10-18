@@ -14,20 +14,20 @@ TMP="$(mktemp -d)"
 rm -rf "$APP"
 
 # --- Applet (necessario perché macOS conceda i permessi alla app) ---
-cat > "$TMP/altea.applescript" <<'AS'
+cat > "$TMP/banana.applescript" <<'AS'
 on run
 	set appPath to POSIX path of (path to me)
-	do shell script "bash " & quoted form of (appPath & "Contents/Resources/launcher.sh") & " >/tmp/altea-launcher.log 2>&1"
+	do shell script "bash " & quoted form of (appPath & "Contents/Resources/launcher.sh") & " >/tmp/banana-launcher.log 2>&1"
 end run
 AS
-osacompile -o "$APP" "$TMP/altea.applescript"
+osacompile -o "$APP" "$TMP/banana.applescript"
 
 # --- Launcher (eseguito dall'applet) ---
 cat > "$APP/Contents/Resources/launcher.sh" <<'LAUNCHER'
 #!/bin/bash
 DIR="__DIR__"
 URL="http://127.0.0.1:8080"
-LOG="/tmp/altea.log"
+LOG="/tmp/banana.log"
 STARTED=0
 
 stop_server() {

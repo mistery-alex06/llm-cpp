@@ -3,7 +3,7 @@
 la conferma dell'utente nella UI. Servizio locale (127.0.0.1:8093).
 
 Nessuna shell, nessun comando libero. File: solo dentro la cartella di lavoro
-~/Altea/workspace (modificabile con ALTEA_WORKSPACE).
+~/Banana/workspace (modificabile con BANANA_WORKSPACE).
 
   POST /action  {"azione": "...", ...}  ->  {"ok": true, "risultato": "..."} | {"ok": false, "errore": "..."}
   GET  /health
@@ -17,7 +17,7 @@ import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 PORT = 8093
-WORKSPACE = os.path.realpath(os.path.expanduser(os.environ.get("ALTEA_WORKSPACE", "~/Altea/workspace")))
+WORKSPACE = os.path.realpath(os.path.expanduser(os.environ.get("BANANA_WORKSPACE", "~/Banana/workspace")))
 ALLOWED_ORIGINS = {"http://127.0.0.1:8080", "http://localhost:8080"}
 MAX_READ = 20000
 MAX_WRITE = 200 * 1024
