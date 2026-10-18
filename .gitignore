@@ -26,3 +26,6 @@ llama.cpp/tools/ui/.svelte-kit/
 /*.gguf
 /Qwen*/
 /Banana.app/
+
+# Clone locale della wiki (repo git separato: llm-cpp.wiki)
+/wiki/
