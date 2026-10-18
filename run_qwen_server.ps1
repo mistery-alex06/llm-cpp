@@ -20,7 +20,7 @@ $Py = @('py', 'python') | Where-Object { Get-Command $_ -ErrorAction SilentlyCon
 $Helpers = @()
 if ($Py) {
     foreach ($s in 'search_server.py', 'store_server.py', 'actions_server.py') {
-        if (Test-Path "$Dir\$s") {
+        if (Test-Path "$Dir\servers\$s") {
             $Helpers += Start-Process -FilePath $Py -ArgumentList "`"$Dir\$s`"" -WindowStyle Hidden -PassThru
         }
     }

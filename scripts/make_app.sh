@@ -2,12 +2,12 @@
 # make_app.sh — genera ~/Desktop/Banana.app (avvio con un clic).
 #   Doppio clic su Banana.app: avvia il server, apre Banana in una finestra
 #   dedicata e, alla chiusura della finestra, spegne il server.
-# Uso: ./make_app.sh   (da rieseguire solo se sposti la cartella llm)
+# Uso: bash scripts/make_app.sh   (da rieseguire solo se sposti la cartella llm)
 # La prima volta macOS chiede i permessi per la cartella Desktop e per
 # controllare Google Chrome: vanno accettati.
 
 set -e
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 APP="$HOME/Desktop/Banana.app"
 TMP="$(mktemp -d)"
 
@@ -82,9 +82,9 @@ exit 0
 LAUNCHER
 sed -i '' "s|__DIR__|$DIR|" "$APP/Contents/Resources/launcher.sh"
 
-# --- Icona (ritaglio quadrato da sfondo_AI.jpg) ---
-if [ -f "$DIR/sfondo_AI.jpg" ]; then
-	sips -s format png -c 1440 1440 "$DIR/sfondo_AI.jpg" --out "$TMP/sq.png" >/dev/null
+# --- Icona (ritaglio quadrato da assets/sfondo_AI.jpg) ---
+if [ -f "$DIR/assets/sfondo_AI.jpg" ]; then
+	sips -s format png -c 1440 1440 "$DIR/assets/sfondo_AI.jpg" --out "$TMP/sq.png" >/dev/null
 	ICONSET="$TMP/Banana.iconset"; mkdir "$ICONSET"
 	for s in 16 32 128 256 512; do
 		sips -z $s $s "$TMP/sq.png" --out "$ICONSET/icon_${s}x${s}.png" >/dev/null

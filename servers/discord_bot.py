@@ -13,8 +13,8 @@ Configurazione: ~/Banana/discord.json (fuori dalla repo, non versionato)
   }
 
 Uso:
-  python3 discord_bot.py                  avvia il bot
-  python3 discord_bot.py --test "ciao"    prova il collegamento col modello, senza Discord
+  python3 servers/discord_bot.py                  avvia il bot
+  python3 servers/discord_bot.py --test "ciao"    prova il collegamento col modello, senza Discord
 Comandi in chat: !reset (azzera la conversazione)
 """
 import asyncio

@@ -7,7 +7,7 @@
 
 set -e
 
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 MODEL="$DIR/Qwen3-4B-Q4_K_M.gguf"
 BIN="$DIR/llama.cpp/build/bin/llama-cli"
 
