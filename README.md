@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/logo-512.png" width="140" alt="Logo di Banana"></p>
+
 # Banana (llm-cpp)
 
 Banana è un'IA locale in C++ che gira interamente sul tuo computer: chat da terminale e interfaccia web in italiano, basate su [llama.cpp](https://github.com/ggml-org/llama.cpp) e modelli Qwen in formato GGUF. Sviluppata e testata su Mac Intel, 8 GB di RAM, solo CPU.

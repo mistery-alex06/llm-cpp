@@ -82,9 +82,9 @@ exit 0
 LAUNCHER
 sed -i '' "s|__DIR__|$DIR|" "$APP/Contents/Resources/launcher.sh"
 
-# --- Icona (ritaglio quadrato da assets/sfondo_AI.jpg) ---
-if [ -f "$DIR/assets/sfondo_AI.jpg" ]; then
-	sips -s format png -c 1440 1440 "$DIR/assets/sfondo_AI.jpg" --out "$TMP/sq.png" >/dev/null
+# --- Icona (logo Banana: assets/logo-512.png) ---
+if [ -f "$DIR/assets/logo-512.png" ]; then
+	cp "$DIR/assets/logo-512.png" "$TMP/sq.png"
 	ICONSET="$TMP/Banana.iconset"; mkdir "$ICONSET"
 	for s in 16 32 128 256 512; do
 		sips -z $s $s "$TMP/sq.png" --out "$ICONSET/icon_${s}x${s}.png" >/dev/null
