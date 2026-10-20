@@ -17,6 +17,7 @@ import { DatabaseService } from '$lib/services/database.service';
 import { ChatService } from '$lib/services/chat.service';
 import { bananaWeb } from '$lib/utils/banana-web.svelte';
 import { bananaDocs } from '$lib/utils/banana-docs.svelte';
+import { interceptSummary, interceptAttachmentSummary } from '$lib/utils/banana-summary';
 import { bananaAuto } from '$lib/utils/banana-auto.svelte';
 import { bananaHistory } from '$lib/utils/banana-history.svelte';
 import { bananaProjects } from '$lib/utils/banana-projects.svelte';
@@ -1032,6 +1033,17 @@ class ChatStore {
 
 	async sendMessage(content: string, extras?: DatabaseMessageExtra[]): Promise<void> {
 		content = handleMemoryCommand(content) ?? content;
+		if (!bananaDocs.skipNext) {
+			const att = await interceptAttachmentSummary(content, extras);
+			if (att?.abort) return;
+			const sum = att ?? (await interceptSummary(content));
+			if (sum?.abort) return;
+			if (sum?.prompt) {
+				content = sum.prompt;
+				if (att) extras = att.rest as DatabaseMessageExtra[]; // gli allegati sono già nel riassunto
+				bananaDocs.skipNext = true; // il testo è già nel messaggio
+			}
+		}
 		const skipCtx = bananaDocs.skipNext;
 		if (bananaWeb.enabled && content.trim() && !skipCtx) await bananaWeb.prepare(content);
 		const docScope =
