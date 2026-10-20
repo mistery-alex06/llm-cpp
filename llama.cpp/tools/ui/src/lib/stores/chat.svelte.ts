@@ -18,6 +18,7 @@ import { ChatService } from '$lib/services/chat.service';
 import { bananaWeb } from '$lib/utils/banana-web.svelte';
 import { bananaDocs } from '$lib/utils/banana-docs.svelte';
 import { interceptSummary, interceptAttachmentSummary } from '$lib/utils/banana-summary';
+import { interceptReminder } from '$lib/utils/banana-reminders';
 import { bananaAuto } from '$lib/utils/banana-auto.svelte';
 import { bananaHistory } from '$lib/utils/banana-history.svelte';
 import { bananaProjects } from '$lib/utils/banana-projects.svelte';
@@ -1033,6 +1034,7 @@ class ChatStore {
 
 	async sendMessage(content: string, extras?: DatabaseMessageExtra[]): Promise<void> {
 		content = handleMemoryCommand(content) ?? content;
+		if (!extras?.length && (await interceptReminder(content))) return; // timer/promemoria: gestiti in locale
 		if (!bananaDocs.skipNext) {
 			const att = await interceptAttachmentSummary(content, extras);
 			if (att?.abort) return;

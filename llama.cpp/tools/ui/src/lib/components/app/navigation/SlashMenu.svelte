@@ -8,6 +8,7 @@
 	import { bananaAuto } from '$lib/utils/banana-auto.svelte';
 	import { bananaActions } from '$lib/utils/banana-actions.svelte';
 	import { bananaNotify } from '$lib/utils/banana-notify.svelte';
+	import { listReminders } from '$lib/utils/banana-reminders';
 
 	let { onMemory, onExport, onHelp }: { onMemory: () => void; onExport: () => void; onHelp: () => void } = $props();
 
@@ -29,6 +30,7 @@
 		{ key: 'web', desc: 'Attiva/disattiva la ricerca web', run: () => bananaWeb.toggle() },
 		{ key: 'auto', desc: 'Attiva/disattiva la scelta automatica del modello', run: () => bananaAuto.toggle() },
 		{ key: 'azioni', desc: 'Attiva/disattiva le azioni sul computer', run: () => bananaActions.toggle() },
+		{ key: 'promemoria', desc: 'Mostra i promemoria e i timer attivi', run: () => listReminders() },
 		{ key: 'avviso', desc: 'Attiva/disattiva l\'avviso a fine risposta', run: () => bananaNotify.toggle() },
 		...PERSONAS.map((p) => ({
 			key: 'ruolo-' + p.id,

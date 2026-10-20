@@ -9,11 +9,17 @@ Nessuna shell, nessun comando libero. File: solo dentro la cartella di lavoro
   GET  /health
 
 Azioni: elenca_file, leggi_file, scrivi_file, apri_file, apri_url.
+Promemoria e timer (comandi diretti dell'utente, non del modello): promemoria_aggiungi,
+promemoria_elenca, promemoria_annulla. Salvati in ~/Banana/data/reminders.json: sopravvivono
+al riavvio. Alla scadenza: notifica di sistema + suono + voce.
 """
 import json
 import os
 import subprocess
 import sys
+import threading
+import time
+import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 PORT = 8093
@@ -26,6 +32,114 @@ MAX_BODY = 400 * 1024
 OPEN_EXT = {".md", ".txt", ".pdf", ".png", ".jpg", ".jpeg", ".gif", ".csv", ".json", ".html", ".docx", ".xlsx", ".pptx"}
 
 os.makedirs(WORKSPACE, exist_ok=True)
+
+# --- Promemoria e timer -------------------------------------------------------------------
+DATA_DIR = os.path.expanduser(os.environ.get("BANANA_DATA", "~/Banana/data"))
+REM_FILE = os.path.join(DATA_DIR, "reminders.json")
+MAX_REMINDERS = 50
+MAX_REM_TEXT = 200
+REM_LOCK = threading.Lock()
+REMINDERS = []  # [{"id", "t" (epoch s), "testo"}]
+
+
+def rem_load():
+    try:
+        with open(REM_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return [
+            {"id": str(r["id"]), "t": float(r["t"]), "testo": str(r.get("testo", ""))[:MAX_REM_TEXT]}
+            for r in data
+            if isinstance(r, dict) and "id" in r and "t" in r
+        ][:MAX_REMINDERS]
+    except (OSError, ValueError, TypeError):
+        return []
+
+
+def rem_save():
+    os.makedirs(DATA_DIR, exist_ok=True)
+    tmp = REM_FILE + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(REMINDERS, f, ensure_ascii=False)
+    os.replace(tmp, REM_FILE)
+
+
+def rem_notify(msg):
+    """Notifica di sistema + suono + voce. Il testo viaggia come argomento, mai dentro un comando."""
+    try:
+        if sys.platform == "darwin":
+            subprocess.run(
+                [
+                    "osascript", "-e", "on run argv",
+                    "-e", 'display notification (item 1 of argv) with title "Banana" subtitle "Promemoria" sound name "Glass"',
+                    "-e", "end run", msg,
+                ],
+                check=False, timeout=15,
+            )
+            if subprocess.run(["say", "-v", "Alice", msg], check=False, timeout=60, capture_output=True).returncode != 0:
+                subprocess.run(["say", msg], check=False, timeout=60)
+        elif sys.platform.startswith("win"):
+            subprocess.run(
+                [
+                    "powershell", "-NoProfile", "-Command",
+                    "Add-Type -AssemblyName System.Windows.Forms; "
+                    "[System.Windows.Forms.MessageBox]::Show($env:BANANA_MSG, 'Banana')",
+                ],
+                check=False, timeout=3600, env={**os.environ, "BANANA_MSG": msg},
+            )
+        else:
+            subprocess.run(["notify-send", "Banana", msg], check=False, timeout=15)
+    except (OSError, subprocess.SubprocessError):
+        pass
+
+
+def rem_scheduler():
+    while True:
+        now = time.time()
+        with REM_LOCK:
+            due = [r for r in REMINDERS if r["t"] <= now]
+            if due:
+                REMINDERS[:] = [r for r in REMINDERS if r["t"] > now]
+                try:
+                    rem_save()
+                except OSError:
+                    pass
+        for r in due:
+            late = now - r["t"] > 90
+            msg = r["testo"] or "Il timer è scaduto"
+            if late:
+                msg += " (in ritardo: Banana era spenta)"
+            threading.Thread(target=rem_notify, args=(msg,), daemon=True).start()
+        time.sleep(1)
+
+
+def rem_act(a, req):
+    if a == "promemoria_elenca":
+        with REM_LOCK:
+            return json.dumps(sorted(REMINDERS, key=lambda r: r["t"]), ensure_ascii=False)
+    if a == "promemoria_aggiungi":
+        try:
+            t = float(req.get("quando"))
+        except (TypeError, ValueError):
+            raise ActionError("orario non valido")
+        now = time.time()
+        if not (now - 60 < t < now + 366 * 86400):
+            raise ActionError("orario fuori intervallo (da ora a un anno)")
+        testo = str(req.get("testo") or "").strip()[:MAX_REM_TEXT]
+        with REM_LOCK:
+            if len(REMINDERS) >= MAX_REMINDERS:
+                raise ActionError("troppi promemoria attivi (max 50)")
+            r = {"id": uuid.uuid4().hex[:8], "t": t, "testo": testo}
+            REMINDERS.append(r)
+            rem_save()
+        return json.dumps(r, ensure_ascii=False)
+    # promemoria_annulla: un id, oppure "tutti"
+    rid = str(req.get("id") or "")
+    with REM_LOCK:
+        before = len(REMINDERS)
+        REMINDERS[:] = [] if rid == "tutti" else [r for r in REMINDERS if r["id"] != rid]
+        rem_save()
+        return str(before - len(REMINDERS))
+
 
 
 class ActionError(Exception):
@@ -94,6 +208,8 @@ def act(req):
             raise ActionError("solo indirizzi http/https")
         open_with_system(url)
         return f"aperto {url}"
+    if a in ("promemoria_aggiungi", "promemoria_elenca", "promemoria_annulla"):
+        return rem_act(a, req)
     raise ActionError("azione non consentita")
 
 
@@ -145,4 +261,6 @@ class Handler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
+    REMINDERS[:] = rem_load()
+    threading.Thread(target=rem_scheduler, daemon=True).start()
     ThreadingHTTPServer(("127.0.0.1", PORT), Handler).serve_forever()

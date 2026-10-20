@@ -75,6 +75,14 @@ export const HELP: HelpSection[] = [
 		]
 	},
 	{
+		title: 'Timer e promemoria',
+		items: [
+			{ name: 'Timer', desc: 'Scrivi "timer 10 minuti" o "timer di 1 ora e 30 minuti per la pasta".' },
+			{ name: 'Promemoria', desc: 'Scrivi "ricordami tra 20 minuti di chiamare Marco", "ricordami domani alle 9 di ..." o "sveglia alle 7:30". Alla scadenza: notifica, suono e voce, anche a scheda chiusa.' },
+			{ name: 'Elenco e annullo', desc: '"/promemoria" mostra quelli attivi; "annulla tutti i timer" li cancella.' }
+		]
+	},
+	{
 		title: 'Tasti utili',
 		items: [
 			{ name: 'Invio', desc: 'Invia il messaggio (nel menu "/" conferma il comando evidenziato).' },
