@@ -5,6 +5,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Switch } from '$lib/components/ui/switch';
 	import { bananaDocs } from '$lib/utils/banana-docs.svelte';
+	import { summarizeText } from '$lib/utils/banana-summary';
 
 	interface Props {
 		open: boolean;
@@ -52,6 +53,16 @@
 		bananaDocs.skipNext = true;
 		open = false;
 		await chatStore.sendMessage(MODES[mode].prompt(doc.name, r.from, r.to, r.text));
+	}
+
+	async function fullSummary(docId: string) {
+		const doc = bananaDocs.docs.find((d) => d.id === docId);
+		if (!doc) return;
+		open = false;
+		const r = await summarizeText(doc.name, bananaDocs.fullText(doc));
+		if (!r.prompt) return;
+		bananaDocs.skipNext = true;
+		await chatStore.sendMessage(r.prompt);
 	}
 
 	async function handleFiles(e: Event) {
@@ -126,7 +137,8 @@
 										di {bananaDocs.maxPage(doc)}{pv && pv.text ? ` · userà le pagine ${pv.from}-${pv.to}` : ''}
 									</span>
 								</div>
-								<div class="flex gap-2">
+								<div class="flex flex-wrap gap-2">
+									<Button size="sm" onclick={() => fullSummary(doc.id)}>Riassunto completo</Button>
 									{#each Object.entries(MODES) as [key, m] (key)}
 										<Button
 											size="sm"
@@ -136,7 +148,8 @@
 									{/each}
 								</div>
 								<p class="text-xs text-muted-foreground">
-									Una parte alla volta (circa 3000 caratteri): per continuare, imposta la pagina successiva.
+									"Riassunto completo" legge il documento a blocchi (più lento, fino a ~17.000 caratteri). Gli altri
+									pulsanti usano una parte alla volta (circa 3000 caratteri): per continuare, imposta la pagina successiva.
 								</p>
 							</li>
 						{/if}

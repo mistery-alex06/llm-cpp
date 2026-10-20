@@ -166,6 +166,17 @@ class BananaDocs {
 		return out.trim();
 	}
 
+	/** Testo completo del documento (pagine in ordine, senza sovrapposizioni). */
+	fullText(doc: BananaDoc): string {
+		const last = this.maxPage(doc);
+		const parts: string[] = [];
+		for (let p = 1; p <= last; p++) {
+			const t = this.pageText(doc, p);
+			if (t) parts.push(t);
+		}
+		return parts.join('\n');
+	}
+
 	/** Testo da pagina `from` in poi, fino a `maxChars` caratteri (almeno una pagina). */
 	studyText(
 		doc: BananaDoc,

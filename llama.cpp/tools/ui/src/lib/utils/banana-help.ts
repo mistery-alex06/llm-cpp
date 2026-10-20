@@ -13,7 +13,7 @@ export const HELP: HelpSection[] = [
 		title: 'Comandi (scrivi / nella casella)',
 		items: [
 			{ name: '/help', desc: 'Apre questa guida.' },
-			{ name: '/riassumi', desc: 'Inserisce il modello "Riassumi in modo conciso il seguente testo".' },
+			{ name: '/riassumi', desc: 'Inserisce il modello "Riassumi in modo conciso il seguente testo". Con un indirizzo ("riassumi https://...") riassume la pagina web.' },
 			{ name: '/traduci', desc: 'Inserisce il modello per tradurre un testo in inglese.' },
 			{ name: '/spiega', desc: 'Inserisce il modello per una spiegazione semplice con esempio.' },
 			{ name: '/correggi', desc: 'Inserisce il modello per correggere grammatica e stile.' },
