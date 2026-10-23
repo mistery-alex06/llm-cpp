@@ -28,6 +28,7 @@
 	import { TooltipSide } from '$lib/enums';
 	import { device } from '$lib/stores/device.svelte';
 	import { circIn } from 'svelte/easing';
+	import { chatSearch } from '$lib/utils/banana-chat-search.svelte';
 
 	interface Props {
 		onSearchClick?: () => void;
@@ -80,14 +81,24 @@
 	let isSearchModeActive = $state(false);
 	let searchQuery = $state('');
 
+	$effect(() => {
+		if (isSearchModeActive) void chatSearch.ensure(); // indice dei messaggi per la ricerca
+	});
+
 	let filteredConversations = $derived.by(() => {
 		if (isSearchModeActive) {
-			if (searchQuery.trim().length > 0) {
-				return conversations().filter((conversation: { name: string }) =>
-					conversation.name.toLowerCase().includes(searchQuery.toLowerCase())
+			void chatSearch.version; // si riscrive quando l'indice è pronto
+			const q = searchQuery.trim();
+			const inRange = (c: { lastModified: number }) => chatSearch.inRange(c.lastModified);
+			if (q.length > 0) {
+				const ql = q.toLowerCase();
+				return conversations().filter(
+					(c: { id: string; name: string; lastModified: number }) =>
+						inRange(c) && (c.name.toLowerCase().includes(ql) || chatSearch.find(q, c.id) !== null)
 				);
 			}
 
+			if (chatSearch.range !== 'all') return conversations().filter(inRange);
 			return [];
 		}
 
