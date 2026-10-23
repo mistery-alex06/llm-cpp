@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { buildConversationTree } from '$lib/stores/conversations.svelte';
 	import SidebarNavigationConversationItem from './SidebarNavigationConversationItem.svelte';
+	import { chatSearch, DATE_RANGES } from '$lib/utils/banana-chat-search.svelte';
 
 	interface Props {
 		class?: string;
@@ -41,10 +42,37 @@
 	const hasQuery = $derived(searchQuery.trim().length > 0);
 	const showHeader = $derived(hasQuery && filteredConversations.length > 0);
 
-	const emptyMessage = $derived(hasQuery ? 'No results found' : 'Start typing to see results');
+	const emptyMessage = $derived(
+		hasQuery || chatSearch.range !== 'all'
+			? 'Nessun risultato'
+			: 'Scrivi per cercare nei titoli e nei messaggi, oppure scegli un periodo'
+	);
+
+	/** Estratto del messaggio che contiene le parole cercate (solo se non è già nel titolo). */
+	function snippetFor(id: string, name: string): string | null {
+		void chatSearch.version;
+		if (!hasQuery) return null;
+		if (name.toLowerCase().includes(searchQuery.trim().toLowerCase())) return null;
+		return chatSearch.find(searchQuery, id);
+	}
 </script>
 
 <div class="flex min-h-0 flex-1 flex-col gap-2 whitespace-nowrap {className}">
+	<div class="flex shrink-0 flex-wrap gap-1 px-2" role="group" aria-label="Periodo">
+		{#each DATE_RANGES as r (r.id)}
+			<button
+				type="button"
+				class="rounded-full border px-2.5 py-0.5 text-xs transition-colors {chatSearch.range === r.id
+					? 'border-transparent bg-accent text-accent-foreground'
+					: 'text-muted-foreground hover:bg-accent/50'}"
+				aria-pressed={chatSearch.range === r.id}
+				onclick={() => (chatSearch.range = r.id)}
+			>
+				{r.label}
+			</button>
+		{/each}
+	</div>
+
 	{#if showHeader}
 		<div
 			class="text-muted-foreground flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium"
@@ -79,6 +107,17 @@
 						{onSelectionClick}
 						{onRowMouseDown}
 					/>
+					{#each [snippetFor(conversation.id, conversation.name)] as snippet (snippet)}
+						{#if snippet}
+							<p
+								class="text-muted-foreground truncate pb-1 pr-3 text-xs"
+								style="padding-left: {0.75 + depth * 0.75}rem"
+								title={snippet}
+							>
+								{snippet}
+							</p>
+						{/if}
+					{/each}
 				</li>
 			{/each}
 

@@ -10,7 +10,7 @@
 
 	let {
 		value = $bindable(''),
-		placeholder = 'Cerca conversazioni...',
+		placeholder = 'Cerca nei titoli e nei messaggi...',
 		onInput,
 		class: className
 	}: Props = $props();
