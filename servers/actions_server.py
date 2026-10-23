@@ -9,6 +9,7 @@ Nessuna shell, nessun comando libero. File: solo dentro la cartella di lavoro
   GET  /health
 
 Azioni: elenca_file, leggi_file, scrivi_file, apri_file, apri_url.
+Appunti rapidi (comandi diretti dell'utente): appunti_aggiungi, appunti_elenca, in appunti.md.
 Promemoria e timer (comandi diretti dell'utente, non del modello): promemoria_aggiungi,
 promemoria_elenca, promemoria_annulla. Salvati in ~/Banana/data/reminders.json: sopravvivono
 al riavvio. Alla scadenza: notifica di sistema + suono + voce.
@@ -167,6 +168,39 @@ def open_with_system(target):
         subprocess.run(["xdg-open", target], check=False, timeout=10)
 
 
+NOTES_FILE = "appunti.md"
+MAX_NOTE = 500
+MAX_NOTES_SIZE = 200 * 1024
+NOTES_LOCK = threading.Lock()
+
+
+def notes_act(a, req):
+    """Appunti rapidi: una riga per appunto in <cartella di lavoro>/appunti.md (comandi diretti dell'utente)."""
+    path = os.path.join(WORKSPACE, NOTES_FILE)
+    if a == "appunti_aggiungi":
+        testo = " ".join(str(req.get("testo") or "").split())[:MAX_NOTE]
+        if not testo:
+            raise ActionError("appunto vuoto")
+        with NOTES_LOCK:
+            if os.path.exists(path) and os.path.getsize(path) > MAX_NOTES_SIZE:
+                raise ActionError("il file degli appunti è troppo grande (max 200 KB)")
+            with open(path, "a", encoding="utf-8") as f:
+                f.write(f"- {time.strftime('%Y-%m-%d %H:%M')} {testo}\n")
+        return "salvato"
+    # appunti_elenca: ultimi N appunti + totale
+    try:
+        n = max(1, min(30, int(req.get("n") or 8)))
+    except (TypeError, ValueError):
+        n = 8
+    with NOTES_LOCK:
+        try:
+            with open(path, "r", encoding="utf-8", errors="replace") as f:
+                lines = [l.rstrip("\n")[2:] for l in f if l.startswith("- ")]
+        except OSError:
+            lines = []
+    return json.dumps({"totale": len(lines), "ultimi": lines[-n:]}, ensure_ascii=False)
+
+
 def act(req):
     a = req.get("azione")
     if a == "elenca_file":
@@ -210,6 +244,8 @@ def act(req):
         return f"aperto {url}"
     if a in ("promemoria_aggiungi", "promemoria_elenca", "promemoria_annulla"):
         return rem_act(a, req)
+    if a in ("appunti_aggiungi", "appunti_elenca"):
+        return notes_act(a, req)
     raise ActionError("azione non consentita")
 
 

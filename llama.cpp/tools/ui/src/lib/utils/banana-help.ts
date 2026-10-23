@@ -83,6 +83,13 @@ export const HELP: HelpSection[] = [
 		]
 	},
 	{
+		title: 'Appunti rapidi',
+		items: [
+			{ name: 'Salva', desc: 'Scrivi "salva negli appunti: comprare il latte" o "annota: chiamare Marco". Finisce in ~/Banana/workspace/appunti.md, con data e ora.' },
+			{ name: 'Richiama', desc: '"/appunti" o "cosa c\'è negli appunti?" mostra gli ultimi; "apri gli appunti" apre il file.' }
+		]
+	},
+	{
 		title: 'Tasti utili',
 		items: [
 			{ name: 'Invio', desc: 'Invia il messaggio (nel menu "/" conferma il comando evidenziato).' },
