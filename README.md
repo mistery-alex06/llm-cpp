@@ -18,7 +18,7 @@ Banana è un'IA locale in C++ che gira interamente sul tuo computer: chat da ter
 - Risponde in locale, in italiano e al femminile; tre modelli (Qwen3-1.7B, Qwen3-4B, Qwen2.5-Omni-3B).
 - Ricerca web opzionale, documenti locali (RAG), memoria persistente, progetti, immagini, audio e video.
 - Interfaccia web con temi, comandi `/` (scrivi `/help`), azioni sul computer con conferma, bot Discord.
-- Avvio con un clic su macOS (`Banana.app`) e Windows (`Banana.bat`).
+- Avvio con un clic su macOS (`Banana.app`) e Windows (`Banana.bat`); su Linux `bash scripts/banana_linux.sh` (menu delle applicazioni con `bash scripts/install_linux.sh`).
 
 ## Anteprima
 
