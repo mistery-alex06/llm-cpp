@@ -27,8 +27,9 @@ const REMIND_RE =
 	/^\s*(?:(?:imposta|metti|crea|aggiungi|programma)\s+(?:un\s+|una\s+)?)?(ricordami|avvisami|avvertimi|promemoria|svegliami|sveglia)\b[\s:,]*/;
 const LIST_RE =
 	/^\s*\/?(?:i miei\s+)?(?:promemoria|timer|sveglie)\s*\??\s*$|^\s*(?:quali|mostra|elenca|vedi|fammi vedere|dimmi)\b.*\b(?:promemoria|timer|sveglie)\b/;
+// Gruppi: 1 = "tutti/tutte", 2 = resto della frase (numero o testo di un singolo promemoria)
 const CANCEL_RE =
-	/^\s*(?:annulla|cancella|elimina|togli|ferma|disattiva)\s+(?:tutt[ie]\s+)?(?:(?:i|il|le|la|gli)\s+)?(?:miei\s+|mie\s+)?(?:promemoria|timer|sveglie|sveglia)\b/;
+	/^\s*(?:annulla|cancella|elimina|togli|ferma|disattiva)\s+(tutt[ie]\s+)?(?:(?:i|il|le|la|gli|lo)\s+)?(?:miei\s+|mie\s+)?(?:promemoria|timer|sveglie|sveglia)\b(.*)$/;
 const DAY_RE =
 	/\b(oggi|domani|dopodomani|stasera|questa sera|stamattina|stamani|lunedi|martedi|mercoledi|giovedi|venerdi|sabato|domenica)\b(?:\s+(?:prossimo|prossima))?/;
 const TIME_RE =
@@ -98,6 +99,7 @@ export type Parsed =
 	| { kind: 'add'; when: number; message: string; title: string; note?: string }
 	| { kind: 'list' }
 	| { kind: 'cancel' }
+	| { kind: 'cancel_one'; target: string; byNumber: boolean }
 	| { kind: 'past' };
 
 /** Interpreta un comando; esportata per i test. */
@@ -107,7 +109,15 @@ export function parseReminder(content: string): Parsed | null {
 		return null;
 	}
 	const f = fold(orig);
-	if (CANCEL_RE.test(f)) return { kind: 'cancel' };
+	const cm = CANCEL_RE.exec(f);
+	if (cm) {
+		// "annulla il timer della pasta" / "annulla il promemoria 2": uno solo; altrimenti tutti
+		const pm = /^[\s:,]*(numero\b|n\.|n°|#|(?:di|del|dello|della|dei|delle|per|con)\b)?\s*/.exec(cm[2])!;
+		const target = cm[2].slice(pm[0].length).replace(/[\s.!?]+$/, '').trim();
+		// un numero vale come posizione nell'elenco solo se non preceduto da una preposizione ("delle 7")
+		const byNumber = /^\d{1,2}$/.test(target) && (!pm[1] || /^(numero|n\.|n°|#)/.test(pm[1]));
+		return cm[1] || !target ? { kind: 'cancel' } : { kind: 'cancel_one', target, byNumber };
+	}
 	if (LIST_RE.test(f)) return { kind: 'list' };
 	const now = Date.now();
 
@@ -258,10 +268,39 @@ export async function listReminders(): Promise<void> {
 	if (!items.length) return void toast.info('Nessun promemoria o timer attivo');
 	toast.info(`${items.length} attiv${items.length === 1 ? 'o' : 'i'}`, {
 		description: items
-			.map((i) => `${describeWhen(i.t * 1000)}: ${i.testo || 'Timer'}`)
+			.map((i, n) => `${n + 1}) ${describeWhen(i.t * 1000)}: ${i.testo || 'Timer'}`)
 			.join(' · '),
 		duration: 15000
 	});
+}
+
+/** Annulla un solo promemoria: per numero (come nell'elenco) o per testo contenuto. */
+async function cancelOne(target: string, byNumber: boolean): Promise<void> {
+	const r = await call({ azione: 'promemoria_elenca' });
+	if (!r.ok) return void toast.error(r.testo);
+	let items: { id: string; t: number; testo: string }[] = [];
+	try {
+		items = JSON.parse(r.testo);
+	} catch {
+		/* elenco vuoto */
+	}
+	if (!items.length) return void toast.info('Nessun promemoria o timer attivo');
+	const num = byNumber ? parseInt(target, 10) : 0;
+	const words = fold(target).split(/\s+/).filter((w) => w.length > 2);
+	const hits = num
+		? items.slice(num - 1, num)
+		: items.filter((i) => words.length > 0 && words.every((w) => fold(i.testo || 'timer').includes(w)));
+	if (hits.length !== 1) {
+		toast.error(
+			hits.length
+				? `Più promemoria corrispondono a "${target}": usa il numero dall'elenco (/promemoria).`
+				: `Nessun promemoria corrisponde a "${target}". Usa /promemoria per vedere l'elenco.`
+		);
+		return;
+	}
+	const d = await call({ azione: 'promemoria_annulla', id: hits[0].id });
+	if (d.ok) toast.success(`Annullato: ${hits[0].testo || 'Timer'}`);
+	else toast.error(d.testo);
 }
 
 /**
@@ -279,6 +318,10 @@ export async function interceptReminder(content: string): Promise<boolean> {
 		const r = await call({ azione: 'promemoria_annulla', id: 'tutti' });
 		if (r.ok) toast.success(`Annullati ${r.testo} tra promemoria e timer`);
 		else toast.error(r.testo);
+		return true;
+	}
+	if (p.kind === 'cancel_one') {
+		await cancelOne(p.target, p.byNumber);
 		return true;
 	}
 	if (p.kind === 'past') {
