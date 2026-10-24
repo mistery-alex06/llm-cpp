@@ -83,6 +83,14 @@ export const HELP: HelpSection[] = [
 		]
 	},
 	{
+		title: 'Immagini',
+		items: [
+			{ name: 'Modelli', desc: 'Nell\'elenco dei modelli, sezione "Modelli per immagini": SD-Turbo (veloce) e Stable Diffusion 1.5 (più curato, molto più lento). Scelto a mano, ogni messaggio diventa un disegno finché non scegli un modello di testo.' },
+			{ name: 'Automatico', desc: 'Con Auto attivo, frasi come "disegna un gatto astronauta" o "genera un\'immagine di ..." usano da sole SD-Turbo (Stable Diffusion 1.5 se chiedi "realistico" o "dettagliato"). Anche "/immagine ...".' },
+			{ name: 'Tempi', desc: 'Solo CPU: circa 2 minuti con SD-Turbo, molti di più con SD 1.5. Prima di disegnare, Banana scarica i modelli di testo dalla RAM: la risposta successiva li ricarica.' }
+		]
+	},
+	{
 		title: 'Tasti utili',
 		items: [
 			{ name: 'Invio', desc: 'Invia il messaggio (nel menu "/" conferma il comando evidenziato).' },

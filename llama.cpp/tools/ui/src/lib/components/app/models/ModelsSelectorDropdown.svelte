@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { ChevronDown, Loader2, Package } from '@lucide/svelte';
+	import { ChevronDown, Image as ImageIcon, Loader2, Package } from '@lucide/svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import * as Tooltip from '$lib/components/ui/tooltip';
 	import { KeyboardKey, ServerModelStatus } from '$lib/enums';
 	import { useModelsSelector } from '$lib/hooks/use-models-selector.svelte';
 	import { modelsStore, routerModels } from '$lib/stores/models.svelte';
 	import { modelLoadFraction } from '$lib/utils';
+	import { bananaImages, IMAGE_MODELS } from '$lib/utils/banana-images.svelte';
 	import {
 		DialogModelInformation,
 		DropdownMenuSearchable,
@@ -51,6 +52,19 @@
 		void ms.searchTerm;
 		highlightedIndex = -1;
 	});
+
+	// Modelli immagine installati: li ricontrolla all'apertura dell'elenco
+	$effect(() => {
+		void bananaImages.refresh(isOpen);
+	});
+
+	function pickImage(id: string) {
+		bananaImages.select(id);
+		ms.handleOpenChange(false);
+		requestAnimationFrame(() => {
+			document.querySelector<HTMLTextAreaElement>('[data-slot="chat-form"] textarea')?.focus();
+		});
+	}
 
 	export function open() {
 		ms.handleOpenChange(true);
@@ -150,17 +164,22 @@
 								]}
 								disabled={disabled || ms.updating}
 							>
-								<Package class="h-3.5 w-3.5 shrink-0" />
-
-								{#if selectedOption}
-									<ModelId
-										modelId={selectedOption.model}
-										class="min-w-0 overflow-hidden"
-										hideOrgName={false}
-										hideQuantization
-									/>
+								{#if bananaImages.active}
+									<ImageIcon class="h-3.5 w-3.5 shrink-0" />
+									<span class="min-w-0 truncate font-medium">{bananaImages.active.name}</span>
 								{:else}
-									<span class="min-w-0 font-medium">Seleziona modello</span>
+									<Package class="h-3.5 w-3.5 shrink-0" />
+
+									{#if selectedOption}
+										<ModelId
+											modelId={selectedOption.model}
+											class="min-w-0 overflow-hidden"
+											hideOrgName={false}
+											hideQuantization
+										/>
+									{:else}
+										<span class="min-w-0 font-medium">Seleziona modello</span>
+									{/if}
 								{/if}
 
 								{#if ms.updating || ms.isLoadingModel}
@@ -249,6 +268,29 @@
 								onInfoClick={ms.handleInfoClick}
 								renderOption={modelOption}
 							/>
+							{#if bananaImages.installed.length > 0}
+								<p
+									class="my-1.5 px-2 py-2 text-[13px] font-semibold text-muted-foreground/70 select-none"
+								>
+									Modelli per immagini
+								</p>
+								{#each IMAGE_MODELS.filter((m) => bananaImages.available[m.id]) as m (m.id)}
+									<button
+										type="button"
+										role="option"
+										aria-selected={bananaImages.selected === m.id}
+										class="flex w-full cursor-pointer items-center gap-2 rounded-sm px-2 py-2 text-left text-sm hover:bg-accent focus:bg-accent focus:outline-none {bananaImages.selected ===
+										m.id
+											? 'bg-accent'
+											: ''}"
+										onclick={() => pickImage(m.id)}
+									>
+										<ImageIcon class="h-3.5 w-3.5 shrink-0" />
+										<span class="font-medium">{m.name}</span>
+										<span class="ml-auto pl-3 text-xs text-muted-foreground">{m.desc}</span>
+									</button>
+								{/each}
+							{/if}
 						</div>
 					</DropdownMenuSearchable>
 				</DropdownMenu.Content>

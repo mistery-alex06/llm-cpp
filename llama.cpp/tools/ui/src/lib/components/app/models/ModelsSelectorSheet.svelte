@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { ChevronDown, Loader2, Package } from '@lucide/svelte';
+	import { ChevronDown, Image as ImageIcon, Loader2, Package } from '@lucide/svelte';
+	import { bananaImages, IMAGE_MODELS } from '$lib/utils/banana-images.svelte';
 	import * as Sheet from '$lib/components/ui/sheet';
 	import { useModelsSelector } from '$lib/hooks/use-models-selector.svelte';
 	import {
@@ -95,9 +96,16 @@
 				disabled={disabled || ms.updating}
 				onclick={() => ms.handleOpenChange(true)}
 			>
-				<Package class="h-3.5 w-3.5 shrink-0" />
+				{#if bananaImages.active}
+					<ImageIcon class="h-3.5 w-3.5 shrink-0" />
+					<span class="min-w-0 truncate text-xs font-medium">{bananaImages.active.name}</span>
+				{:else}
+					<Package class="h-3.5 w-3.5 shrink-0" />
+				{/if}
 
-				{#if !selectedOption}
+				{#if bananaImages.active}
+					<!-- modello immagine scelto a mano -->
+				{:else if !selectedOption}
 					<span class="min-w-0 font-medium">Seleziona modello</span>
 				{:else}
 					<ModelId
@@ -167,6 +175,28 @@
 								onSelect={ms.handleSelect}
 								onInfoClick={ms.handleInfoClick}
 							/>
+							{#if bananaImages.installed.length > 0}
+								<p class="px-2 py-2 text-xs font-semibold text-muted-foreground/60 select-none">
+									Modelli per immagini
+								</p>
+								{#each IMAGE_MODELS.filter((m) => bananaImages.available[m.id]) as m (m.id)}
+									<button
+										type="button"
+										class="flex w-full items-center gap-2 rounded-sm px-2 py-2.5 text-left text-sm hover:bg-accent {bananaImages.selected ===
+										m.id
+											? 'bg-accent'
+											: ''}"
+										onclick={() => {
+											bananaImages.select(m.id);
+											ms.handleOpenChange(false);
+										}}
+									>
+										<ImageIcon class="h-3.5 w-3.5 shrink-0" />
+										<span class="font-medium">{m.name}</span>
+										<span class="ml-auto pl-3 text-xs text-muted-foreground">{m.desc}</span>
+									</button>
+								{/each}
+							{/if}
 						</div>
 					</div>
 				</Sheet.Content>

@@ -19,6 +19,7 @@ import { bananaWeb } from '$lib/utils/banana-web.svelte';
 import { bananaDocs } from '$lib/utils/banana-docs.svelte';
 import { interceptSummary, interceptAttachmentSummary } from '$lib/utils/banana-summary';
 import { interceptReminder } from '$lib/utils/banana-reminders';
+import { bananaImages, IMAGE_MODELS } from '$lib/utils/banana-images.svelte';
 import { bananaAuto } from '$lib/utils/banana-auto.svelte';
 import { bananaHistory } from '$lib/utils/banana-history.svelte';
 import { bananaProjects } from '$lib/utils/banana-projects.svelte';
@@ -1035,7 +1036,9 @@ class ChatStore {
 	async sendMessage(content: string, extras?: DatabaseMessageExtra[]): Promise<void> {
 		content = handleMemoryCommand(content) ?? content;
 		if (!extras?.length && (await interceptReminder(content))) return; // timer/promemoria: gestiti in locale
-		if (!bananaDocs.skipNext) {
+		// Richiesta di disegno: modello immagine scelto a mano o, con Auto, riconosciuto dalla frase
+		const drawModel = await bananaImages.pick(content, Boolean(extras?.length), bananaAuto.enabled);
+		if (!drawModel && !bananaDocs.skipNext) {
 			const att = await interceptAttachmentSummary(content, extras);
 			if (att?.abort) return;
 			const sum = att ?? (await interceptSummary(content));
@@ -1047,15 +1050,16 @@ class ChatStore {
 			}
 		}
 		const skipCtx = bananaDocs.skipNext;
-		if (bananaWeb.enabled && content.trim() && !skipCtx) await bananaWeb.prepare(content);
+		if (bananaWeb.enabled && content.trim() && !skipCtx && !drawModel) await bananaWeb.prepare(content);
 		const docScope =
 			bananaProjects.projectOf(conversationsStore.activeConversation?.id)?.id ??
 			bananaProjects.pendingProjectId ??
 			undefined;
-		bananaDocs.prepare(content, docScope);
-		if (!skipCtx) await bananaHistory.prepare(content, conversationsStore.activeConversation?.id);
+		if (!drawModel) bananaDocs.prepare(content, docScope);
+		if (!skipCtx && !drawModel)
+			await bananaHistory.prepare(content, conversationsStore.activeConversation?.id);
 		if (!content.trim() && (!extras || extras.length === 0)) return;
-		if (bananaAuto.enabled) {
+		if (bananaAuto.enabled && !drawModel) {
 			const target = bananaAuto.classify(
 				content,
 				extras as { type?: string }[] | undefined,
@@ -1127,6 +1131,10 @@ class ChatStore {
 				);
 			const assistantMessage = await this.createAssistantMessage(userMessage.id);
 			conversationsStore.addMessageToActive(assistantMessage);
+			if (drawModel) {
+				await this.drawImage(currentConv.id, assistantMessage, bananaImages.cleanPrompt(content), drawModel);
+				return;
+			}
 			await this.streamChatCompletion(
 				conversationsStore.activeMessages.slice(0, -1),
 				assistantMessage,
@@ -1157,6 +1165,48 @@ class ChatStore {
 				contextInfo
 			});
 		}
+	}
+
+	/**
+	 * Disegna un'immagine con un modello Stable Diffusion (servizio locale) e la mette nella risposta
+	 * come immagine Markdown. Durante il lavoro la risposta mostra lo stato; il pulsante di stop
+	 * interrompe l'attesa (il servizio finisce comunque il disegno in corso).
+	 */
+	private async drawImage(
+		convId: string,
+		message: DatabaseMessage,
+		prompt: string,
+		model: string
+	): Promise<void> {
+		const modelName = IMAGE_MODELS.find((m) => m.id === model)?.name ?? model;
+		const show = (text: string) => {
+			this.setChatStreaming(convId, text, message.id, modelName);
+			conversationsStore.updateMessageAtIndex(conversationsStore.findMessageIndex(message.id), {
+				content: text
+			});
+		};
+		let finalText: string;
+		try {
+			const res = await bananaImages.draw(
+				prompt,
+				model,
+				show,
+				() => !this.isChatLoadingInternal(convId)
+			);
+			if (!res) {
+				finalText = 'Disegno interrotto.';
+			} else {
+				const alt = (prompt || 'immagine').replace(/[[\]\n]/g, ' ').slice(0, 80);
+				finalText = `![${alt}](${res.url})\n\n*${modelName}${res.promptEn ? ` · ${res.promptEn}` : ''}*`;
+			}
+		} catch (e) {
+			finalText = `Non sono riuscita a creare l'immagine: ${e instanceof Error ? e.message : 'errore'}`;
+		}
+		const idx = conversationsStore.findMessageIndex(message.id);
+		conversationsStore.updateMessageAtIndex(idx, { content: finalText, model: modelName });
+		await DatabaseService.updateMessage(message.id, { content: finalText, model: modelName });
+		this.setChatLoading(convId, false);
+		this.clearChatStreaming(convId, message.id);
 	}
 
 	private async streamChatCompletion(

@@ -51,4 +51,11 @@ if [ -f "$DIR/servers/actions_server.py" ]; then
     trap 'kill $SEARCH_PID $STORE_PID $ACTIONS_PID 2>/dev/null' EXIT
 fi
 
+# Immagini (Stable Diffusion, solo CPU): si installano una volta con scripts/setup_images.sh
+if [ -f "$DIR/servers/image_server.py" ]; then
+    python3 "$DIR/servers/image_server.py" >/tmp/banana-image.log 2>&1 &
+    IMAGE_PID=$!
+    trap 'kill $SEARCH_PID $STORE_PID $ACTIONS_PID $IMAGE_PID 2>/dev/null' EXIT
+fi
+
 "$BIN" --models-dir "$DIR" --models-max 1 -ngl 0 -c 4096 -t 4 --reasoning off --reasoning-budget 0 --no-mmproj-offload -fa on --cache-type-k q8_0 --cache-type-v q8_0 --cache-ram 1024 --sleep-idle-seconds 600 --host 127.0.0.1 --port 8080 "$@"

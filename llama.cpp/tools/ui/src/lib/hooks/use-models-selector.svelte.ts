@@ -8,6 +8,7 @@ import {
 	singleModelName
 } from '$lib/stores/models.svelte';
 import { isRouterMode } from '$lib/stores/server.svelte';
+import { bananaImages } from '$lib/utils/banana-images.svelte';
 import { filterModelOptions, groupModelOptions } from '$lib/components/app/models/utils';
 import type { ModelOption } from '$lib/types/models';
 
@@ -122,6 +123,7 @@ export function useModelsSelector(opts: UseModelsSelectorOptions): UseModelsSele
 	async function handleSelect(modelId: string) {
 		const option = options.find((opt) => opt.id === modelId);
 		if (!option) return;
+		bananaImages.clear(); // scegliere un modello di testo disattiva il modello immagine
 
 		let shouldCloseMenu = true;
 
