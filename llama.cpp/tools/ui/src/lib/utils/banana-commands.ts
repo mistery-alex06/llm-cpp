@@ -9,5 +9,6 @@ export const COMMANDS: QuickCommand[] = [
 	{ label: 'Traduci', text: 'Traduci in inglese il seguente testo:\n\n' },
 	{ label: 'Spiega', text: 'Spiegami in modo semplice, con un esempio: ' },
 	{ label: 'Correggi', text: 'Correggi grammatica e stile del seguente testo senza cambiarne il senso:\n\n' },
-	{ label: 'Quiz', text: 'Crea 5 domande di verifica a risposta multipla su: ' }
+	{ label: 'Quiz', text: 'Crea 5 domande di verifica a risposta multipla su: ' },
+	{ label: 'Immagine', text: '/immagine ' }
 ];
